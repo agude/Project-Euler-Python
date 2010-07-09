@@ -63,8 +63,8 @@ s = time.time()
 
 mx = options.max
 
-primes = [2]
-i = 3 # Starting at first prime
+primes = [2] # Add by hand the only even prime so that we can set i+=2 to save loops
+i = 3 # Starting at second prime
 while i < mx:
     if isprime(i):
         primes.append(i)
