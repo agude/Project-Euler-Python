@@ -63,11 +63,11 @@ s = time.time()
 
 mx = options.max
 
-primes = []
-i = 2 # Starting at first prime
+primes = [2]
+i = 3 # Starting at first prime
 while i < mx:
     if isprime(i):
         primes.append(i)
-    i += 1
+    i += 2
     
 print sum(primes),'in',time.time()-s,'secs'
