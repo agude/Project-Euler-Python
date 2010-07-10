@@ -34,8 +34,8 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 
 # Functions
 def isprime(num):
-    """ Is number prime? Returns bool. 1 is not prime, nor is 0 """
-    if num < 1 or int(num) != float(num):
+    """ Is number prime? Returns bool. """
+    if num < 1 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
         return False
     elif num < 4:
         return True # 2,3 are prime, others already excluded
