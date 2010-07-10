@@ -69,8 +69,7 @@ s = time.time()
 
 i = 1
 while True:
-    tosum = [j+1 for j in range(i)]
-    tri = sum(tosum)
+    tri = (i * (i+1))/2 
     factors = returnFactors(tri)
     length = len(factors)
     #print str(tri)+':',length
