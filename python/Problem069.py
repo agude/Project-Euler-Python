@@ -45,9 +45,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 
 (options, args) = parser.parse_args()
 
-# Solution
-s = time.time()
-
+# Functions
 def fattorizza(n):
     c = 0
     f = {}
@@ -64,9 +62,6 @@ def fattorizza(n):
     f[n] = 1
     return f
  
-maxnum = 0
-maxi   = 0
-
 def fi(n):
     if n == 1:
         return 1
@@ -76,6 +71,12 @@ def fi(n):
         k = f[p]
         fi *= (p-1)*p**(k-1)
     return fi
+
+# Solution
+s = time.time()
+
+maxnum = 0
+maxi   = 0
 
 for i in range(1,options.num+1):
     num = float(i)/float(fi(i))
