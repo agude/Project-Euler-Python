@@ -33,7 +33,7 @@ parser.add_option("-n", "--min", action="store", type="int", dest="min", default
 (options, args) = parser.parse_args()
 
 # Functions
-def ispalindromic(num):
+def isPalindromic(num):
     """ Returns True/False after checking if num is palindromic """
     num = str(num)
 
@@ -50,7 +50,7 @@ nums = []
 for a in range(options.max,options.min-1,-1):
     for b in range(a,options.min-1,-1):
         num = a*b
-        if ispalindromic(num):
+        if isPalindromic(num):
             nums.append(num)
             break
             break
