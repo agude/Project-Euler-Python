@@ -52,4 +52,4 @@ for a in range(2,amax+1):
     for b in range(2,bmax+1):
         nset.append(a**b)
 
-print len(list(set(nset))),'in',time.time()-s,'secs'
+print len(set(nset)),'in',time.time()-s,'secs'
