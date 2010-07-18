@@ -9,8 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
+# #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
@@ -84,9 +83,13 @@ def returnPrimeFactors(num):
     primeFactors = []
     for prime in primes: 
         if not num % prime: 
+            primeFactors.append(prime)
+            num = num/prime
             while not num%prime: # While we can still evenly divide the prime out, do so
                 primeFactors.append(prime)
                 num = num/prime
+        if num == 1:
+            break
     if primeFactors == []: # The number must be prime! Return itself
         #print onum,[int(num)]
         return array([int(num)])
