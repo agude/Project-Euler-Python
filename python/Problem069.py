@@ -18,8 +18,8 @@
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
 import time
-from math import sqrt
 from optparse import OptionParser
+from numpy import array, ceil, floor, sqrt, bool, nonzero, ones
 """
 Euler's Totient function, phi(n) [sometimes called the phi function], is used to determine the number of numbers less than n which are relatively prime to n. For example, as 1, 2, 4, 5, 7, and 8, are all less than nine and relatively prime to nine, phi(9)=6.
 
@@ -46,31 +46,65 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 (options, args) = parser.parse_args()
 
 # Functions
-def fattorizza(n):
-    c = 0
-    f = {}
-    for i in xrange(2, int(sqrt(n))):
-        if not n%i:
-            f[i] = 1
-            n /= i
-        while not n%i:
-            f[i] += 1
-            vn = n
-            n /= i
-        if n == 1:
-            return f
-    f[n] = 1
-    return f
- 
-def fi(n):
-    if n == 1:
-        return 1
-    fi = 1
-    f = fattorizza(n)
-    for p in f:
-        k = f[p]
-        fi *= (p-1)*p**(k-1)
-    return fi
+def returnPrimes(num):
+    """ Return a list of primes up to num """
+    isPrime = ones(num,dtype=bool) # An array of bools to test using their index
+    isPrime[0] = isPrime[1] = 0 # 0,1 not prime
+    for i in xrange(2,int(ceil(sqrt(num)))):
+        if isPrime[i]: # False if already proven not prime
+            # Starting at i*i : until the end of the array : incriment by i
+            # You can start at i*i because lower mutliples have already been removed
+            isPrime[i*i:num+1:i] = False
+
+    return nonzero(isPrime)[0] # Return the index values of True, that is primes
+
+def returnUniquePrimeFactors(num):
+    """ Return the unique prime factors of a number """
+    onum = num
+    primes = returnPrimes(num) # Get all the primes smaller than num
+    num = float(num)
+    primeFactors = []
+    for prime in primes: 
+        if not num % prime: 
+            primeFactors.append(prime) # Only append the first time
+            while num%prime !=0: # While we can still evenly divide the prime out, do so
+                num = num/prime
+    if primeFactors == []: # The number must be prime! Return itself
+        #print onum,[int(num)]
+        return array([int(num)])
+    else:
+        #print onum,primeFactors
+        return array(primeFactors)
+
+def returnPrimeFactors(num):
+    """ Return the prime factors of a number """
+    onum = num
+    primes = returnPrimes(num) # Get all the primes smaller than num
+    num = float(num)
+    primeFactors = []
+    for prime in primes: 
+        if not num % prime: 
+            while not num%prime: # While we can still evenly divide the prime out, do so
+                primeFactors.append(prime)
+                num = num/prime
+    if primeFactors == []: # The number must be prime! Return itself
+        #print onum,[int(num)]
+        return array([int(num)])
+    else:
+        #print onum,primeFactors
+        return array(primeFactors)
+        
+def returnEulerTotient(num):
+    """ Returns Euler's Totient of num, the number of numbers coprime with num """
+    if num == 1 or num == 0:
+        return 1 # 1 is the only number coprime to itself by definition; phi(0) := 1
+    else:
+        product = num
+        primes = returnUniquePrimeFactors(num)
+        primes = (1 - (1./primes))
+        for prime in primes:
+            product *= prime
+        return product
 
 # Solution
 s = time.time()
@@ -78,8 +112,11 @@ s = time.time()
 maxnum = 0
 maxi   = 0
 
-for i in range(1,options.num+1):
-    num = float(i)/float(fi(i))
+for i in range(2,options.num+1):
+    et = int(floor(returnEulerTotient(i))) # Mostly we get n.0, but sometimes we get some floating point. From a test of a few of them floor seems to provide the correct answer
+    num = float(i)/et
+    #if i%1000 == 0:
+        #print i,'in',time.time()-s,'secs'
     if num > maxnum:
         maxnum = num
         maxi   = i
