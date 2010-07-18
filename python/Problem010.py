@@ -19,7 +19,7 @@
 
 import time
 from optparse import OptionParser
-from math import sqrt,ceil,floor
+from numpy import array, ceil, sqrt, bool, nonzero, ones
 """
 The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 
@@ -33,41 +33,24 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 (options, args) = parser.parse_args()
 
 # Functions
-def isprime(num):
-    """ Is number prime? Returns bool. """
-    if num < 1 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
-        return False
-    elif num < 4:
-        return True # 2,3 are prime, others already excluded
-    elif not num%2:
-        return False
-    elif num < 9: # We have now excluded 4,6,8
-        return True
-    elif not num%3:
-        return False
-    else:
-        r = floor(sqrt(num))
-        f = 5
-        while f <= r:
-            if not num%f:
-                return False
-            elif not num%(f+2):
-                return False
-            else:
-                f += 6
-        else:
-            return True
+def returnPrimes(num):
+    """ Return a list of primes up to num using a Sieve of Eratosthenes """
+    isPrime = ones(num+1,dtype=bool) # An array of bools to test using their index
+    isPrime[0] = isPrime[1] = 0 # 0,1 not prime
+    for i in xrange(2,int(ceil(sqrt(num)))):
+        if isPrime[i]: # False if already proven not prime
+            # Starting at 2*i : until the end of the array : incriment by i
+            # You can start at i*i because lower mutliples have already been removed
+            isPrime[i*i:num+1:i] = False
+
+    return nonzero(isPrime)[0] # Return the index values of True, that is primes
+
 
 # Solution
 s = time.time()
 
 mx = options.max
 
-primes = [2] # Add by hand the only even prime so that we can set i+=2 to save loops
-i = 3 # Starting at second prime
-while i < mx:
-    if isprime(i):
-        primes.append(i)
-    i += 2
-    
-print sum(primes),'in',time.time()-s,'secs'
+primes = returnPrimes(mx)
+
+print primes.sum(),'in',time.time()-s,'secs'
