@@ -42,7 +42,7 @@ s = time.time()
 sumtotal = options.num
 
 for c in range(sumtotal-3,1,-1):
-    for b in range(1000-c-1,1,-1):
+    for b in range(sumtotal-c-1,1,-1):
         a = sumtotal - b - c
         if not a < b < c or a < 0:
             continue
