@@ -81,7 +81,6 @@ def returnPrimeFactors(num):
     """ Return the prime factors of a number """
     onum = num
     primes = returnPrimes(num) # Get all the primes smaller than num
-    num = float(num)
     primeFactors = []
     for prime in primes: 
         if not num % prime: 
@@ -116,8 +115,8 @@ maxi   = 0
 for i in range(2,options.num+1):
     et = int(floor(returnEulerTotient(i))) # Mostly we get n.0, but sometimes we get some floating point. From a test of a few of them floor seems to provide the correct answer
     num = float(i)/et
-    if i%1000 == 0:
-        print i,'in',time.time()-s,'secs'
+    #if i%1000 == 0:
+        #print i,'in',time.time()-s,'secs'
     if num > maxnum:
         maxnum = num
         maxi   = i
