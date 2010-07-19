@@ -134,7 +134,7 @@ else:
     runningProduct = 1
 
     startPrimes = 10000 # Just a nice big number... 
-    inputPrimes = list(returnPrimes(startPrimes))
+    inputPrimes = returnPrimes(startPrimes)
 
     for i in range(len(inputPrimes)):
         runningProduct *= int(inputPrimes[i]) # Int64 from Numpy Vs. Python BigInt again....
