@@ -18,7 +18,7 @@
 
 import time
 from optparse import OptionParser
-from numpy import array, ceil, floor, sqrt, bool, nonzero, ones
+from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64, dtype
 """
 Euler's Totient function, phi(n) [sometimes called the phi function], is used to determine the number of numbers less than n which are relatively prime to n. For example, as 1, 2, 4, 5, 7, and 8, are all less than nine and relatively prime to nine, phi(9)=6.
 
@@ -38,9 +38,10 @@ It can be seen that n=6 produces a maximum n/phi(n) for n <= 10.
 Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n number -b bool"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000000, help="find the last ten digits of the sum n**n")
+parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000000, help="find the max of n/phi(n) for 0 < n < NUM+1")
+parser.add_option("-b", "--brute", action="store_true", dest="brute", default=False, help="if true, use a brute force calculate n/phi(n). VERY SLOW!")
 
 (options, args) = parser.parse_args()
 
@@ -55,7 +56,7 @@ def returnPrimes(num):
             # You can start at i*i because lower mutliples have already been removed
             isPrime[i*i:num+1:i] = False
 
-    return nonzero(isPrime)[0] # Return the index values of True, that is primes
+    return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
 
 def returnPrimeFactors(num,inputPrimes=[]):
     """ 
@@ -67,7 +68,6 @@ def returnPrimeFactors(num,inputPrimes=[]):
     onum = num
 
     if inputPrimes == []: # If we got an empty list, make the list
-        print "Making Prime list"
         inputPrimes = returnPrimes(num) # Get all the primes smaller than num
 
     primeFactors = {}
@@ -112,14 +112,36 @@ s = time.time()
 maxnum = 0
 maxi   = 0
 num    = options.num
+brute  = options.brute
 
-inputPrimes = returnPrimes(num+1)
+if brute:
+    inputPrimes = returnPrimes(num+1)
 
-for i in range(2,num+1):
-    et = returnEulerTotient(i,inputPrimes)
-    num = float(i)/et
-    if num > maxnum:
-        maxnum = num
-        maxi   = i
+    for i in range(2,num+1):
+        et = returnEulerTotient(i,inputPrimes)
+        num = float(i)/et
+        if num > maxnum:
+            maxnum = num
+            maxi   = i
+
+else:
+    """
+    n/phi(n) = Product[ p / ( p - 1 ) ] over the unique primes that divide n.
+
+    Then n/phi(n) is maximal if n is the product of the first k prime numbers.
+    """
+    products = []
+    runningProduct = 1
+
+    startPrimes = 10000 # Just a nice big number... 
+    inputPrimes = list(returnPrimes(startPrimes))
+
+    for i in range(len(inputPrimes)):
+        runningProduct *= int(inputPrimes[i]) # Int64 from Numpy Vs. Python BigInt again....
+        if runningProduct > num:
+            break
+        else:
+            products.append(runningProduct)
+    maxi = max(products)
 
 print maxi,'in',time.time()-s,'secs'
