@@ -57,64 +57,73 @@ def returnPrimes(num):
 
     return nonzero(isPrime)[0] # Return the index values of True, that is primes
 
-def returnUniquePrimeFactors(num,inputPrimes=[]):
-    """ Return the unique prime factors of a number """
-    onum = num
-
-    if inputPrimes == []: # If we got an empty list, make the list
-        print "Making Prime list"
-        inputPrimes = returnPrimes(num) # Get all the primes smaller than num
-
-    primeFactors = []
-    for prime in inputPrimes: 
-        if not num % prime and num != 1: 
-            primeFactors.append(prime) # Only append the first time
-            while not num%prime and num != 1: # While we can still evenly divide the prime out, do so
-                num = num/prime
-        if num == 1:
-            break
-    if primeFactors == []: # The number must be prime! Return itself
-        #print onum,[int(num)]
-        return array([int(num)])
-    else:
-        #print onum,primeFactors
-        return array(primeFactors)
+#def returnUniquePrimeFactors(num,inputPrimes=[]):
+#    """ Return the unique prime factors of a number """
+#    onum = num
+#
+#    if inputPrimes == []: # If we got an empty list, make the list
+#        print "Making Prime list"
+#        inputPrimes = returnPrimes(num) # Get all the primes smaller than num
+#
+#    primeFactors = []
+#    for prime in inputPrimes: 
+#        if not num % prime and num != 1: 
+#            primeFactors.append(prime) # Only append the first time
+#            while not num%prime and num != 1: # While we can still evenly divide the prime out, do so
+#                num = num/prime
+#        if num == 1:
+#            break
+#    if primeFactors == []: # The number must be prime! Return itself
+#        #print onum,[int(num)]
+#        return array([int(num)])
+#    else:
+#        #print onum,primeFactors
+#        return array(primeFactors)
 
 def returnPrimeFactors(num,inputPrimes=[]):
-    """ Return the prime factors of a number """
+    """ 
+    Return the prime factors of a number in a dictionary
+
+
+    {primeFactor1:n1,primeFactor2:n2....}
+    """
     onum = num
 
     if inputPrimes == []: # If we got an empty list, make the list
         print "Making Prime list"
         inputPrimes = returnPrimes(num) # Get all the primes smaller than num
 
-    primeFactors = []
+    primeFactors = {}
     for prime in inputPrimes: 
         if not num % prime and num != 1: 
-            primeFactors.append(prime)
+            primeFactors[prime] = 1
             num = num/prime
             while not num%prime and num != 1: # While we can still evenly divide the prime out, do so
-                primeFactors.append(prime)
+                primeFactors[prime] += 1
                 num = num/prime
         if num == 1:
             break
-    if primeFactors == []: # The number must be prime! Return itself
+    if primeFactors == {}: # The number must be prime! Return itself
         #print onum,[int(num)]
-        return array([int(num)])
+        return {onum:1}
     else:
         #print onum,primeFactors
-        return array(primeFactors)
+        return primeFactors
         
 def returnEulerTotient(num,inputPrimes=[]):
     """ Returns Euler's Totient of num, the number of numbers coprime with num """
     if num == 1 or num == 0:
         return 1 # 1 is the only number coprime to itself by definition; phi(0) := 1
     else:
-        product = num
-        primes = returnUniquePrimeFactors(num,inputPrimes)
-        primes = (1 - (1./primes))
+        product = 1
+        primes = returnPrimeFactors(num,inputPrimes)
         for prime in primes:
-            product *= prime
+            k = primes[prime]
+            # From Wikipedia:
+            #
+            # phi(n) = (p1 - 1)*(p1**(k1-1)) 
+            # where p1 is a prime factor of n, and k1 is the frequency of that prime factor
+            product *= (prime - 1)*(prime**(k-1))
         return product
 
 # Solution
@@ -127,7 +136,7 @@ num    = options.num
 inputPrimes = returnPrimes(num+1)
 
 for i in range(2,num+1):
-    et = int(floor(returnEulerTotient(i,inputPrimes))) # Mostly we get n.0, but sometimes we get some floating point. From a test of a few of them floor seems to provide the correct answer
+    et = returnEulerTotient(i,inputPrimes)
     num = float(i)/et
     #if i%1000 == 0:
         #print i,'in',time.time()-s,'secs'
