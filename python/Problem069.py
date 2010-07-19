@@ -57,15 +57,19 @@ def returnPrimes(num):
 
     return nonzero(isPrime)[0] # Return the index values of True, that is primes
 
-def returnUniquePrimeFactors(num):
+def returnUniquePrimeFactors(num,inputPrimes=[]):
     """ Return the unique prime factors of a number """
     onum = num
-    primes = returnPrimes(num) # Get all the primes smaller than num
+
+    if inputPrimes == []: # If we got an empty list, make the list
+        print "Making Prime list"
+        inputPrimes = returnPrimes(num) # Get all the primes smaller than num
+
     primeFactors = []
-    for prime in primes: 
-        if not num % prime: 
+    for prime in inputPrimes: 
+        if not num % prime and num != 1: 
             primeFactors.append(prime) # Only append the first time
-            while num%prime !=0: # While we can still evenly divide the prime out, do so
+            while not num%prime and num != 1: # While we can still evenly divide the prime out, do so
                 num = num/prime
         if num == 1:
             break
@@ -76,16 +80,20 @@ def returnUniquePrimeFactors(num):
         #print onum,primeFactors
         return array(primeFactors)
 
-def returnPrimeFactors(num):
+def returnPrimeFactors(num,inputPrimes=[]):
     """ Return the prime factors of a number """
     onum = num
-    primes = returnPrimes(num) # Get all the primes smaller than num
+
+    if inputPrimes == []: # If we got an empty list, make the list
+        print "Making Prime list"
+        inputPrimes = returnPrimes(num) # Get all the primes smaller than num
+
     primeFactors = []
-    for prime in primes: 
-        if not num % prime: 
+    for prime in inputPrimes: 
+        if not num % prime and num != 1: 
             primeFactors.append(prime)
             num = num/prime
-            while not num%prime: # While we can still evenly divide the prime out, do so
+            while not num%prime and num != 1: # While we can still evenly divide the prime out, do so
                 primeFactors.append(prime)
                 num = num/prime
         if num == 1:
@@ -97,13 +105,13 @@ def returnPrimeFactors(num):
         #print onum,primeFactors
         return array(primeFactors)
         
-def returnEulerTotient(num):
+def returnEulerTotient(num,inputPrimes=[]):
     """ Returns Euler's Totient of num, the number of numbers coprime with num """
     if num == 1 or num == 0:
         return 1 # 1 is the only number coprime to itself by definition; phi(0) := 1
     else:
         product = num
-        primes = returnUniquePrimeFactors(num)
+        primes = returnUniquePrimeFactors(num,inputPrimes)
         primes = (1 - (1./primes))
         for prime in primes:
             product *= prime
@@ -114,9 +122,12 @@ s = time.time()
 
 maxnum = 0
 maxi   = 0
+num    = options.num
 
-for i in range(2,options.num+1):
-    et = int(floor(returnEulerTotient(i))) # Mostly we get n.0, but sometimes we get some floating point. From a test of a few of them floor seems to provide the correct answer
+inputPrimes = returnPrimes(num+1)
+
+for i in range(2,num+1):
+    et = int(floor(returnEulerTotient(i,inputPrimes))) # Mostly we get n.0, but sometimes we get some floating point. From a test of a few of them floor seems to provide the correct answer
     num = float(i)/et
     #if i%1000 == 0:
         #print i,'in',time.time()-s,'secs'
