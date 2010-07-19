@@ -57,29 +57,6 @@ def returnPrimes(num):
 
     return nonzero(isPrime)[0] # Return the index values of True, that is primes
 
-#def returnUniquePrimeFactors(num,inputPrimes=[]):
-#    """ Return the unique prime factors of a number """
-#    onum = num
-#
-#    if inputPrimes == []: # If we got an empty list, make the list
-#        print "Making Prime list"
-#        inputPrimes = returnPrimes(num) # Get all the primes smaller than num
-#
-#    primeFactors = []
-#    for prime in inputPrimes: 
-#        if not num % prime and num != 1: 
-#            primeFactors.append(prime) # Only append the first time
-#            while not num%prime and num != 1: # While we can still evenly divide the prime out, do so
-#                num = num/prime
-#        if num == 1:
-#            break
-#    if primeFactors == []: # The number must be prime! Return itself
-#        #print onum,[int(num)]
-#        return array([int(num)])
-#    else:
-#        #print onum,primeFactors
-#        return array(primeFactors)
-
 def returnPrimeFactors(num,inputPrimes=[]):
     """ 
     Return the prime factors of a number in a dictionary
@@ -141,8 +118,6 @@ inputPrimes = returnPrimes(num+1)
 for i in range(2,num+1):
     et = returnEulerTotient(i,inputPrimes)
     num = float(i)/et
-    #if i%1000 == 0:
-        #print i,'in',time.time()-s,'secs'
     if num > maxnum:
         maxnum = num
         maxi   = i
