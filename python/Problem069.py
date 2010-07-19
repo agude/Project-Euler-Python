@@ -111,7 +111,14 @@ def returnPrimeFactors(num,inputPrimes=[]):
         return primeFactors
         
 def returnEulerTotient(num,inputPrimes=[]):
-    """ Returns Euler's Totient of num, the number of numbers coprime with num """
+    """ 
+    Returns Euler's Totient of num, the number of numbers coprime with num
+
+    From Wikipedia:
+    
+    phi(n) = (p1 - 1)*(p1**(k1-1)) 
+    where p1 is a prime factor of n, and k1 is the frequency of that prime factor
+    """
     if num == 1 or num == 0:
         return 1 # 1 is the only number coprime to itself by definition; phi(0) := 1
     else:
@@ -119,10 +126,6 @@ def returnEulerTotient(num,inputPrimes=[]):
         primes = returnPrimeFactors(num,inputPrimes)
         for prime in primes:
             k = primes[prime]
-            # From Wikipedia:
-            #
-            # phi(n) = (p1 - 1)*(p1**(k1-1)) 
-            # where p1 is a prime factor of n, and k1 is the frequency of that prime factor
             product *= (prime - 1)*(prime**(k-1))
         return product
 
