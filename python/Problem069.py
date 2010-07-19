@@ -68,7 +68,10 @@ def returnPrimeFactors(num,inputPrimes=[]):
     onum = num
 
     if inputPrimes == []: # If we got an empty list, make the list
-        inputPrimes = returnPrimes(num) # Get all the primes smaller than num
+        inputPrimes = returnPrimes(num+1) # Get all the primes up to num
+
+    if num in inputPrimes: # The number is prime! Return itself
+        return {onum:1}
 
     primeFactors = {}
     for prime in inputPrimes: 
@@ -80,12 +83,9 @@ def returnPrimeFactors(num,inputPrimes=[]):
                 num = num/prime
         if num == 1:
             break
-    if primeFactors == {}: # The number must be prime! Return itself
-        #print onum,[int(num)]
-        return {onum:1}
-    else:
-        #print onum,primeFactors
-        return primeFactors
+
+    #print onum,primeFactors
+    return primeFactors
         
 def returnEulerTotient(num,inputPrimes=[]):
     """ 
