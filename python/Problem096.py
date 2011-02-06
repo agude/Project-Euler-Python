@@ -1,4 +1,4 @@
-#  Copyright (C) 2011  Alexander Gude - alex.public.account+PySudokuSolver@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,33 +41,50 @@ def combine(A,B):
     return [a+b for a in A for b in B]
 
 # Constants
-rows   = ('A','B','C','D','E','F','G','H','I')
-cols   = ('1','2','3','4','5','6','7','8','9')
-nums   = ('1','2','3','4','5','6','7','8','9')
-cells  = combine(rows,cols)
-groups = (
-          [combine(rows,c) for c in cols] + # Columns
-          [combine(r,cols) for r in rows] + # Rows
-          [combine(r,c)
-           for r in [('A','B','C'),('D','E','F'),('G','H','I')] 
-           for c in [('1','2','3'),('4','5','6'),('7','8','9')] 
-          ]                                 # Blocks
-         )
 
-connections = {}
-for cell in cells:
-    cellList = []
-    for group in groups:
-        if cell in group:
-            cellList += group
-    cellSet = set(cellList)
-    cellSet.remove(cell)
-    cellList = list(cellSet)
-    cellList.sort()
-    connections[cell] = tuple(cellList)
+
+# Classes
+class sudoku:
+    """ Stores a sudoku grid """
+    def __init__(self,input):
+        """ Initiates via an input string off the form A1A2A3... with 0 or . for blanks """
+        self.input = input
+        self.__init_vars() 
+
+    def __init_vars(self):
+        """ Initiates some data structures needed by the class.
+
+            These could be hardcoded, but it is more compact to generate when needed."""
+        self.rows   = ('A','B','C','D','E','F','G','H','I')
+        self.cols   = ('1','2','3','4','5','6','7','8','9')
+        self.nums   = self.cols
+        self.cells  = combine(self.rows,self.cols)
+        self.groups = ([combine(self.rows,c) for c in self.cols] + # Columns
+                       [combine(r,self.cols) for r in self.rows] + # Rows
+                       [combine(r,c)
+                           for r in [('A','B','C'),('D','E','F'),('G','H','I')] 
+                           for c in [('1','2','3'),('4','5','6'),('7','8','9')] 
+                       ])                                          # Blocks
+        self.connections = {}
+        for cell in self.cells:
+            cellList = []
+            for group in groups:
+                if cell in group:
+                    cellList += group
+            cellSet = set(cellList) - set(cell)
+            print cellSet
+            cellSet.remove(cell)
+            cellList = list(cellSet)
+            cellList.sort()
+            self.connections[cell] = tuple(cellList)
+
+    def __pasrse_input(self):
+        """ """
+        pass
 
 # Solution
 if __name__ == '__main__':
     s = time.time()
+
 
     print time.time()-s,'secs'
