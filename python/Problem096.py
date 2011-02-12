@@ -50,6 +50,7 @@ class sudoku:
         """ Initiates via an input string off the form A1A2A3... with 0 or . for blanks """
         self.input = input
         self.__init_vars() 
+        self.__parse_input()
 
     def __init_vars(self):
         """ Initiates some data structures needed by the class.
@@ -59,32 +60,53 @@ class sudoku:
         self.cols   = ('1','2','3','4','5','6','7','8','9')
         self.nums   = self.cols
         self.cells  = combine(self.rows,self.cols)
+        self.cells.sort()
         self.groups = ([combine(self.rows,c) for c in self.cols] + # Columns
                        [combine(r,self.cols) for r in self.rows] + # Rows
                        [combine(r,c)
                            for r in [('A','B','C'),('D','E','F'),('G','H','I')] 
                            for c in [('1','2','3'),('4','5','6'),('7','8','9')] 
                        ])                                          # Blocks
+
+        # Need to clean this up
         self.connections = {}
         for cell in self.cells:
             cellList = []
-            for group in groups:
+            for group in self.groups:
                 if cell in group:
                     cellList += group
             cellSet = set(cellList) - set(cell)
-            print cellSet
             cellSet.remove(cell)
             cellList = list(cellSet)
             cellList.sort()
             self.connections[cell] = tuple(cellList)
 
-    def __pasrse_input(self):
-        """ """
-        pass
+    def __parse_input(self):
+        """ Reads in a gameboard as a string """
+        self.grid = dict((self.cells[i],self.input[i]) for i in xrange(len(self.cells)))
+
+    def __str__(self):
+        """ Output the self.grid in human readable form """
+        col_b = 3
+        row_b = 3
+        outStr = ""
+        for row in self.rows:
+            if row in ('D','G'):
+                outStr += "------+-------+------\n"
+            for col in self.cols:
+                if col in ('4','7'):
+                    outStr += "| "
+                outStr += self.grid[row+col]+" "
+                if col == '9':
+                    outStr += ("\n" if row not in 'I' else '')
+        return outStr
 
 # Solution
+p1 = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
 if __name__ == '__main__':
     s = time.time()
 
+    puzzle = sudoku(p1)
+    print puzzle
 
     print time.time()-s,'secs'
