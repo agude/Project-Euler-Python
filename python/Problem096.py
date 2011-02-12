@@ -87,8 +87,6 @@ class sudoku:
 
     def __str__(self):
         """ Output the self.grid in human readable form """
-        col_b = 3
-        row_b = 3
         outStr = ""
         for row in self.rows:
             if row in ('D','G'):
