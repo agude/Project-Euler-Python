@@ -113,6 +113,12 @@ class sudoku:
         for cl in c:
             self.__remove_solved(cl)
 
+    def return_output(self):
+        """ Returns the solution as a string in the same form as the input """
+        c = self.cells
+        s = self.solved
+        return ''.join( (s[cl] for cl in c) )
+
     def __str__(self):
         """ Allows printing of self.grid in human readable form """
         g = self.grid
@@ -137,16 +143,13 @@ class sudoku:
         return min( (i for i in self.solved.values()) )
 
 # Solution
-p1 = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
-p2 = "590000003604005890201940500300090052405000609760050008003068904072500106800000025"
+p1  = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
+p1s = "483921657967345821251876493548132976729564138136798245372689514814253769695417382"
 
 if __name__ == '__main__':
     s = time.time()
 
     s1 = sudoku(p1)
     print s1
-    print "======"
-    s2 = sudoku(p2)
-    print s2
 
     print 'Solved in',time.time()-s,'secs'
