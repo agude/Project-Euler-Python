@@ -80,10 +80,14 @@ class sudoku:
         # Need to clean this up
         self.connections = {'all':{},'row':{},'col':{},'block':{}}
         for cell in self.cells:
-            self.connections['all'][cell]   = set(sum([g for g in self.groups if cell in g],[])) - set([cell])
-            self.connections['row'][cell]   = set(sum([g for g in self.grow   if cell in g],[])) - set([cell])
-            self.connections['col'][cell]   = set(sum([g for g in self.gcol   if cell in g],[])) - set([cell])
-            self.connections['block'][cell] = set(sum([g for g in self.gblk   if cell in g],[])) - set([cell])
+            self.connections['all'][cell]   = set(chain.from_iterable([g for g in self.groups if cell in g])) - set([cell])
+            self.connections['row'][cell]   = set(chain.from_iterable([g for g in self.grow   if cell in g])) - set([cell])
+            self.connections['col'][cell]   = set(chain.from_iterable([g for g in self.gcol   if cell in g])) - set([cell])
+            self.connections['block'][cell] = set(chain.from_iterable([g for g in self.gblk   if cell in g])) - set([cell])
+            #elf.connections['all'][cell]   = set(sum([g for g in self.groups if cell in g],[])) - set([cell])
+            #elf.connections['row'][cell]   = set(sum([g for g in self.grow   if cell in g],[])) - set([cell])
+            #elf.connections['col'][cell]   = set(sum([g for g in self.gcol   if cell in g],[])) - set([cell])
+            #elf.connections['block'][cell] = set(sum([g for g in self.gblk   if cell in g],[])) - set([cell])
 
     def __remove_solved(self,cell):
         """ For a cell, removes all values from its possible list that are already assigned else where """
