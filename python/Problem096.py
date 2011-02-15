@@ -154,17 +154,18 @@ class sudoku:
 
     def __is_solved(self):
         """ Check to see if solved """
-        return min( (i for i in self.solved.values()) )
+        return self.solved == self.grid
 
 # Solution
 p1  = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
-p1s = "483921657967345821251876493548132976729564138136798245372689514814253769695417382"
 p2  = ".8.9.3.4...61.7.....3...6..6...89..49.......37..64...2..9...3.....8.62...1.7.5.9."
 
 if __name__ == '__main__':
     s = time.time()
 
-    s1 = sudoku(p2)
-    print s1
+    for i in range(100):
+        s2 = sudoku(p2)
+    print s2
+    #print s1,'\n\n',s2
 
     print 'Solved in',time.time()-s,'secs'
