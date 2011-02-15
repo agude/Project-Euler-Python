@@ -82,19 +82,23 @@ class sudoku:
             self.connections[cell] = tuple(cellList)
 
     def __parse_input(self):
-        """ Reads in a gameboard as a string """
+        """ Reads in a gameboard as a string and replaces unknowns """
         self.grid = dict((self.cells[i],self.input[i]) for i in xrange(len(self.cells)))
 
     def __str__(self):
         """ Output the self.grid in human readable form """
         outStr = ""
+        width = max(len(self.grid[i]) for i in self.grid.keys())
         for row in self.rows:
             if row in ('D','G'):
-                outStr += "------+-------+------\n"
+                outStr += (("-"*(4+3*width) + "+")*3)[:-1] + "\n"
             for col in self.cols:
                 if col in ('4','7'):
                     outStr += "| "
-                outStr += self.grid[row+col]+" "
+                elif col == '1':
+                    outStr += " "
+                cWidth = width-len(self.grid[row+col])+1
+                outStr += self.grid[row+col]+" "*cWidth
                 if col == '9':
                     outStr += ("\n" if row not in 'I' else '')
         return outStr
