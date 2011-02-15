@@ -15,6 +15,7 @@
 
 import time
 from optparse import OptionParser
+from itertools import chain
 """
 Su Doku (Japanese meaning number place) is the name given to a popular puzzle concept. Its origin is unclear, but credit must be attributed to Leonhard Euler who invented a similar, and much more difficult, puzzle idea called Latin Squares. The objective of Su Doku puzzles, however, is to replace the blanks (or zeros) in a 9 by 9 grid in such that each row, column, and 3 by 3 box contains each of the digits 1 to 9. Below is an example of a typical starting puzzle grid and its solution grid.
 
@@ -104,11 +105,12 @@ class sudoku:
         for key in ('col','row','block'):
             group = self.connections[key][cell]
             possible = self.grid[cell]
-            for c in group:
-                for l in self.grid[c]:
-                    possible = possible.replace(l,'')
-                    if possible == '':
-                        return 0
+            rm = ''.join((self.grid[c] for c in group))
+            for l in rm:
+                possible = possible.replace(l,'')
+                if possible=='': 
+                    break
+                        
             if len(possible) == 1:
                 #print "Update cell",cell,"from",self.grid[cell],"to",possible
                 self.grid[cell] = possible
@@ -163,8 +165,10 @@ p2  = ".8.9.3.4...61.7.....3...6..6...89..49.......37..64...2..9...3.....8.62...
 if __name__ == '__main__':
     s = time.time()
 
-    for i in range(100):
-        s2 = sudoku(p2)
+    #for i in range(100):
+    #    s2 = sudoku(p2)
+    s2 = sudoku(p2)
+    
     print s2
     #print s1,'\n\n',s2
 
