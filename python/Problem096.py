@@ -42,7 +42,6 @@ def combine(A,B):
 
 # Constants
 
-
 # Classes
 class sudoku:
     """ Stores a sudoku grid """
@@ -55,6 +54,8 @@ class sudoku:
         while not self.__is_solved():
             for c in self.cells:
                 self.__remove_solved(c)
+                if len(self.grid[c]) > 1:
+                    self.__update_constraints(c)
 
     def __init_vars(self):
         """ Initiates some data structures needed by the class.
@@ -66,31 +67,27 @@ class sudoku:
         self.nums   = ''.join(self.cols)
         self.cells  = combine(self.rows,self.cols)
         self.cells.sort()
-        self.groups = ([combine(self.rows,c) for c in self.cols] + # Columns
-                       [combine(r,self.cols) for r in self.rows] + # Rows
-                       [combine(r,c)
-                           for r in [('A','B','C'),('D','E','F'),('G','H','I')] 
-                           for c in [('1','2','3'),('4','5','6'),('7','8','9')] 
-                       ])                                          # Blocks
+        # Groups of cells (Rows, Columns, Blocks, and all)
+        self.gcol   = [combine(self.rows,c) for c in self.cols]
+        self.grow   = [combine(r,self.cols) for r in self.rows]
+        self.gblk   = [combine(r,c)
+                           for r in [('A','B','C'),('D','E','F'),('G','H','I')]
+                           for c in [('1','2','3'),('4','5','6'),('7','8','9')]
+                       ]
+        self.groups = self.gcol + self.grow + self.gblk
 
         # Need to clean this up
-        self.connections = {}
+        self.connections = {'all':{},'row':{},'col':{},'block':{}}
         for cell in self.cells:
-            cellList = []
-            for group in self.groups:
-                if cell in group:
-                    cellList += group
-            cellSet = set(cellList) - set(cell)
-            cellSet.remove(cell)
-            cellList = list(cellSet)
-            cellList.sort()
-            self.connections[cell] = tuple(cellList)
-        
+            self.connections['all'][cell]   = set(sum([g for g in self.groups if cell in g],[])) - set([cell])
+            self.connections['row'][cell]   = set(sum([g for g in self.grow   if cell in g],[])) - set([cell])
+            self.connections['col'][cell]   = set(sum([g for g in self.gcol   if cell in g],[])) - set([cell])
+            self.connections['block'][cell] = set(sum([g for g in self.gblk   if cell in g],[])) - set([cell])
 
     def __remove_solved(self,cell):
         """ For a cell, removes all values from its possible list that are already assigned else where """
         g   = self.grid
-        con = self.connections[cell]
+        con = self.connections['all'][cell]
         sol = self.solved
         nl = self.numl
 
@@ -101,6 +98,23 @@ class sudoku:
 
         if len(g[cell]) == 1:
             sol[cell] = g[cell]
+
+    def __update_constraints(self,cell):
+        """ Check to see if cell is contrained to be one value """
+        for key in ('col','row','block'):
+            group = self.connections[key][cell]
+            possible = self.grid[cell]
+            for c in group:
+                for l in self.grid[c]:
+                    possible = possible.replace(l,'')
+                    if possible == '':
+                        return 0
+            if len(possible) == 1:
+                #print "Update cell",cell,"from",self.grid[cell],"to",possible
+                self.grid[cell] = possible
+                self.solved[cell] = possible
+                return 0
+            
 
     def __parse_input(self):
         """ Reads in a gameboard as a string """
@@ -145,11 +159,12 @@ class sudoku:
 # Solution
 p1  = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
 p1s = "483921657967345821251876493548132976729564138136798245372689514814253769695417382"
+p2  = ".8.9.3.4...61.7.....3...6..6...89..49.......37..64...2..9...3.....8.62...1.7.5.9."
 
 if __name__ == '__main__':
     s = time.time()
 
-    s1 = sudoku(p1)
+    s1 = sudoku(p2)
     print s1
 
     print 'Solved in',time.time()-s,'secs'
