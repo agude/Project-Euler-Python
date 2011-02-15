@@ -51,6 +51,10 @@ class sudoku:
         self.input = input
         self.__init_vars() 
         self.__parse_input()
+        # MAY RUN FOREVER!
+        while not self.__is_solved():
+            for c in self.cells:
+                self.__remove_solved(c)
 
     def __init_vars(self):
         """ Initiates some data structures needed by the class.
@@ -58,7 +62,8 @@ class sudoku:
             These could be hardcoded, but it is more compact to generate when needed."""
         self.rows   = ('A','B','C','D','E','F','G','H','I')
         self.cols   = ('1','2','3','4','5','6','7','8','9')
-        self.nums   = self.cols
+        self.numl   = self.cols
+        self.nums   = ''.join(self.cols)
         self.cells  = combine(self.rows,self.cols)
         self.cells.sort()
         self.groups = ([combine(self.rows,c) for c in self.cols] + # Columns
@@ -80,15 +85,39 @@ class sudoku:
             cellList = list(cellSet)
             cellList.sort()
             self.connections[cell] = tuple(cellList)
+        
+
+    def __remove_solved(self,cell):
+        """ For a cell, removes all values from its possible list that are already assigned else where """
+        g   = self.grid
+        con = self.connections[cell]
+        sol = self.solved
+        nl = self.numl
+
+        if not sol[cell]:
+            rl = [sol[c] for c in con if sol[c] in nl]
+            for l in rl:
+                g[cell] = g[cell].replace(l,'')
+
+        if len(g[cell]) == 1:
+            sol[cell] = g[cell]
 
     def __parse_input(self):
-        """ Reads in a gameboard as a string and replaces unknowns """
-        self.grid = dict((self.cells[i],self.input[i]) for i in xrange(len(self.cells)))
+        """ Reads in a gameboard as a string """
+        c  = self.cells
+        p  = self.input 
+        nl = self.numl
+        ns = self.nums
+        self.grid   = dict( (c[i],p[i]) if p[i] in nl else (c[i],ns) for i in range(len(c)) )
+        self.solved = dict( (c[i],p[i]) if p[i] in nl else (c[i],False) for i in range(len(c)) )
+        for cl in c:
+            self.__remove_solved(cl)
 
     def __str__(self):
-        """ Output the self.grid in human readable form """
+        """ Allows printing of self.grid in human readable form """
+        g = self.grid
         outStr = ""
-        width = max(len(self.grid[i]) for i in self.grid.keys())
+        width = max(len(g[i]) for i in g.keys())
         for row in self.rows:
             if row in ('D','G'):
                 outStr += (("-"*(4+3*width) + "+")*3)[:-1] + "\n"
@@ -97,11 +126,18 @@ class sudoku:
                     outStr += "| "
                 elif col == '1':
                     outStr += " "
-                cWidth = width-len(self.grid[row+col])+1
-                outStr += self.grid[row+col]+" "*cWidth
+                cWidth = width-len(g[row+col])+1
+                outStr += g[row+col]+" "*cWidth
                 if col == '9':
-                    outStr += ("\n" if row not in 'I' else '')
+                    outStr += ("\n" if row != 'I' else '')
         return outStr
+
+    def __is_solved(self):
+        """ Check to see if solved """
+        for cell in self.solved:
+            if not self.solved[cell]:
+                return False
+        return True
 
 # Solution
 p1 = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
@@ -111,4 +147,4 @@ if __name__ == '__main__':
     puzzle = sudoku(p1)
     print puzzle
 
-    print time.time()-s,'secs'
+    print 'Solved in',time.time()-s,'secs'
