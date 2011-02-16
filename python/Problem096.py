@@ -92,18 +92,13 @@ class sudoku:
 
     def __remove_solved(self,cell):
         """ For a cell, removes all values from its possible list that are already assigned else where """
-        g   = self.grid
-        con = self.connections['all'][cell]
-        sol = self.solved
-        nl = self.numl
-
-        if not sol[cell]:
-            rl = [sol[c] for c in con if sol[c] in nl]
+        if not self.solved[cell]:
+            rl = (self.solved[c] for c in self.connections['all'][cell] if (self.solved[c] in self.numl))
             for l in rl:
-                g[cell] = g[cell].replace(l,'')
+                self.grid[cell] = self.grid[cell].replace(l,'')
 
-        if len(g[cell]) == 1:
-            sol[cell] = g[cell]
+        if len(self.grid[cell]) == 1:
+            self.solved[cell] = self.grid[cell]
 
     def __update_constraints(self,cell):
         """ Check to see if cell is contrained to be one value """
@@ -125,23 +120,12 @@ class sudoku:
 
     def __parse_input(self):
         """ Reads in a gameboard as a string """
-        c  = self.cells
-        p  = self.input 
-        nl = self.numl
-        ns = self.nums
-        self.grid   = dict( (c[i],p[i]) if p[i] in nl else (c[i],ns) for i in range(len(c)) )
-        self.solved = dict( (c[i],p[i]) if p[i] in nl else (c[i],False) for i in range(len(c)) )
-        for cl in c:
-            self.__remove_solved(cl)
-            if len(self.grid[cl]) > 1:
-                self.__update_constraints(cl)
-
+        self.grid   = dict( (v,self.input[i]) if self.input[i] in self.numl else (v,self.nums) for i,v in enumerate(self.cells) )
+        self.solved = dict( (v,self.input[i]) if self.input[i] in self.numl else (v,False) for i,v in enumerate(self.cells) )
 
     def return_output(self):
         """ Returns the solution as a string in the same form as the input """
-        c = self.cells
-        s = self.solved
-        return ''.join( (s[cl] for cl in c) )
+        return ''.join( (self.solved[c] for c in self.cells) )
 
     def __str__(self):
         """ Allows printing of self.grid in human readable form """
@@ -173,7 +157,7 @@ p2  = ".8.9.3.4...61.7.....3...6..6...89..49.......37..64...2..9...3.....8.62...
 if __name__ == '__main__':
     s = time.time()
 
-    for i in range(1):
+    for i in range(100):
         s2 = sudoku(p2)
     
     print s2
