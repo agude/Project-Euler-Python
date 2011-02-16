@@ -16,6 +16,7 @@
 import time
 from optparse import OptionParser
 from itertools import chain
+from copy import deepcopy,copy
 """
 Su Doku (Japanese meaning number place) is the name given to a popular puzzle concept. Its origin is unclear, but credit must be attributed to Leonhard Euler who invented a similar, and much more difficult, puzzle idea called Latin Squares. The objective of Su Doku puzzles, however, is to replace the blanks (or zeros) in a 9 by 9 grid in such that each row, column, and 3 by 3 box contains each of the digits 1 to 9. Below is an example of a typical starting puzzle grid and its solution grid.
 
@@ -51,9 +52,13 @@ class sudoku:
         self.input = input
         self.__init_vars() 
         self.__parse_input()
-        # MAY RUN FOREVER!
+        self.__analytical_solve()
+
+    def __analytical_solve(self):
+        """ Solves the puzzle as far as possible without having to guess values """
         while not self.__is_solved():
-            for c in self.cells:
+            ucells = tuple( (c for c in self.solved.keys() if not self.solved[c]) )
+            for c in ucells:
                 self.__remove_solved(c)
                 if len(self.grid[c]) > 1:
                     self.__update_constraints(c)
@@ -77,17 +82,13 @@ class sudoku:
                        ]
         self.groups = self.gcol + self.grow + self.gblk
 
-        # Need to clean this up
+        # Enumerate the different types of connections
         self.connections = {'all':{},'row':{},'col':{},'block':{}}
         for cell in self.cells:
             self.connections['all'][cell]   = set(chain.from_iterable([g for g in self.groups if cell in g])) - set([cell])
             self.connections['row'][cell]   = set(chain.from_iterable([g for g in self.grow   if cell in g])) - set([cell])
             self.connections['col'][cell]   = set(chain.from_iterable([g for g in self.gcol   if cell in g])) - set([cell])
             self.connections['block'][cell] = set(chain.from_iterable([g for g in self.gblk   if cell in g])) - set([cell])
-            #elf.connections['all'][cell]   = set(sum([g for g in self.groups if cell in g],[])) - set([cell])
-            #elf.connections['row'][cell]   = set(sum([g for g in self.grow   if cell in g],[])) - set([cell])
-            #elf.connections['col'][cell]   = set(sum([g for g in self.gcol   if cell in g],[])) - set([cell])
-            #elf.connections['block'][cell] = set(sum([g for g in self.gblk   if cell in g],[])) - set([cell])
 
     def __remove_solved(self,cell):
         """ For a cell, removes all values from its possible list that are already assigned else where """
@@ -132,6 +133,9 @@ class sudoku:
         self.solved = dict( (c[i],p[i]) if p[i] in nl else (c[i],False) for i in range(len(c)) )
         for cl in c:
             self.__remove_solved(cl)
+            if len(self.grid[cl]) > 1:
+                self.__update_constraints(cl)
+
 
     def return_output(self):
         """ Returns the solution as a string in the same form as the input """
@@ -169,11 +173,9 @@ p2  = ".8.9.3.4...61.7.....3...6..6...89..49.......37..64...2..9...3.....8.62...
 if __name__ == '__main__':
     s = time.time()
 
-    #for i in range(100):
-    #    s2 = sudoku(p2)
-    s2 = sudoku(p2)
+    for i in range(1):
+        s2 = sudoku(p2)
     
     print s2
-    #print s1,'\n\n',s2
 
     print 'Solved in',time.time()-s,'secs'
