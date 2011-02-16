@@ -112,7 +112,6 @@ class sudoku:
                     break
                         
             if len(possible) == 1:
-                #print "Update cell",cell,"from",self.grid[cell],"to",possible
                 self.grid[cell] = possible
                 self.solved[cell] = possible
                 return 0
