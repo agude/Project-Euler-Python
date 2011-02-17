@@ -62,6 +62,7 @@ class sudoku:
                 self.__remove_solved(c)
                 if len(self.grid[c]) > 1:
                     self.__update_constraints(c)
+#            print self.__str__()
 
     def __init_vars(self):
         """ Initiates some data structures needed by the class.
@@ -152,13 +153,14 @@ class sudoku:
 # Solution
 p1  = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
 p2  = ".8.9.3.4...61.7.....3...6..6...89..49.......37..64...2..9...3.....8.62...1.7.5.9."
+p3  = "5...9..42...53.....1.2.....42....1.6..3...9..6.9....27.....2.9.....87...94..63..8"
 
 if __name__ == '__main__':
     s = time.time()
 
     for i in range(100):
-        s2 = sudoku(p2)
+        s1 = sudoku(p1)
     
-    print s2
+    print s1
 
     print 'Solved in',time.time()-s,'secs'
