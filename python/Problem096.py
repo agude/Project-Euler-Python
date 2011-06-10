@@ -36,7 +36,6 @@ parser.add_option("-f", "--file", action="store", type="string", dest="inFile", 
 parser.add_option("-s", "--string", action="store", type="string", dest="inStr", default=None, help="Reads in a string of the Sudoku puzzle")
 
 (options, args) = parser.parse_args()
-
 # Functions
 def combine(A,B):
     """ Returns a list of all posible combinations of a+b for a in A and b in B """
@@ -154,12 +153,14 @@ class sudoku:
 p1  = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
 p2  = ".8.9.3.4...61.7.....3...6..6...89..49.......37..64...2..9...3.....8.62...1.7.5.9."
 p3  = "5...9..42...53.....1.2.....42....1.6..3...9..6.9....27.....2.9.....87...94..63..8"
+p4  = "300010000000600490000458300080006210147285060026300070005134000031007000000060005"
+p5  = "630000004001040030700000001903504120400903006067208903100000002050090600300000059"
 
 if __name__ == '__main__':
     s = time.time()
 
-    for i in range(100):
-        s1 = sudoku(p1)
+    for i in range(1):
+        s1 = sudoku(p2)
     
     print s1
 
