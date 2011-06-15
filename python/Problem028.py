@@ -72,7 +72,7 @@ class spiral:
         self.b[s_i][s_j] = m
         if n < 3:
             return
-        i,j,m = self.__fillHori(s_i,s_j,Right=True)
+        i,j = self.__fillHori(s_i,s_j,Right=True)
 
     def __fillHori(self,i,j,Left=True,Right=False):
         """
@@ -90,6 +90,7 @@ class spiral:
         while True:
             m += 1
             j += dir
+            print "checking",i+dir,j,self.b[i+dir][j]
             if self.b[i+dir][j] != False:
                 try:
                     self.b[i][j] = m
@@ -104,9 +105,12 @@ class spiral:
             return -1,-1
         m += 1
 
+        print self.__str__()
         if Right:
+            print "Sending to Down with ",i,j
             return self.__fillVert(i,j,Down=True)
         if Left:
+            print "Sending to Up with ",i,j
             return self.__fillVert(i,j,Up=True)
 
     def __fillVert(self,i,j,Up=True,Down=False):
@@ -115,17 +119,16 @@ class spiral:
         """
         if Down:
             Up = False
-            dir = +1
+            dir = -1
         if Up:
             Down = False
-            dir = -1
+            dir = +1
         m = self.b[i][j]
         # Fill until no matching above
         while True:
             m += 1
-            i += dir
-            if self.b[i+dir][j] != False:
-                print "True"
+            i -= dir
+            if self.b[i][j+dir] != False:
                 try:
                     self.b[i][j] = m
                 except IndexError:
@@ -141,15 +144,17 @@ class spiral:
 
         print self.__str__()
         if Up:
+            print "Sending to Right with ",i,j
             return self.__fillHori(i,j,Right=True)
         if Down:
+            print "Sending to Left with ",i,j
             return self.__fillHori(i,j,Left=True)
 
     def __str__(self):
         """
         Format for printing.
         """
-        outStr = ''
+        outStr = '\n'
         width = len(str((self.size * self.size))) + 2
         for i in range(self.size):
             for j in range(self.size):
@@ -163,7 +168,7 @@ class spiral:
 # Solution
 s = time.time()
 
-sp = spiral(5)
+sp = spiral(3)
 print sp
 
 print 'in',time.time()-s,'secs'
