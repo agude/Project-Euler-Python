@@ -35,7 +35,7 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n number"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000, help="find the sum of the diagonals of a num x num spiral")
+parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1001, help="find the sum of the diagonals of a num x num spiral")
 
 (options, args) = parser.parse_args()
 
