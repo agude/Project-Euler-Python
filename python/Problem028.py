@@ -49,12 +49,9 @@ class spiral:
         Size is n x n block. n must be odd.
         """
         n = int(n)
+        # No center is defined if even.
         assert n%2!= 0
         self.size = n
-        # This program recurses a lot. Need to insure this works
-        if (n-1)*(n-1) >= 1000:
-            import sys
-            sys.setrecursionlimit((n-1)*(n-1))
         self.b = None
         self.__makeBoard()
         self.sum = None
@@ -74,26 +71,47 @@ class spiral:
 
         # Fills it
         m = 1
-        s_i = n/2
-        s_j = n/2
-        self.b[s_i][s_j] = m
+        i = n/2
+        j = n/2
+        self.b[i][j] = m
         if n < 3:
             return
-        i,j = self.__fillHori(s_i,s_j,Right=True)
+        while True:
+            # Fill Right
+            if i == -1 or j == -1:
+                break
+            else:
+                i,j = self.__fillHori(i,j,Right=True)
+            # Fill Down
+            if i == -1 or j == -1:
+                break
+            else:
+                i,j = self.__fillVert(i,j,Down=True)
+            # Fill Left
+            if i == -1 or j == -1:
+                break
+            else:
+                i,j = self.__fillHori(i,j,Left=True)
+            # Fill Up
+            if i == -1 or j == -1:
+                break
+            else:
+                i,j = self.__fillVert(i,j,Up=True)
 
     def __fillHori(self,i,j,Left=True,Right=False):
         """
-        Fills the board to the left as follows as long as values exist in the row above.
+        Fills the board to the left/(right) as long as values exist in the row above/(below).
         """
+        # You may only set one option
         if Right:
             Left = False
             dir = +1
         if Left:
             Right = False
             dir = -1
-
+        # Initial Value
         m = self.b[i][j]
-        # Fill until no matching above
+        # Fill until no matching above/below
         while True:
             m += 1
             j += dir
@@ -111,23 +129,22 @@ class spiral:
             return -1,-1
         m += 1
 
-        if Right:
-            return self.__fillVert(i,j,Down=True)
-        if Left:
-            return self.__fillVert(i,j,Up=True)
+        return i,j
 
     def __fillVert(self,i,j,Up=True,Down=False):
         """
-        Fills the board to the left as follows as long as values exist in the row above.
+        Fills the board to up/(down) as follows as long as values exist in the column to the right/(left).
         """
+        # You may only set one option
         if Down:
             Up = False
             dir = -1
         if Up:
             Down = False
             dir = +1
+        # Initial value
         m = self.b[i][j]
-        # Fill until no matching above
+        # Fill until no matching to the right/left
         while True:
             m += 1
             i -= dir
@@ -145,10 +162,7 @@ class spiral:
             return -1,-1
         m += 1
 
-        if Up:
-            return self.__fillHori(i,j,Right=True)
-        if Down:
-            return self.__fillHori(i,j,Left=True)
+        return i,j
 
     def __sumDiags(self):
         """
@@ -165,7 +179,7 @@ class spiral:
         Format for printing.
         """
         outStr = '\n'
-        width = len(str((self.size * self.size))) + 2
+        width = len(str((self.size * self.size))) + 1
         for i in range(self.size):
             for j in range(self.size):
                 outStr += str(self.b[i][j]).center(width,' ')
@@ -175,8 +189,5 @@ class spiral:
 
 # Solution
 s = time.time()
-
 sp = spiral(options.num)
-#print sp
-
 print sp.sum,'in',time.time()-s,'secs'
