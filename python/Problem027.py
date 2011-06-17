@@ -20,7 +20,6 @@
 import time
 from optparse import OptionParser
 from math import sqrt,floor
-from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
 Euler published the remarkable quadratic formula:
 
