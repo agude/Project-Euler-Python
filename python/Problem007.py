@@ -33,7 +33,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 (options, args) = parser.parse_args()
 
 # Functions
-#def isprime(num):
+#def isPrime(num):
 #    """ Is number prime? Returns bool. """
 #    if num <= 1 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
 #        return False
@@ -49,9 +49,9 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 #
 #        return False
 
-def isprime(num):
+def isPrime(num):
     """ Is number prime? Returns bool. """
-    if num < 1 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
+    if num < 2 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
         return False
     elif num < 4:
         return True # 2,3 are prime, others already excluded
@@ -82,7 +82,7 @@ mx = options.max
 i = 3 # Starting at first prime
 primes = [2]
 while len(primes) < mx:
-    if isprime(i):
+    if isPrime(i):
         primes.append(i)
     i += 2
 

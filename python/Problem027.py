@@ -45,9 +45,9 @@ parser.add_option("-b", "--bmax", action="store", type="int", dest="bmax", defau
 (options, args) = parser.parse_args()
 
 # Functions
-def isprime(num):
+def isPrime(num):
     """ Is number prime? Returns bool. """
-    if num < 1 or int(num) != float(num): # 0,1, negative numbers, and floats are n
+    if num < 2 or int(num) != float(num): # 0,1, negative numbers, and floats are n
         return False
     elif num < 4:
         return True # 2,3 are prime, others already excluded
@@ -80,7 +80,7 @@ for a in range(-options.amax,options.amax+1):
     for b in range(-options.bmax,options.bmax+1):
         cons = 0
         n = 0
-        while isprime( n*n + a*n + b ):
+        while isPrime( n*n + a*n + b ):
             cons += 1
             n += 1
         if cons > best:
