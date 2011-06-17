@@ -120,38 +120,17 @@ def isRightPrime(num):
     # Passed our tests
     return True
 
-def isTwoSidePrime(num):
-    """
-    Returns True if a number is prime when truncated from both sides.
-    """
-    if not isPrime(num):
-        return False
-    # Test Right Truncating
-    rnum = num
-    while True:
-        rnum = rightTruncate(rnum)
-        if not rnum: # 0
-            break
-        if not isPrime(rnum):
-            return False
-    # Test Left Truncating
-    lnum = num
-    while True:
-        lnum = leftTruncate(lnum)
-        if not lnum: # 0
-            break
-        if not isPrime(lnum):
-            return False
-
-    # Passed our tests
-    return True
-
 # Constants
 starts = ('2','3','5','7') # Only possible starts are 1 digit primes
 addons = ('1','3','7','9') # Anything even is divisible by 2, 5 is divisible by 5, 0 by both.
 
 # Solution
 s = time.time()
+
+# Right/Left Truncatable Primes (RTP/LTP) are a proper superset of Truncatable
+# Primes (TP).  The union of RTP and LTP is equal to TP.  The size of RTP is
+# much smaller than LTP, so we calculate that first, and then find the union
+# with LTP
 
 # Generate right truncatable primes
 rights = list(starts[:])
@@ -164,7 +143,7 @@ while rstack:
             rights.append(str(num))
             rstack.append(str(num))
 
-# Find the members of right that are also left right prime
-twoprimes = [int(i) for i in rights if ( isTwoSidePrime(int(i)) and i not in starts)]
+# Find the members of right that are also left prime
+twoprimes = [int(i) for i in rights if ( isLeftPrime(int(i)) and i not in starts)]
 
 print sum(twoprimes),'in',time.time()-s,'secs'
