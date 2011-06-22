@@ -19,7 +19,6 @@
 
 import time
 from optparse import OptionParser
-from decimal import getcontext,Decimal
 from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
 A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
@@ -46,39 +45,18 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 
 # Constants
 max = options.max
-getcontext().prec = 2*max # The cycles will be, at max, the size of the number - 1.
 
 # Functions
-def getCycleEvent(num,v=False):
+def returnCycleLength(num):
     """
-    Finds the length of a repeating cycle.
+    Uses the fact that 1/x has a cycle of length n if ((10**d)-1)%x == 0
     """
-    num = str(num)
-    # Test for decimal
-    try:
-        if not num[1] == '.':
-            return 0
-    except IndexError:
-        return 0
-    ## Matching points
-    num = num[2:] # Trimming off '0.'
-    end = len(num)-1
-    maxspacing = end/2
-    for spacing in xrange(1,maxspacing):
-        matches = 0
-        t = 0
-        h = t + spacing
-        while h <= end:
-            if t >= end or h >= end: # No cycles
-                break
-            tort = num[t]
-            hare = num[h]
-            if tort == hare:
-                matches += 1
-            t += 1
-            h += 1
-        if matches/float(end) > .45:
-            return spacing
+    num = long(num)
+    d = 1
+    while True:
+        if ((10**d)-1)%num == 0:
+            return d
+        d += 1
 
 def returnPrimes(num):
     """
@@ -101,16 +79,15 @@ s = time.time()
 ## multiples of n. Therefore only primes have a chance at a new cycle length.
 primes = returnPrimes(max)
 maxcyclen = 0
-d = 0
+number = 0
 ## We start at the end as the maximum cycle length is number - 1
 for i in primes[::-1]:
     # Cycle is larger then remaining numbers, so their cycles must be shorter
     if maxcyclen >= i:
         break 
-    num = Decimal(1)/Decimal(i)
-    cyclen = getCycleEvent(num,v=False)
+    cyclen = returnCycleLength(i)
     if cyclen > maxcyclen:
         maxcyclen = cyclen
-        d = i
+        number = i
 
-print d,'in',time.time()-s,'secs'
+print number,'in',time.time()-s,'secs'
