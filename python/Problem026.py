@@ -20,6 +20,7 @@
 import time
 from optparse import OptionParser
 from decimal import getcontext,Decimal
+from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
 A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
 
@@ -44,8 +45,8 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 (options, args) = parser.parse_args()
 
 # Constants
-getcontext().prec = 100
 max = options.max
+getcontext().prec = 2*max # The cycles will be, at max, the size of the number - 1.
 
 # Functions
 def getCycleEvent(num,v=False):
@@ -56,28 +57,60 @@ def getCycleEvent(num,v=False):
     # Test for decimal
     try:
         if not num[1] == '.':
-            if v: print "Not a Decimal"
             return 0
     except IndexError:
-        if v: print "Number too short pre truncation"
         return 0
-    # Find period using Floyd's cycle-finding algorithm
     ## Matching points
     num = num[2:] # Trimming off '0.'
     end = len(num)-1
-    t = 0
-    h = 1
-    if t >= end or h >= end: # No cycles
-        if v: print "Number too short post truncation"
-        return 0
-    tort = num[t]
-    hare = num[h]
+    maxspacing = end/2
+    for spacing in xrange(1,maxspacing):
+        matches = 0
+        t = 0
+        h = t + spacing
+        while h <= end:
+            if t >= end or h >= end: # No cycles
+                break
+            tort = num[t]
+            hare = num[h]
+            if tort == hare:
+                matches += 1
+            t += 1
+            h += 1
+        if matches/float(end) > .45:
+            return spacing
+
+def returnPrimes(num):
+    """
+    Return a list of primes up to num
+    """
+    isPrime = ones(num,dtype=bool) # An array of bools to test using their index
+    isPrime[0] = isPrime[1] = 0 # 0,1 not prime
+    for i in xrange(2,int(ceil(sqrt(num)))):
+        if isPrime[i]: # False if already proven not prime
+            # Starting at i*i : until the end of the array : incriment by i
+            # You can start at i*i because lower mutliples have already been removed
+            isPrime[i*i:num+1:i] = False
+
+    return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
 
 # Solution
 s = time.time()
 
-for i in range(1,max):
+## We look only at primes. If n has a cycle of length m, then so do all
+## multiples of n. Therefore only primes have a chance at a new cycle length.
+primes = returnPrimes(max)
+maxcyclen = 0
+d = 0
+## We start at the end as the maximum cycle length is number - 1
+for i in primes[::-1]:
+    # Cycle is larger then remaining numbers, so their cycles must be shorter
+    if maxcyclen >= i:
+        break 
     num = Decimal(1)/Decimal(i)
-    print num,
-    if getCycleEvent(num,v=True): print "\n"
-print 'in',time.time()-s,'secs'
+    cyclen = getCycleEvent(num,v=False)
+    if cyclen > maxcyclen:
+        maxcyclen = cyclen
+        d = i
+
+print d,'in',time.time()-s,'secs'
