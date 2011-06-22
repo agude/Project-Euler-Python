@@ -45,44 +45,30 @@ max = options.max
 ## First we find the maximum of each type
 s = time.time()
 max1 = max
-max2 = (max/2) + 1
-max5 = (max/5) + 1
-max10 = (max/10) + 1
-max20 = (max/20) + 1
-max50 = (max/50) + 1
-max100 = (max/100) + 1
-max200 = (max/200) + 1
 
 ## Then we loop over possible combinations
 combos = 0
 for ones in xrange(0,max1+1):
     amount = ones
-    if amount > max:
-        break
+    max2 = (max-amount)/2
     for twos in xrange(0,max2+1):
         amount = ones + 2*twos
-        if amount > max:
-            break
+        max5 = (max-amount)/5
         for fives in xrange(0,max5+1):
             amount = ones + 2*twos + 5*fives
-            if amount > max:
-                break
+            max10 = (max-amount)/10
             for tens in xrange(0,max10+1):
                 amount = ones + 2*twos + 5*fives + 10*tens
-                if amount > max:
-                    break
+                max20 = (max-amount)/20
                 for twents in xrange(0,max20+1):
                     amount = ones + 2*twos + 5*fives + 10*tens + 20*twents
-                    if amount > max:
-                        break
+                    max50 = (max-amount)/50
                     for fifts in xrange(0,max50+1):
                         amount = ones + 2*twos + 5*fives + 10*tens + 20*twents + 50*fifts
-                        if amount > max:
-                            break
+                        max100 = (max-amount)/100
                         for hunds in xrange(0,max100+1):
                             amount = ones + 2*twos + 5*fives + 10*tens + 20*twents + 50*fifts + 100*hunds
-                            if amount > max:
-                                break
+                            max200 = (max-amount)/200
                             for twohunds in xrange(0,max200+1):
                                 amount = ones + 2*twos + 5*fives + 10*tens + 20*twents + 50*fifts + 100*hunds + 200*twohunds
                                 if amount == max:
