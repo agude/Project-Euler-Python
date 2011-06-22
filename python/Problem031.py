@@ -19,7 +19,6 @@
 
 import time
 from optparse import OptionParser
-from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
 In England the currency is made up of pound, $, and pence, p, and there are eight coins in general circulation:
 
