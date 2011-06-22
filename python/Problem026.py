@@ -73,43 +73,6 @@ def getCycleEvent(num,v=False):
     tort = num[t]
     hare = num[h]
 
-    while tort != hare:
-        # End of array testing, dumby loop
-        for z in xrange(2):
-            h += 1 
-            if h == end:
-                if v: print "Hare ran off array while looking for matching points"
-                return 0
-        t += 1
-        tort = num[t]
-        hare = num[h]
-    ## Finding the start, which is where they intersect again
-    mu = 0
-    t = 0
-    tort = num[t]
-    hare = num[h]
-    while tort != hare:
-        h += 1 
-        if h == end:
-            if v: print "Hare ran off array while looking for start"
-            return 0
-        t += 1
-        tort = num[t]
-        hare = num[h]
-        mu += 1
-    ## Find the period
-    lam = 1
-    h = t # Restart hare at start of array with tort
-    hare = num[h]
-    while tort != hare:
-        h += 1 
-        if h == end:
-            if v: print "Hare ran off array while looking for period"
-            return 0
-        lam += 1
-
-    return lam
-
 # Solution
 s = time.time()
 
