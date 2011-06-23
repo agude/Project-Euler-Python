@@ -43,11 +43,22 @@ max = options.num
 
 # Solution
 s = time.time()
+
+## We note that are three cases:
+##  a even, b even -> c even -> p even
+##  a odd, b odd   -> c even -> p even
+##  a even, b odd  -> c odd  -> p even
+##
+## So we need only check even parameters
+## We further note that the triangle inequality holds:
+## a + b > c --> a + b + c > 2c --> p > 2c --> p/2 > c
+## c > a or b, hence p/2 > c,a,b
+
 finalp = 0
 finalcombo = 0
-for p in xrange(1,max+1):
+for p in xrange(12,max+1,2): # 12 is smallest perimeter
     combo = 0
-    for a in xrange(1,p):
+    for a in xrange(1,p/2):
         bmax = p - a
         for b in xrange(a,bmax):
             c = sqrt(a*a+b*b)
