@@ -80,20 +80,26 @@ primedict = returnPrimeDict(primes,max+1)
 lenprime = len(primes)
 print 'in',time.time()-s,'secs'
 
+## Find the largest length of primes we could possibly add to set upper bound
+tot = 0
+for i in xrange(lenprime):
+    tot += primes[i] 
+    if tot > max:
+        maxlen = i
+
 ## Try to make primes
-maxlen = 0
-maxprime = 0
-for length in range(2,lenprime+1)[::-1]:
-    if length < maxlen:
+bestlen = 0
+bestprime = 0
+for length in range(2,maxlen)[::-1]:
+    if length < bestlen:
         break
     for start in xrange(0,lenprime-length+1):
         testnum = sum(primes[start:start+length])
         if testnum > max:
             break
-        if primedict[testnum] and length > maxlen:
+        if primedict[testnum] and length > bestlen:
             print testnum,primes[start:start+length]
-            maxlen = length
-            maxprime = testnum
-
+            bestlen = length
+            bestprime = testnum
 
 print 'in',time.time()-s,'secs'
