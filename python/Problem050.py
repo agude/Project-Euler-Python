@@ -20,8 +20,7 @@
 import time
 from optparse import OptionParser
 from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
-"""
-The prime 41, can be written as the sum of six consecutive primes:
+"""The prime 41, can be written as the sum of six consecutive primes:
 
     41 = 2 + 3 + 5 + 7 + 11 + 13
 
@@ -30,6 +29,7 @@ This is the longest sum of consecutive primes that adds to a prime below one-hun
 The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953.
 
 Which prime, below one-million, can be written as the sum of the most consecutive primes?
+
 """
 # Optparse setup
 usage = "usage: %prog [OPTIONS]"
@@ -41,8 +41,8 @@ parser.add_option("-n", "--num", action="store", type="int", dest="num", default
 # Classes
 
 # Functions
-def returnPrimes(num):
-    """ Return a list of primes up to num """
+def return_primes(num):
+    """Return a list of primes up to num"""
     isPrime = ones(num,dtype=bool) # An array of bools to test using their index
     isPrime[0] = isPrime[1] = 0 # 0,1 not prime
     for i in xrange(2,int(ceil(sqrt(num)))):
@@ -54,9 +54,7 @@ def returnPrimes(num):
     return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
 
 def returnPrimeDict(primes,max):
-    """
-    Returns a dictionary of the form {0:False,1:False,2:True,....}
-    """
+    """ Return a dictionary of the form {0:False,1:False,2:True,....} """
     primedict = {}
     oldprime = -1
     for prime in primes:
@@ -75,7 +73,7 @@ max = options.num
 s = time.time()
 
 ## Get our primes
-primes = returnPrimes(max+1)
+primes = return_primes(max+1)
 primedict = returnPrimeDict(primes,max+1)
 lenprime = len(primes)
 print 'in',time.time()-s,'secs'
