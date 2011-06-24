@@ -75,33 +75,33 @@ MAX = options.num
 # Solution
 s = time.time()
 
-## Get our primes
+# Get our primes
 primes = return_primes(MAX+1)
 primedict = returnPrimeDict(primes,MAX+1)
 lenprime = len(primes)
 
-## Find the largest length of primes we could possibly add to set upper bound
+# Find the largest length of primes we could possibly add to set upper bound
 tot = 0
+maxlen = 0
 for i in xrange(lenprime):
     tot += primes[i] 
     if tot <= MAX:
-        maxlen = i
+        maxlen += 1
     else:
         break
 
-## Try to make primes
+# Try to make primes
 bestlen = 0
 bestprime = 0
-for length in range(2,maxlen)[::-1]:
-    if length < bestlen:
+for length in range(2,maxlen+1)[::-1]:
+    if length <= bestlen:
         break
     for start in xrange(0,lenprime-length+1):
         testnum = sum(primes[start:start+length])
         if testnum > MAX:
             break
         if primedict[testnum] and length > bestlen:
-            #print testnum,primes[start:start+length]
             bestlen = length
             bestprime = testnum
 
-print 'in',time.time()-s,'secs'
+print bestprime,'in',time.time()-s,'secs'
