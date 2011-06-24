@@ -24,11 +24,14 @@ from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 
     41 = 2 + 3 + 5 + 7 + 11 + 13
 
-This is the longest sum of consecutive primes that adds to a prime below one-hundred.
+This is the longest sum of consecutive primes that adds to a prime below
+one-hundred.
 
-The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953.
+The longest sum of consecutive primes below one-thousand that adds to a prime,
+contains 21 terms, and is equal to 953.
 
-Which prime, below one-million, can be written as the sum of the most consecutive primes?
+Which prime, below one-million, can be written as the sum of the most
+consecutive primes?
 
 """
 # Optparse setup
@@ -76,14 +79,15 @@ s = time.time()
 primes = return_primes(max+1)
 primedict = returnPrimeDict(primes,max+1)
 lenprime = len(primes)
-print 'in',time.time()-s,'secs'
 
 ## Find the largest length of primes we could possibly add to set upper bound
 tot = 0
 for i in xrange(lenprime):
     tot += primes[i] 
-    if tot > max:
+    if tot <= max:
         maxlen = i
+    else:
+        break
 
 ## Try to make primes
 bestlen = 0
