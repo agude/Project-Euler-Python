@@ -70,21 +70,21 @@ def returnPrimeDict(primes,max):
     return primedict
 
 # Constants
-max = options.num
+MAX = options.num
 
 # Solution
 s = time.time()
 
 ## Get our primes
-primes = return_primes(max+1)
-primedict = returnPrimeDict(primes,max+1)
+primes = return_primes(MAX+1)
+primedict = returnPrimeDict(primes,MAX+1)
 lenprime = len(primes)
 
 ## Find the largest length of primes we could possibly add to set upper bound
 tot = 0
 for i in xrange(lenprime):
     tot += primes[i] 
-    if tot <= max:
+    if tot <= MAX:
         maxlen = i
     else:
         break
@@ -97,10 +97,10 @@ for length in range(2,maxlen)[::-1]:
         break
     for start in xrange(0,lenprime-length+1):
         testnum = sum(primes[start:start+length])
-        if testnum > max:
+        if testnum > MAX:
             break
         if primedict[testnum] and length > bestlen:
-            print testnum,primes[start:start+length]
+            #print testnum,primes[start:start+length]
             bestlen = length
             bestprime = testnum
 
