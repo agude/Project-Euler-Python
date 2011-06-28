@@ -19,26 +19,28 @@
 
 import time
 from optparse import OptionParser
-"""
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+""" If we list all the natural numbers below 10 that are multiples of 3 or 5,
+we get 3, 5, 6 and 9. The sum of these multiples is 23.
 
 Find the sum of all the multiples of 3 or 5 below 1000.
 """
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n number"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="max", default=1000, help="finds sum of the multiples of 3 and 5 up to this number")
+parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000, help="finds sum of the multiples of 3 and 5 below NUM")
 
 (options, args) = parser.parse_args()
+
+# Constants
+MAX = options.num
 
 # Solution
 s = time.time()
 
-max = options.max
-intlist = []
+total = 0
 
-for i in range(0,max):
+for i in xrange(0,MAX):
     if (not i%3) or (not i%5):
-        intlist.append(i)       
+        total += i
 
-print sum(intlist),'in',time.time()-s,'secs'
+print total,'in',time.time()-s,'secs'
