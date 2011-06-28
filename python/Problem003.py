@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,29 +19,51 @@
 
 import time
 from optparse import OptionParser
-"""
-The prime factors of 13195 are 5, 7, 13 and 29.
+from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
+""" The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 317584931803?
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="number", default=317584931803, help="finds the largest prime factor of this number")
+parser.add_option("-n", "--NUM", action="store", type="int", dest="num", default=317584931803, help="find the largest prime factor of NUM")
 
 (options, args) = parser.parse_args()
+
+# Functions
+def get_primes(num):
+    """ Returns an array of primes below num.
+
+    Keyword arguments:
+        num  -- find primes below this number
+
+    """
+    isPrime = ones(num,dtype=bool) # An array of bools to test using their index
+    isPrime[0] = isPrime[1] = 0 # 0,1 not prime
+    for i in xrange(2,int(ceil(sqrt(num)))):
+        if isPrime[i]: # False if already proven not prime
+            # Starting at i*i : until the end of the array : incriment by i
+            # You can start at i*i because lower mutliples have already been removed
+            isPrime[i*i:num+1:i] = False
+
+    return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
+
+# Constants
+NUM = options.num
 
 # Solution
 s = time.time()
 
-number = options.number
-x = 2
-primes = []
+MAX = int(ceil(sqrt(NUM))) + 1
+primes = get_primes(MAX)
 
-while number > 1:
-    if number%x == 0:
-        primes.append(x)        
-        number = number/x
-    x += 1
+maxprime = 0
 
-print max(primes),'in',time.time()-s,'secs' 
+for prime in primes:
+    while not NUM%prime:
+        maxprime = prime
+        NUM = NUM/prime
+
+print maxprime,'in',time.time()-s,'secs' 
