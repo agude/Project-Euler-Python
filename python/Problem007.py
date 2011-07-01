@@ -20,6 +20,9 @@
 from time import time
 from optparse import OptionParser
 from itertools import count,islice
+from numpy import array, bool, nonzero, ones, int64
+from math import ceil, sqrt, log
+
 """ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see
 that the 6th prime is 13.
 
@@ -34,20 +37,22 @@ parser.add_option("-n", "--num", action="store", type="int", dest="NUM", default
 (options, args) = parser.parse_args()
 
 # Functions
-def prime_iter():
-    """ Return an iterator over primes. """
-    not_primes = {}
-    yield 2 # Only even prime, put in by hand
-    for i in islice(count(0),3,None,2):
-        j = not_primes.pop(i, None) # If i is alread in not_primes, remove and return it, otherwise return None
-        if j is None:
-            yield i
-            not_primes[i*i] = i
-        else:
-            k = i+j
-            while k in not_primes or not k%2: #If k will be knocked out by a smaller multiple, we ignore it and continue
-                k += j
-            not_primes[k] = j
+def get_primes(num):
+    """ Return an array of primes below num.
+
+    Keyword arguments:
+        num  -- find primes below this number
+
+    """
+    isPrime = ones(num,dtype=bool) # An array of bools to test using their index
+    isPrime[0] = isPrime[1] = 0 # 0,1 not prime
+    for i in xrange(2,int(ceil(sqrt(num)))):
+        if isPrime[i]: # False if already proven not prime
+            # Starting at i*i : until the end of the array : incriment by i
+            # You can start at i*i because lower mutliples have already been removed
+            isPrime[i*i:num+1:i] = False
+
+    return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
 
 # Constants
 NUM = options.NUM
@@ -55,7 +60,13 @@ NUM = options.NUM
 # Solution
 s = time()
 
-for prime in islice(prime_iter(),NUM-1,NUM,1):
-    pass
+# We need an upper bound on the prime to use the fast sieve
+if NUM >=6:
+    MAX = NUM * log(NUM) + NUM * log(log(NUM)) 
+    primes = get_primes(MAX)
+elif NUM > 0:
+    primes = [2, 3, 5, 7, 11, 13]
+else:
+    primes = [None, None]
 
-print prime,'in',time()-s,'secs'
+print primes[NUM-1],'in',time()-s,'secs'
