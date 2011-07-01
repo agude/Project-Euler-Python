@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,33 +19,36 @@
 
 from time import time
 from optparse import OptionParser
-"""
-The sum of the squares of the first ten natural numbers is,
+""" The sum of the squares of the first ten natural numbers is:
 1**2 + 2**2 + ... + 10**2 = 385
 
-The square of the sum of the first ten natural numbers is,
+The square of the sum of the first ten natural numbers is:
 (1 + 2 + ... + 10)**2 = 55**2 = 3025
 
-Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 - 385 = 2640.
+Hence the difference between the sum of the squares of the first ten natural
+numbers and the square of the sum is 3025 - 385 = 2640.
 
-Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+Find the difference between the sum of the squares of the first one hundred
+natural numbers and the square of the sum.
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="max", default=100, help="find (1**2 + 2**2 + ... + number**2) - (1 + 2 + ... + number)**2")
+parser.add_option("-n", "--max", action="store", type="int", dest="MAX", default=100, help="find (1**2 + 2**2 + ... + MAX**2) - (1 + 2 + ... + MAX)**2")
 
 (options, args) = parser.parse_args()
+
+# Constants
+MAX = options.MAX
 
 # Solution
 s = time()
 
-max = options.max
+x = 0
+x2 = 0
+for i in xrange(MAX+1): # We just brute force it
+    x += i
+    x2 += i*i
 
-x = []
-x2 = []
-for i in range(max+1): # We just brute force it
-    x.append(i)
-    x2.append(i**2)
-
-print (sum(x))**2 - sum(x2),'in',time()-s,'secs'
+print "(",x*x,"-",x2,") =",(x*x - x2),'in',time()-s,'secs'
