@@ -25,7 +25,7 @@ two terms. By starting with 1 and 2, the first 10 terms will be:
 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 
 Find the sum of all the even-valued terms in the sequence which do not exceed
-one million.
+four million.
 
 """
 # Optparse setup
@@ -44,7 +44,6 @@ s = time()
 i = 1
 j = 1
 tot = 0
-
 while i <= MAX:
     if not i%2:
         tot += i
