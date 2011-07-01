@@ -29,7 +29,7 @@ What is the smallest number that is evenly divisible by all of the numbers from
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="MAX", default=20, help="answer must be divisible by 1,2,3,...,MAX")
+parser.add_option("-n", "--max", action="store", type="int", dest="MAX", default=20, help="answer must be divisible by 1,2,3,...,MAX")
 
 (options, args) = parser.parse_args()
 
