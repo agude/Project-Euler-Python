@@ -28,7 +28,7 @@ What is the largest prime factor of the number 317584931803?
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--NUM", action="store", type="int", dest="num", default=317584931803, help="find the largest prime factor of NUM")
+parser.add_option("-n", "--num", action="store", type="int", dest="num", default=317584931803, help="find the largest prime factor of NUM")
 
 (options, args) = parser.parse_args()
 
