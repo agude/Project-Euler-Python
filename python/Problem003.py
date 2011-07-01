@@ -19,7 +19,7 @@
 
 import time
 from optparse import OptionParser
-from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
+from itertools import count,islice
 """ The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 317584931803?
@@ -33,22 +33,20 @@ parser.add_option("-n", "--NUM", action="store", type="int", dest="num", default
 (options, args) = parser.parse_args()
 
 # Functions
-def get_primes(num):
-    """ Returns an array of primes below num.
-
-    Keyword arguments:
-        num  -- find primes below this number
-
-    """
-    isPrime = ones(num,dtype=bool) # An array of bools to test using their index
-    isPrime[0] = isPrime[1] = 0 # 0,1 not prime
-    for i in xrange(2,int(ceil(sqrt(num)))):
-        if isPrime[i]: # False if already proven not prime
-            # Starting at i*i : until the end of the array : incriment by i
-            # You can start at i*i because lower mutliples have already been removed
-            isPrime[i*i:num+1:i] = False
-
-    return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
+def prime_iter():
+    """ Return an iterator over primes. """
+    not_primes = {}
+    yield 2 # Only even prime, put in by hand
+    for i in islice(count(0),3,None,2):
+        j = not_primes.pop(i, None) # If i is alread in not_primes, remove and return it, otherwise return None
+        if j is None:
+            yield i
+            not_primes[i*i] = i
+        else:
+            k = i+j
+            while k in not_primes or not k%2: #If k will be knocked out by a smaller multiple, we ignore it and continue
+                k += j
+            not_primes[k] = j
 
 # Constants
 NUM = options.num
@@ -56,14 +54,15 @@ NUM = options.num
 # Solution
 s = time.time()
 
-MAX = int(ceil(sqrt(NUM))) + 1
-primes = get_primes(MAX)
-
 maxprime = 0
+
+primes = prime_iter()
 
 for prime in primes:
     while not NUM%prime:
         maxprime = prime
         NUM = NUM/prime
+    if NUM == 1 or prime > NUM:
+        break
 
 print maxprime,'in',time.time()-s,'secs' 

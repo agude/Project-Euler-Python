@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """ If we list all the natural numbers below 10 that are multiples of 3 or 5,
 we get 3, 5, 6 and 9. The sum of these multiples is 23.
@@ -36,7 +36,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 MAX = options.num
 
 # Solution
-s = time.time()
+s = time()
 
 total = 0
 
@@ -44,4 +44,4 @@ for i in xrange(0,MAX):
     if (not i%3) or (not i%5):
         total += i
 
-print total,'in',time.time()-s,'secs'
+print total,'in',time()-s,'secs'
