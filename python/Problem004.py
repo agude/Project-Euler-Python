@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,40 +19,48 @@
 
 from time import time
 from optparse import OptionParser
-"""
-A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 x 99.
+""" A palindromic number reads the same both ways. The largest palindrome made
+from the product of two 2-digit numbers is 9009 = 91 x 99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -m number -n number"
+usage = "usage: %prog [OPTIONS] -m MAX -n MIN"
 parser = OptionParser(usage=usage)
-parser.add_option("-m", "--max", action="store", type="int", dest="max", default=999, help="the largest number to check")
-parser.add_option("-n", "--min", action="store", type="int", dest="min", default=100, help="the smallest number to check")
+parser.add_option("-m", "--max", action="store", type="int", dest="MAX", default=999, help="find a palindromic number by multipling numbers <= MAX")
+parser.add_option("-n", "--min", action="store", type="int", dest="MIN", default=100, help="find a palindromic number by multipling numbers >= MIN")
 
 (options, args) = parser.parse_args()
 
 # Functions
 def isPalindromic(num):
-    """ Returns True/False after checking if num is palindromic """
+    """ Returns True if num is palindromic, False otherwise.
+
+    Keyword arguments:
+    num  -- test if num is palindromic
+
+    """
     num = str(num)
 
-    for i in range(len(num) / 2):
+    for i in xrange(len(num) / 2):
         if int(num[i]) != int(num[-(i+1)]):
             return False
-    
+
     return True
+
+# Constants
+MAX = options.MAX
+MIN = options.MIN
 
 # Solution
 s = time()
 
-nums = []
-for a in range(options.max,options.min-1,-1):
-    for b in range(a,options.min-1,-1):
+num = 0
+for a in xrange(MAX,MIN-1,-1):
+    for b in xrange(a,MIN-1,-1):
         num = a*b
         if isPalindromic(num):
-            nums.append(num)
-            break
-            break
+            break # First one is largest
 
-print max(nums),'in',time()-s,'secs' 
+print num,'in',time()-s,'secs' 
