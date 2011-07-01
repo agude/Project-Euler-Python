@@ -31,7 +31,7 @@ four million.
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--max", action="store", type="int", dest="MAX", default=4000000, help="finds sum of the even numbers in the Fibonacci sequence below MAX")
+parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=4000000, help="finds sum of the even numbers in the Fibonacci sequence below MAX")
 
 (options, args) = parser.parse_args()
 

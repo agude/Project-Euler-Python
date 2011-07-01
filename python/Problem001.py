@@ -26,14 +26,14 @@ Find the sum of all the multiples of 3 or 5 below 1000.
 
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n NUM"
+usage = "usage: %prog [OPTIONS] -n max"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000, help="finds sum of the multiples of 3 and 5 below NUM")
+parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=1000, help="finds sum of the multiples of 3 and 5 below MAX")
 
 (options, args) = parser.parse_args()
 
 # Constants
-MAX = options.num
+MAX = options.MAX
 
 # Solution
 s = time()
