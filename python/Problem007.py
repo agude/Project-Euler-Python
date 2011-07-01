@@ -19,71 +19,43 @@
 
 from time import time
 from optparse import OptionParser
-from math import sqrt,floor
-"""
-By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+from itertools import count,islice
+""" By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see
+that the 6th prime is 13.
 
 What is the 10001st prime number?
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="max", default=10001, help="find number'th prime")
+parser.add_option("-n", "--num", action="store", type="int", dest="NUM", default=10001, help="find NUM'th prime")
 
 (options, args) = parser.parse_args()
 
 # Functions
-#def isPrime(num):
-#    """ Is number prime? Returns bool. """
-#    if num <= 1 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
-#        return False
-#    elif num == 2: # 2 is prime
-#        return True
-#    else:
-#        root = int(ceil(sqrt(num)))
-#        for i in range(2,root+1):
-#            if not num%i:
-#                break
-#        else:
-#            return True
-#
-#        return False
-
-def isPrime(num):
-    """ Is number prime? Returns bool. """
-    if num < 2 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
-        return False
-    elif num < 4:
-        return True # 2,3 are prime, others already excluded
-    elif not num%2:
-        return False
-    elif num < 9: # We have now excluded 4,6,8
-        return True
-    elif not num%3:
-        return False
-    else:
-        r = floor(sqrt(num))
-        f = 5
-        while f <= r:
-            if not num%f:
-                return False
-            elif not num%(f+2):
-                return False
-            else:
-                f += 6
+def prime_iter():
+    """ Return an iterator over primes. """
+    not_primes = {}
+    yield 2 # Only even prime, put in by hand
+    for i in islice(count(0),3,None,2):
+        j = not_primes.pop(i, None) # If i is alread in not_primes, remove and return it, otherwise return None
+        if j is None:
+            yield i
+            not_primes[i*i] = i
         else:
-            return True
+            k = i+j
+            while k in not_primes or not k%2: #If k will be knocked out by a smaller multiple, we ignore it and continue
+                k += j
+            not_primes[k] = j
+
+# Constants
+NUM = options.NUM
 
 # Solution
 s = time()
 
-mx = options.max
+for prime in islice(prime_iter(),NUM-1,NUM,1):
+    pass
 
-i = 3 # Starting at first prime
-primes = [2]
-while len(primes) < mx:
-    if isPrime(i):
-        primes.append(i)
-    i += 2
-
-print primes[-1],'in',time()-s,'secs'
+print prime,'in',time()-s,'secs'
