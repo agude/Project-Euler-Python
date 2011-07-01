@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 An irrational decimal fraction is created by concatenating the positive integers:
@@ -37,7 +37,7 @@ parser = OptionParser(usage=usage)
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 ## Generate string
 i=1
@@ -51,4 +51,4 @@ while True:
 ## Add up digits
 finalsum = int(num[1+1]) * int(num[10+1]) * int(num[100+1]) * int(num[1000+1]) * int(num[10000+1]) * int(num[100000+1]) * int(num[1000000+1])
 
-print finalsum,'in',time.time()-s,'secs' 
+print finalsum,'in',time()-s,'secs' 

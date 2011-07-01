@@ -16,7 +16,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
@@ -107,7 +107,7 @@ def returnEulerTotient(num,inputPrimes=[]):
         return product
 
 # Solution
-s = time.time()
+s = time()
 
 maxnum = 0
 maxi   = 0
@@ -144,4 +144,4 @@ else:
             products.append(runningProduct)
     maxi = max(products)
 
-print maxi,'in',time.time()-s,'secs'
+print maxi,'in',time()-s,'secs'

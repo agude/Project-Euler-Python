@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
@@ -32,7 +32,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 max = options.max
 
@@ -45,5 +45,5 @@ while True:
         else:
             continue
     else: # This statement only exicutes if the for loops runs through all i%j without breaking, i.e. we have our number
-        print i,'in',time.time()-s,'secs'
+        print i,'in',time()-s,'secs'
         exit()

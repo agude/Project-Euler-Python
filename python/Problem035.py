@@ -16,7 +16,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
@@ -66,7 +66,7 @@ def returnCirculars(num):
     return nums
 
 # Solution
-s = time.time()
+s = time()
 
 num = options.num
 inputPrimes = returnPrimes(num+1)
@@ -88,4 +88,4 @@ for prime in inputPrimes:
             outputPrimes = outputPrimes + circs
 
 outputPrimes.sort()
-print len(outputPrimes),'in',time.time()-s,'secs'
+print len(outputPrimes),'in',time()-s,'secs'

@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt,floor
 """
@@ -71,7 +71,7 @@ def isPrime(num):
             return True
 
 # Solution
-s = time.time()
+s = time()
 
 best = 0
 besta= 0
@@ -89,4 +89,4 @@ for a in range(-options.amax,options.amax+1):
             bestb = b
             best  = cons
 
-print 'Longest series goes to n =',best,'with a =',besta,'and b =',bestb,' and a*b = ',besta*bestb,'in',time.time()-s,'secs'
+print 'Longest series goes to n =',best,'with a =',besta,'and b =',bestb,' and a*b = ',besta*bestb,'in',time()-s,'secs'

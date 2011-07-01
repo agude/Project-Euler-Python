@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 #from optparse import OptionParser
 """
 The first known prime found to exceed one million digits was discovered in 1999, and is a Mersenne prime of the form 269725931; it contains exactly 2,098,960 digits. Subsequently other Mersenne primes, of the form 2p1, have been found which contain more digits.
@@ -34,6 +34,6 @@ Find the last ten digits of this prime number.
 #(options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
-print ((28433*(2**7830457))+1) % 10000000000,'in',time.time()-s,'secs'
+print ((28433*(2**7830457))+1) % 10000000000,'in',time()-s,'secs'

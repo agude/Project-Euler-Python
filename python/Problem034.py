@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import factorial
 """
@@ -52,11 +52,11 @@ def isDigitFactorial(num):
             return False
 
 # Solution
-s = time.time()
+s = time()
 
 nsum = 0
 for i in range(50000):
     if isDigitFactorial(i):
         nsum += i
 
-print nsum,'in',time.time()-s,'secs'
+print nsum,'in',time()-s,'secs'

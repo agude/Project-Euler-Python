@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt,floor
 """
@@ -65,7 +65,7 @@ def returnFactors(num):
     return factors
 
 # Solution
-s = time.time()
+s = time()
 
 i = 1
 while True:
@@ -74,6 +74,6 @@ while True:
     length = len(factors)
     #print str(tri)+':',length
     if length >= options.num:
-        print tri,'in',time.time()-s,'secs'
+        print tri,'in',time()-s,'secs'
         exit()
     i += 1

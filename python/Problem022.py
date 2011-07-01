@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 Using names.txt (right click and 'Save Link/Target As...'), a 46K text file containing over five-thousand first names, begin by sorting it into alphabetical order. Then working out the alphabetical value for each name, multiply this value by its alphabetical position in the list to obtain a name score.
@@ -52,7 +52,7 @@ def returnValue(name):
     return value
 
 # Solution
-s = time.time()
+s = time()
 
 nameList.sort()
 
@@ -63,4 +63,4 @@ for name in nameList:
     sum += place*returnValue(name)
     place += 1
 
-print sum,'in',time.time()-s,'secs'
+print sum,'in',time()-s,'secs'

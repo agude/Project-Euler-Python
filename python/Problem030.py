@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
@@ -66,7 +66,7 @@ def isSumOfDigits(num,powdict):
 power = options.pow
 
 # Solution
-s = time.time()
+s = time()
 
 # Create a mapping of digits to power to speed the process
 powdict = makePowerDict(power)
@@ -89,4 +89,4 @@ while run:
         #print "Stopping at",i
 
 #print nums
-print total,'in',time.time()-s,'secs' 
+print total,'in',time()-s,'secs' 

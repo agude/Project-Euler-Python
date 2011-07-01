@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 The decimal number, 585 = 10010010012 (binary), is palindromic in both bases.
@@ -49,7 +49,7 @@ max = options.num
 nums = []
 
 # Solution
-s = time.time()
+s = time()
 
 for i in xrange(1,max):
     if isPalindromic(i):
@@ -58,4 +58,4 @@ for i in xrange(1,max):
             nums.append(i)
 #            print i,b
 
-print sum(nums),'in',time.time()-s,'secs' 
+print sum(nums),'in',time()-s,'secs' 

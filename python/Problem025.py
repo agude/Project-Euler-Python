@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 The Fibonacci sequence is defined by the recurrence relation:
@@ -49,7 +49,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 num = options.num
 i=1
@@ -65,4 +65,4 @@ while True:
         j=k
         term += 1
 
-print term,'in',time.time()-s,'secs'
+print term,'in',time()-s,'secs'

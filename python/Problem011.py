@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt,ceil,floor
 from operator import mul
@@ -156,7 +156,7 @@ def prodN(list,n):
     return prods
 
 # Solution
-s = time.time()
+s = time()
 
 ## Makes out matrix and pulls out each row, column, and diagonal
 mat = matrix()
@@ -171,4 +171,4 @@ allprods = []
 for item in masterlist:
     allprods = allprods + prodN(item,options.num)
 
-print max(allprods),'in',time.time()-s,'secs'
+print max(allprods),'in',time()-s,'secs'

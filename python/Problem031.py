@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 In England the currency is made up of pound, $, and pence, p, and there are eight coins in general circulation:
@@ -42,7 +42,7 @@ max = options.max
 
 # Solution
 ## First we find the maximum of each type
-s = time.time()
+s = time()
 max1 = max
 
 ## Then we loop over possible combinations
@@ -74,4 +74,4 @@ for ones in xrange(0,max1+1):
                                     combos += 1
                                     #print "GOOD:",ones,twos,fives,tens,twents,fifts,hunds,twohunds
 
-print combos,'in',time.time()-s,'secs'
+print combos,'in',time()-s,'secs'

@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 The following iterative sequence is defined for the set of positive integers:
@@ -58,7 +58,7 @@ def returnChain(num):
     return chain
 
 # Solution
-s = time.time()
+s = time()
 
 mxlen = 0
 mxnum = 0
@@ -71,5 +71,5 @@ for num in range(0,options.num):
         mxnum = num
         mxchain = chain
 
-print mxnum,'in',time.time()-s,'secs'
+print mxnum,'in',time()-s,'secs'
 #print mxchain

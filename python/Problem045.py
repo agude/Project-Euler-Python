@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt
 """
@@ -59,7 +59,7 @@ def isPent(num):
         return False
 
 # Solution
-s = time.time()
+s = time()
 
 ## Compute Hexoginal numbers as there are fewer. We note that all hexoginal numbers are triangle numbers.
 n = 144 # Starting number is h143
@@ -70,4 +70,4 @@ while True:
     else:
         n += 1
 
-print num,n,'in',time.time()-s,'secs' 
+print num,n,'in',time()-s,'secs' 

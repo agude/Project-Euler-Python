@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
@@ -73,7 +73,7 @@ def returnPrimes(num):
     return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
 
 # Solution
-s = time.time()
+s = time()
 
 ## We look only at primes. If n has a cycle of length m, then so do all
 ## multiples of n. Therefore only primes have a chance at a new cycle length.
@@ -90,4 +90,4 @@ for i in primes[::-1]:
         maxcyclen = cyclen
         number = i
 
-print number,'in',time.time()-s,'secs'
+print number,'in',time()-s,'secs'

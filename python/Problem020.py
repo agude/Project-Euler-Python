@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 2**15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
@@ -32,7 +32,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 finalnum = 1
 for j in range(options.num):
@@ -49,4 +49,4 @@ for i in range(len(strnum)):
     else:
         tosum.append(int(term))
 
-print sum(tosum),'in',time.time()-s,'secs'
+print sum(tosum),'in',time()-s,'secs'

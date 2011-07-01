@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from numpy import array, ceil, sqrt, bool, nonzero, ones
 """
@@ -47,10 +47,10 @@ def returnPrimes(num):
 
 
 # Solution
-s = time.time()
+s = time()
 
 mx = options.max
 
 primes = returnPrimes(mx)
 
-print primes.sum(),'in',time.time()-s,'secs'
+print primes.sum(),'in',time()-s,'secs'

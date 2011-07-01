@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt,floor
 """
@@ -75,7 +75,7 @@ def isPrime(num):
             return True
 
 # Solution
-s = time.time()
+s = time()
 
 mx = options.max
 
@@ -86,4 +86,4 @@ while len(primes) < mx:
         primes.append(i)
     i += 2
 
-print primes[-1],'in',time.time()-s,'secs'
+print primes[-1],'in',time()-s,'secs'

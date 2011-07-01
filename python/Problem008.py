@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt,ceil
 """
@@ -54,7 +54,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 strnum = str(options.num)
 
@@ -63,4 +63,4 @@ for i in range(len(strnum)-5):
     product = int(strnum[i])*int(strnum[i+1])*int(strnum[i+2])*int(strnum[i+3])*int(strnum[i+4])
     numbers.append(product)
 
-print max(numbers),'in',time.time()-s,'secs'
+print max(numbers),'in',time()-s,'secs'

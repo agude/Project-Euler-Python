@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt,floor
 """
@@ -57,7 +57,7 @@ def returnProperFactorsSum(num):
     return sum(factors)
 
 # Solution
-s = time.time()
+s = time()
 
 num = options.num
 pairs = []
@@ -71,4 +71,4 @@ for i in range(num):
                 pairs.append(i)
                 pairs.append(checkNum)
 
-print sum(pairs),'in',time.time()-s,'secs'
+print sum(pairs),'in',time()-s,'secs'

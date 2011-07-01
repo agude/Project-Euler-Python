@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """The prime 41, can be written as the sum of six consecutive primes:
@@ -73,7 +73,7 @@ def returnPrimeDict(primes,max):
 MAX = options.num
 
 # Solution
-s = time.time()
+s = time()
 
 # Get our primes
 primes = return_primes(MAX+1)
@@ -104,4 +104,4 @@ for length in range(2,maxlen+1)[::-1]:
             bestlen = length
             bestprime = testnum
 
-print bestprime,'in',time.time()-s,'secs'
+print bestprime,'in',time()-s,'secs'

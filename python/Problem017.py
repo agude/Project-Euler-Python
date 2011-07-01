@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
@@ -79,10 +79,10 @@ huns={1:'one hundred',2:'two hundred',3:'three hundred',4:'four hundred',5:'five
 thos={1:'one thousand',0:''}
 
 # Solution
-s = time.time()
+s = time()
 
 count=0
 for num in xrange(1,options.num+1):
     count += getCharLen(num)
 
-print count,'in',time.time()-s,'secs'
+print count,'in',time()-s,'secs'

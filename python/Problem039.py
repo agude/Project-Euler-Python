@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt
 """
@@ -42,7 +42,7 @@ parser.add_option("-n", "--num", action="store", type="int", dest="num", default
 max = options.num
 
 # Solution
-s = time.time()
+s = time()
 
 ## We note that are three cases:
 ##  a even, b even -> c even -> p even
@@ -68,4 +68,4 @@ for p in xrange(12,max+1,2): # 12 is smallest perimeter
         finalp = p
         finalcombo = combo
 
-print finalp,'in',time.time()-s,'secs'
+print finalp,'in',time()-s,'secs'

@@ -13,7 +13,7 @@
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-import time
+from time import time
 from optparse import OptionParser
 from itertools import chain
 from copy import deepcopy,copy
@@ -157,11 +157,11 @@ p4  = "3000100000006004900004583000800062101472850600263000700051340000310070000
 p5  = "630000004001040030700000001903504120400903006067208903100000002050090600300000059"
 
 if __name__ == '__main__':
-    s = time.time()
+    s = time()
 
     for i in range(1):
         s1 = sudoku(p2)
     
     print s1
 
-    print 'Solved in',time.time()-s,'secs'
+    print 'Solved in',time()-s,'secs'

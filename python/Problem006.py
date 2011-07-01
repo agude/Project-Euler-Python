@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 The sum of the squares of the first ten natural numbers is,
@@ -38,7 +38,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="max", defa
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 max = options.max
 
@@ -48,4 +48,4 @@ for i in range(max+1): # We just brute force it
     x.append(i)
     x2.append(i**2)
 
-print (sum(x))**2 - sum(x2),'in',time.time()-s,'secs'
+print (sum(x))**2 - sum(x2),'in',time()-s,'secs'

@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 Starting with the number 1 and moving to the right in a clockwise direction a 5 by 5 spiral is formed as follows:
@@ -188,6 +188,6 @@ class spiral:
         return outStr
 
 # Solution
-s = time.time()
+s = time()
 sp = spiral(options.num)
-print sp.sum,'in',time.time()-s,'secs'
+print sp.sum,'in',time()-s,'secs'

@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from itertools import count,islice
 """ The prime factors of 13195 are 5, 7, 13 and 29.
@@ -52,7 +52,7 @@ def prime_iter():
 NUM = options.num
 
 # Solution
-s = time.time()
+s = time()
 
 maxprime = 0
 
@@ -65,4 +65,4 @@ for prime in primes:
     if NUM == 1 or prime > NUM:
         break
 
-print maxprime,'in',time.time()-s,'secs' 
+print maxprime,'in',time()-s,'secs' 

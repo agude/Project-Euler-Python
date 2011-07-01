@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 The nth term of the sequence of triangle numbers is given by, tn = (1/2)n(n+1); so the first ten triangle numbers are:
@@ -48,7 +48,7 @@ def returnValue(name):
     return value
 
 # Solution
-s = time.time()
+s = time()
 
 ## Find the number of words with certain scores:
 counts = {}
@@ -71,4 +71,4 @@ for n in xrange(max+1):
     except KeyError:
             continue
 
-print total,'in',time.time()-s,'secs' 
+print total,'in',time()-s,'secs' 

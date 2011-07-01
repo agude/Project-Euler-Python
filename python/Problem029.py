@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 Consider all integer combinations of ab for 2  a  5 and 2  b  5:
@@ -43,7 +43,7 @@ parser.add_option("-b", "--bmax", action="store", type="int", dest="bmax", defau
 # Functions
 
 # Solution
-s = time.time()
+s = time()
 
 amax = options.amax
 bmax = options.bmax
@@ -52,4 +52,4 @@ for a in range(2,amax+1):
     for b in range(2,bmax+1):
         nset.append(a**b)
 
-print len(set(nset)),'in',time.time()-s,'secs'
+print len(set(nset)),'in',time()-s,'secs'

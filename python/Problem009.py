@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt
 """
@@ -37,7 +37,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 sumtotal = options.num
 
@@ -47,5 +47,5 @@ for c in range(sumtotal-3,1,-1):
         if not a < b < c or a < 0:
             continue
         elif a**2 + b**2 == c**2:
-            print a*b*c,'in',time.time()-s,'secs'
+            print a*b*c,'in',time()-s,'secs'
             exit()

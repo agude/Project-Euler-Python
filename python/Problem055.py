@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
@@ -73,7 +73,7 @@ def isLychrel(num):
     return True
 
 # Solution
-s = time.time()
+s = time()
 
 max = options.max
 
@@ -83,4 +83,4 @@ for i in range(max):
         #print i
         lycherels.append(i)
 
-print len(lycherels),'in',time.time()-s,'secs' 
+print len(lycherels),'in',time()-s,'secs' 

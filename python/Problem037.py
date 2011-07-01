@@ -16,7 +16,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import floor,sqrt
 """
@@ -125,7 +125,7 @@ starts = ('2','3','5','7') # Only possible starts are 1 digit primes
 addons = ('1','3','7','9') # Anything even is divisible by 2, 5 is divisible by 5, 0 by both.
 
 # Solution
-s = time.time()
+s = time()
 
 # Right/Left Truncatable Primes (RTP/LTP) are a proper superset of Truncatable
 # Primes (TP).  The union of RTP and LTP is equal to TP.  The size of RTP is
@@ -146,4 +146,4 @@ while rstack:
 # Find the members of right that are also left prime
 twoprimes = [int(i) for i in rights if ( isLeftPrime(int(i)) and i not in starts)]
 
-print sum(twoprimes),'in',time.time()-s,'secs'
+print sum(twoprimes),'in',time()-s,'secs'

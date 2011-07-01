@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 x 99.
@@ -44,7 +44,7 @@ def isPalindromic(num):
     return True
 
 # Solution
-s = time.time()
+s = time()
 
 nums = []
 for a in range(options.max,options.min-1,-1):
@@ -55,4 +55,4 @@ for a in range(options.max,options.min-1,-1):
             break
             break
 
-print max(nums),'in',time.time()-s,'secs' 
+print max(nums),'in',time()-s,'secs' 

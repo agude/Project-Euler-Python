@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from fractions import Fraction
 """
@@ -39,7 +39,7 @@ parser = OptionParser(usage=usage)
 max = 100
 
 # Solution
-s = time.time()
+s = time()
 tnum = 1
 tden = 1
 for i in xrange(1,10):
@@ -51,4 +51,4 @@ for i in xrange(1,10):
                 tnum *= num
                 tden *= den
 
-print Fraction(tnum,tden),'in',time.time()-s,'secs'
+print Fraction(tnum,tden),'in',time()-s,'secs'

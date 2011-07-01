@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 """
 Nim is a game played with heaps of stones, where two players take it in turn to remove any number of stones from any heap until no stones remain.
@@ -57,7 +57,7 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 (options, args) = parser.parse_args()
 
 # Solution
-s = time.time()
+s = time()
 
 a=1
 b=2
@@ -69,4 +69,4 @@ while a <= num:
     b+=2
     c+=3
 
-print total,'in',time.time()-s,'secs'
+print total,'in',time()-s,'secs'

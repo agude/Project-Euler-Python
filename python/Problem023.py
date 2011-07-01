@@ -17,7 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-import time
+from time import time
 from optparse import OptionParser
 from math import sqrt,floor
 """
@@ -60,7 +60,7 @@ def returnProperFactorsSum(num):
 max = 28123 # All numbers > 28123 are the sum of two abundant
 
 # Solution
-s = time.time()
+s = time()
 
 ## Generate abundant numbers
 abundant = []
@@ -83,4 +83,4 @@ for i in xrange(1,max+1):
         if check[i-j]: # Sum of two abundant, reject
             break
 
-print sum(notsum),'in',time.time()-s,'secs' 
+print sum(notsum),'in',time()-s,'secs' 
