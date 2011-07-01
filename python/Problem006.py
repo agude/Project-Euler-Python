@@ -35,7 +35,7 @@ natural numbers and the square of the sum.
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--max", action="store", type="int", dest="MAX", default=100, help="find (1**2 + 2**2 + ... + MAX**2) - (1 + 2 + ... + MAX)**2")
+parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=100, help="find (1**2 + 2**2 + ... + MAX**2) - (1 + 2 + ... + MAX)**2")
 
 (options, args) = parser.parse_args()
 
