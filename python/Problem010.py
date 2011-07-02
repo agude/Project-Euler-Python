@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,38 +19,45 @@
 
 from time import time
 from optparse import OptionParser
-from numpy import array, ceil, sqrt, bool, nonzero, ones
-"""
-The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+from numpy import array, bool, nonzero, ones, int64
+from math import ceil, sqrt
+
+""" The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 
 Find the sum of all the primes below two million.
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="max", default=2000000, help="sum all primes below this number")
+parser.add_option("-n", "-m", "--NUM", action="store", type="int", dest="MAX", default=2000000, help="sum all primes below MAX")
 
 (options, args) = parser.parse_args()
 
 # Functions
-def returnPrimes(num):
-    """ Return a list of primes up to num using a Sieve of Eratosthenes """
-    isPrime = ones(num+1,dtype=bool) # An array of bools to test using their index
+def get_primes(num):
+    """ Return an array of primes below num.
+
+    Keyword arguments:
+        num  -- find primes below this number
+
+    """
+    isPrime = ones(num,dtype=bool) # An array of bools to test using their index
     isPrime[0] = isPrime[1] = 0 # 0,1 not prime
     for i in xrange(2,int(ceil(sqrt(num)))):
         if isPrime[i]: # False if already proven not prime
-            # Starting at 2*i : until the end of the array : incriment by i
+            # Starting at i*i : until the end of the array : incriment by i
             # You can start at i*i because lower mutliples have already been removed
             isPrime[i*i:num+1:i] = False
 
-    return nonzero(isPrime)[0] # Return the index values of True, that is primes
+    return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
 
+# Constants
+MAX = options.MAX
 
 # Solution
 s = time()
 
-mx = options.max
-
-primes = returnPrimes(mx)
+primes = get_primes(MAX)
 
 print primes.sum(),'in',time()-s,'secs'
