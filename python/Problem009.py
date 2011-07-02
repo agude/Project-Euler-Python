@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,33 +19,39 @@
 
 from time import time
 from optparse import OptionParser
-from math import sqrt
-"""
-A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
+
+""" A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 a**2 + b**2 = c**2
 
 For example, 3**2 + 4**2 = 9 + 16 = 25 = 5**2.
 
 There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc.
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000, help="a+b+c = num")
+parser.add_option("-n", "--num", action="store", type="int", dest="NUM", default=1000, help="find a,b,c such that a**2+b**2 == c**2 and a+b+c == NUM")
 
 (options, args) = parser.parse_args()
+
+# Constants
+NUM = options.NUM
 
 # Solution
 s = time()
 
-sumtotal = options.num
-
-for c in range(sumtotal-3,1,-1):
-    for b in range(sumtotal-c-1,1,-1):
-        a = sumtotal - b - c
+run = True
+for c in range(NUM-3,1,-1):
+    for b in range(NUM-c-1,1,-1):
+        a = NUM - b - c
         if not a < b < c or a < 0:
             continue
         elif a**2 + b**2 == c**2:
-            print a*b*c,'in',time()-s,'secs'
-            exit()
+            run = False
+            break
+    if not run:
+        break
+
+print a*b*c,'in',time()-s,'secs'
