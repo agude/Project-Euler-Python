@@ -29,6 +29,7 @@ that the 6th prime is 13.
 What is the 10001st prime number?
 
 """
+
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
@@ -67,6 +68,9 @@ if NUM >=6:
 elif NUM > 0:
     primes = [2, 3, 5, 7, 11, 13]
 else:
-    primes = [None, None]
+    primes = None
 
-print primes[NUM-1],'in',time()-s,'secs'
+if primes is not None:
+    print primes[NUM-1],'in',time()-s,'secs'
+else:
+    print primes,'in',time()-s,'secs'
