@@ -19,7 +19,6 @@
 
 from time import time
 from optparse import OptionParser
-from itertools import count,islice
 from numpy import array, bool, nonzero, ones, int64
 from math import ceil, sqrt, log
 
