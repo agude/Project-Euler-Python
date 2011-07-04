@@ -38,7 +38,7 @@ def getCharLen(num):
     """
     Returns the number of English letters used to write out the number
     """
-    snum = str(num)
+    snum = repr(num)
     try:
         one = int(snum[-1])
     except IndexError:
