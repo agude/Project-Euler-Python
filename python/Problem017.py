@@ -34,9 +34,9 @@ parser.add_option("-n", "--number", action="store", type="int", dest="num", defa
 (options, args) = parser.parse_args()
 
 # Functions
-def getCharLen(num):
-    """
-    Returns the number of English letters used to write out the number
+def get_char_len(num):
+    """ Returns the number of English letters used to write out the number
+
     """
     snum = repr(num)
     try:
@@ -83,6 +83,6 @@ s = time()
 
 count=0
 for num in xrange(1,options.num+1):
-    count += getCharLen(num)
+    count += get_char_len(num)
 
 print count,'in',time()-s,'secs'
