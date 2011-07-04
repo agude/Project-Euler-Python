@@ -30,7 +30,7 @@ from optparse import OptionParser
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=1000, help="find the sum of the multiples of 3 or 5 below MAX")
+parser.add_option("-n", action="store", type="int", dest="MAX", default=1000, help="find the sum of the multiples of 3 or 5 below MAX")
 
 (options, args) = parser.parse_args()
 
