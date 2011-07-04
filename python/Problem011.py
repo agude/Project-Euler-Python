@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,9 @@ from time import time
 from optparse import OptionParser
 from math import sqrt,ceil,floor
 from operator import mul
-"""
-In the 20*20 grid below, four numbers along a diagonal line have been marked in red.
+
+""" In the 20*20 grid below, four numbers along a diagonal line have been
+marked in red.
 
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
@@ -50,7 +51,7 @@ The product of these numbers is 26 * 63 * 78 * 14 = 1788696.
 What is the greatest product of four numbers in any direction (up, down, left, right, or diagonally) in the 20*20 grid?
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
 parser.add_option("-n", "--number", action="store", type="int", dest="num", default=4, help="sum NUM consecutive numbers")
 
