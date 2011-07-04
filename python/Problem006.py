@@ -17,8 +17,6 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
 """ The sum of the squares of the first ten natural numbers is:
 1**2 + 2**2 + ... + 10**2 = 385
 
@@ -32,10 +30,14 @@ Find the difference between the sum of the squares of the first one hundred
 natural numbers and the square of the sum.
 
 """
+
+from time import time
+from optparse import OptionParser
+
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=100, help="find (1**2 + 2**2 + ... + MAX**2) - (1 + 2 + ... + MAX)**2")
+parser.add_option("-n", action="store", type="int", dest="MAX", default=100, help="find (1**2 + 2**2 + ... + MAX**2) - (1 + 2 + ... + MAX)**2")
 
 (options, args) = parser.parse_args()
 
@@ -51,4 +53,4 @@ for i in xrange(MAX+1): # We just brute force it
     x += i
     x2 += i*i
 
-print "(",x*x,"-",x2,") =",(x*x - x2),'in',time()-s,'secs'
+print (x*x - x2),'in',time()-s,'secs'
