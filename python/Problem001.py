@@ -17,18 +17,20 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
 """ If we list all the natural numbers below 10 that are multiples of 3 or 5,
 we get 3, 5, 6 and 9. The sum of these multiples is 23.
 
 Find the sum of all the multiples of 3 or 5 below 1000.
 
 """
+
+from time import time
+from optparse import OptionParser
+
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n max"
+usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=1000, help="finds sum of the multiples of 3 and 5 below MAX")
+parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=1000, help="find the sum of the multiples of 3 or 5 below MAX")
 
 (options, args) = parser.parse_args()
 
