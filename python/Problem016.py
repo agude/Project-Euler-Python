@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,29 +19,31 @@
 
 from time import time
 from optparse import OptionParser
-"""
-2**15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+""" 2**15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
 
 What is the sum of the digits of the number 2**1000?
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=2**1000, help="find the sum of the digits of NUM")
+parser.add_option("-n", "--num", action="store", type="int", dest="NUM", default=2<<999, help="find the sum of the digits of NUM")
 
 (options, args) = parser.parse_args()
+
+# Constants
+NUM = options.NUM
 
 # Solution
 s = time()
 
-strnum = repr(options.num)
-
-tosum = []
-for i in range(len(strnum)):
-    term = strnum[i]
+strnum = repr(NUM)
+tot = 0
+for term in strnum:
     if term == 'L':
         continue
     else:
-        tosum.append(int(term))
+        tot += int(term)
 
-print sum(tosum),'in',time()-s,'secs'
+print tot,'in',time()-s,'secs'
