@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,11 +17,6 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-from numpy import array, bool, nonzero, ones, int64
-from math import ceil, sqrt, log
-
 """ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see
 that the 6th prime is 13.
 
@@ -29,10 +24,15 @@ What is the 10001st prime number?
 
 """
 
+from time import time
+from optparse import OptionParser
+from numpy import array, bool, nonzero, ones, int64
+from math import ceil, sqrt, log
+
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--num", action="store", type="int", dest="NUM", default=10001, help="find NUM'th prime")
+parser.add_option("-n", action="store", type="int", dest="NUM", default=10001, help="find the NUM'th prime")
 
 (options, args) = parser.parse_args()
 
@@ -45,7 +45,7 @@ def get_primes(num):
 
     """
     isPrime = ones(num,dtype=bool) # An array of bools to test using their index
-    isPrime[0] = isPrime[1] = 0 # 0,1 not prime
+    isPrime[0] = isPrime[1] = False # 0,1 not prime
     for i in xrange(2,int(ceil(sqrt(num)))):
         if isPrime[i]: # False if already proven not prime
             # Starting at i*i : until the end of the array : incriment by i
@@ -62,7 +62,8 @@ s = time()
 
 # We need an upper bound on the prime to use the fast sieve
 if NUM >=6:
-    MAX = NUM * log(NUM) + NUM * log(log(NUM)) 
+    # P_n <= n * log(n) + n log(log(n))
+    MAX = NUM * log(NUM) + NUM * log(log(NUM))
     primes = get_primes(MAX)
 elif NUM > 0:
     primes = [2, 3, 5, 7, 11, 13]
