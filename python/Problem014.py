@@ -46,21 +46,33 @@ parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", d
 (options, args) = parser.parse_args()
 
 # functions
-def returnChain(num):
+def get_chain_length(num,oldchains):
     """ Returns the chain from:
         n --> n/2 (n is even)
         n --> 3n + 1 (n is odd)
 
     """
-    chain = [num]
+    try:
+        lens = oldchains[num]
+    except KeyError:
+        lens = 1
+    else:
+        return lens
+
     while num > 1:
         if num%2: # Odd
             num = num*3 + 1
         else:     # Even
             num = num/2
-        chain.append(num)
+        
+        try:
+            lens += oldchains[num]
+        except KeyError:
+            lens += 1
+        else:
+            return lens
 
-    return chain
+    return lens
 
 # Constants
 MAX = options.MAX
@@ -70,13 +82,12 @@ s = time()
 
 mxlen = 0
 mxnum = 0
-mxchain = []
+oldchains = {}
 for num in range(0,MAX):
-    chain = returnChain(num)
-    lens = len(chain)
+    lens = get_chain_length(num,oldchains)
+    oldchains[num] = lens
     if lens > mxlen:
         mxlen = lens
         mxnum = num
-        mxchain = chain
 
 print mxnum,'in',time()-s,'secs'
