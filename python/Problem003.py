@@ -17,24 +17,26 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-from itertools import count,islice
 """ The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 317584931803?
 
 """
+
+from time import time
+from optparse import OptionParser
+from itertools import count,islice
+
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--num", action="store", type="int", dest="num", default=317584931803, help="find the largest prime factor of NUM")
+parser.add_option("-n", action="store", type="int", dest="num", default=317584931803, help="find the largest prime factor of NUM")
 
 (options, args) = parser.parse_args()
 
 # Functions
 def prime_iter():
-    """ Return an iterator over primes. """
+    """ Return an iterator over prime numbers. """
     not_primes = {}
     yield 2 # Only even prime, put in by hand
     for i in islice(count(0),3,None,2):
@@ -55,10 +57,7 @@ NUM = options.num
 s = time()
 
 maxprime = 0
-
-primes = prime_iter()
-
-for prime in primes:
+for prime in prime_iter():
     while not NUM%prime:
         maxprime = prime
         NUM = NUM/prime
