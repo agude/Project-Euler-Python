@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@
 
 from time import time
 from optparse import OptionParser
-"""
-The following iterative sequence is defined for the set of positive integers:
+
+""" The following iterative sequence is defined for the set of positive
+integers:
 
 n --> n/2 (n is even)
 n --> 3n + 1 (n is odd)
@@ -28,24 +29,28 @@ n --> 3n + 1 (n is odd)
 Using the rule above and starting with 13, we generate the following sequence:
 13 --> 40 --> 20 --> 10 --> 5 --> 16 --> 8 --> 4 --> 2 --> 1
 
-It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+It can be seen that this sequence (starting at 13 and finishing at 1) contains
+10 terms. Although it has not been proved yet (Collatz Problem), it is thought
+that all starting numbers finish at 1.
 
 Which starting number, under one million, produces the longest chain?
 
 NOTE: Once the chain starts the terms are allowed to go above one million.
+
 """
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000000, help="find the number that produces the longest chain searching from 0 to NUM")
+parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=1000000, help="find the number that produces the longest chain searching from 0 to MAX")
 
 (options, args) = parser.parse_args()
 
 # functions
 def returnChain(num):
-    """ Returns the chain:
+    """ Returns the chain from:
         n --> n/2 (n is even)
         n --> 3n + 1 (n is odd)
+
     """
     chain = [num]
     while num > 1:
@@ -57,13 +62,16 @@ def returnChain(num):
 
     return chain
 
+# Constants
+MAX = options.MAX
+
 # Solution
 s = time()
 
 mxlen = 0
 mxnum = 0
-mxchain = 0
-for num in range(0,options.num):
+mxchain = []
+for num in range(0,MAX):
     chain = returnChain(num)
     lens = len(chain)
     if lens > mxlen:
@@ -72,4 +80,3 @@ for num in range(0,options.num):
         mxchain = chain
 
 print mxnum,'in',time()-s,'secs'
-#print mxchain
