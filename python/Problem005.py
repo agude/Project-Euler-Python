@@ -17,8 +17,6 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
 """ 2520 is the smallest number that can be divided by each of the numbers from
 1 to 10 without any remainder.
 
@@ -26,10 +24,14 @@ What is the smallest number that is evenly divisible by all of the numbers from
 1 to 20?
 
 """
+
+from time import time
+from optparse import OptionParser
+
 # Optparse setup
 usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=20, help="answer must be divisible by 1,2,3,...,MAX")
+parser.add_option("-n", action="store", type="int", dest="MAX", default=20, help="answer must be divisible by 1,2,3,...,MAX")
 
 (options, args) = parser.parse_args()
 
@@ -39,7 +41,7 @@ MAX = options.MAX
 # Solution
 s = time()
 
-# Find number co prime in the set
+# Find the set of coprime numbers in our set
 divs = [True] * MAX
 for i in range(len(divs)):
     numi = i+1
