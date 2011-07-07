@@ -17,46 +17,45 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-from math import sqrt
-"""
-If p is the perimeter of a right angle triangle with integral length sides, {a,b,c}, there are exactly three solutions for p = 120.
+""" If p is the perimeter of a right angle triangle with integral length sides,
+{a,b,c}, there are exactly three solutions for p = 120.
 
 {20,48,52}, {24,45,51}, {30,40,50}
 
 For which value of p  1000, is the number of solutions maximised?
+
 """
+
+from time import time
+from optparse import OptionParser
+from math import sqrt
+
 # Optparse setup
-usage = "usage: %prog [OPTIONS]"
+usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--num", action="store", type="int", dest="num", default=1000, help="find the perimeter that maximizes number of right triangles up to NUM")
+parser.add_option("-n", action="store", type="int", dest="MAX", default=1000, help="find the perimeter that maximizes number of right triangles up to MAX")
 
 (options, args) = parser.parse_args()
 
-# Classes
-
-# Functions
-
 # Constants
-max = options.num
+MAX = options.MAX
 
 # Solution
 s = time()
 
-## We note that are three cases:
-##  a even, b even -> c even -> p even
-##  a odd, b odd   -> c even -> p even
-##  a even, b odd  -> c odd  -> p even
-##
-## So we need only check even parameters
-## We further note that the triangle inequality holds:
-## a + b > c --> a + b + c > 2c --> p > 2c --> p/2 > c
-## c > a or b, hence p/2 > c,a,b
+# We note that are three cases:
+#  a even, b even -> c even -> p even
+#  a odd,  b odd  -> c even -> p even
+#  a even, b odd  -> c odd  -> p even
+#
+# So we need only check even parameters
+# We further note that the triangle inequality holds:
+# a + b > c --> a + b + c > 2c --> p > 2c --> p/2 > c
+# c > a or b, hence p / 2 > c,a,b
 
 finalp = 0
 finalcombo = 0
-for p in xrange(12,max+1,2): # 12 is smallest perimeter
+for p in xrange(12,MAX+1,2): # 12 is smallest perimeter
     combo = 0
     for a in xrange(1,p/2):
         bmax = p - a
