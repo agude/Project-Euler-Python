@@ -17,9 +17,6 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """The prime 41, can be written as the sum of six consecutive primes:
 
     41 = 2 + 3 + 5 + 7 + 11 + 13
@@ -34,14 +31,17 @@ Which prime, below one-million, can be written as the sum of the most
 consecutive primes?
 
 """
+
+from time import time
+from optparse import OptionParser
+from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
+
 # Optparse setup
-usage = "usage: %prog [OPTIONS]"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--num", action="store", type="int", dest="num", default=1000000, help="")
+parser.add_option("-n", action="store", type="int", dest="NUM", default=1000000, help="find the prime below NUM that can be writen as the sum of the most consecutive primes")
 
 (options, args) = parser.parse_args()
-
-# Classes
 
 # Functions
 def return_primes(num):
@@ -70,7 +70,7 @@ def returnPrimeDict(primes,max):
     return primedict
 
 # Constants
-MAX = options.num
+MAX = options.NUM
 
 # Solution
 s = time()

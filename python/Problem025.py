@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,10 +17,7 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-"""
-The Fibonacci sequence is defined by the recurrence relation:
+""" The Fibonacci sequence is defined by the recurrence relation:
 
 F_n = F_n-1 + F_n-2, where F_1 = 1 and F_2 = 1.
 Hence the first 12 terms will be:
@@ -37,32 +34,39 @@ F_9 = 34
 F_10 = 55
 F_11 = 89
 F_12 = 144
+
 The 12th term, F_12, is the first term to contain three digits.
 
 What is the first term in the Fibonacci sequence to contain 1000 digits?
+
 """
+
+from time import time
+from optparse import OptionParser
+
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000, help="find the first Fibonacci number with NUM digits")
+parser.add_option("-n", action="store", type="int", dest="NUM", default=1000, help="find the first Fibonacci number with NUM digits")
 
 (options, args) = parser.parse_args()
+
+# Constants
+NUM = options.NUM
 
 # Solution
 s = time()
 
-num = options.num
 i=1
 j=1
 term = 2
-
 while True:
-    if len(str(i)) >= 1000:
+    if len(str(i)) >= NUM:
        break 
     else:
-        k=i
-        i=j+i
-        j=k
+        k = i
+        i += j
+        j = k
         term += 1
 
 print term,'in',time()-s,'secs'

@@ -16,16 +16,22 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
+""" The number 3797 has an interesting property. Being prime itself, it is
+possible to continuously remove digits from left to right, and remain prime at
+each stage: 3797, 797, 97, and 7. Similarly we can work from right to left:
+3797, 379, 37, and 3.
+
+Find the sum of the only eleven primes that are both truncatable from left to
+right and right to left.
+
+NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+
+"""
+
 from time import time
 from optparse import OptionParser
 from math import floor,sqrt
-"""
-The number 3797 has an interesting property. Being prime itself, it is possible to continuously remove digits from left to right, and remain prime at each stage: 3797, 797, 97, and 7. Similarly we can work from right to left: 3797, 379, 37, and 3.
 
-Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
-
-NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
-"""
 # Optparse setup
 usage = "usage: %prog"
 parser = OptionParser(usage=usage)
@@ -33,7 +39,7 @@ parser = OptionParser(usage=usage)
 (options, args) = parser.parse_args()
 
 # Functions
-def isPrime(num):
+def is_prime(num):
     """ Is a number prime? Returns bool. """
     if num < 2 or int(num) != float(num): # 0,1, negative numbers, and floats are not prime
         return False
@@ -58,11 +64,11 @@ def isPrime(num):
         else:
             return True
 
-def rightTruncate(num):
-    """
-    Right truncates a number:
+def right_truncate(num):
+    """ Right truncates a number:
 
-    13 = rightTruncate(137)
+    13 = right_truncate(137)
+
     """
     snum = str(num)
     newstr = snum[:-1]
@@ -71,11 +77,11 @@ def rightTruncate(num):
     else:
         return int(newstr)
 
-def leftTruncate(num):
-    """
-    Left truncates a number:
+def left_truncate(num):
+    """ Left truncates a number:
 
-    37 = rightTruncate(137)
+    37 = right_truncate(137)
+
     """
     snum = str(num)
     newstr = snum[1:]
@@ -84,37 +90,35 @@ def leftTruncate(num):
     else:
         return int(newstr)
 
-def isLeftPrime(num):
-    """
-    Returns True if a number is prime when truncated from the left side.
-    """
-    if not isPrime(num):
+def is_left_prime(num):
+    """ Returns True if a number is prime when truncated from the left side."""
+    if not is_prime(num):
         return False
     # Test Left Truncating
     lnum = num
     while True:
-        lnum = leftTruncate(lnum)
+        lnum = left_truncate(lnum)
         if not lnum: # 0
             break
-        if not isPrime(lnum):
+        if not is_prime(lnum):
             return False
 
     # Passed our tests
     return True
 
-def isRightPrime(num):
+def is_right_prime(num):
     """
     Returns True if a number is prime when truncated from the right side.
     """
-    if not isPrime(num):
+    if not is_prime(num):
         return False
     # Test Left Truncating
     rnum = num
     while True:
-        rnum = rightTruncate(rnum)
+        rnum = right_truncate(rnum)
         if not rnum: # 0
             break
-        if not isPrime(rnum):
+        if not is_prime(rnum):
             return False
 
     # Passed our tests
@@ -139,11 +143,11 @@ while rstack:
     base = rstack.pop()
     for n in addons:
         num = int(base+n)
-        if isRightPrime(num):
+        if is_right_prime(num):
             rights.append(str(num))
             rstack.append(str(num))
 
 # Find the members of right that are also left prime
-twoprimes = [int(i) for i in rights if ( isLeftPrime(int(i)) and i not in starts)]
+twoprimes = [int(i) for i in rights if (is_left_prime(int(i)) and i not in starts)]
 
 print sum(twoprimes),'in',time()-s,'secs'

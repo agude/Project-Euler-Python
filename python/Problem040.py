@@ -17,19 +17,23 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-"""
-An irrational decimal fraction is created by concatenating the positive integers:
+""" An irrational decimal fraction is created by concatenating the positive
+integers:
 
 0.12345678910 >1< 112131415161718192021...
 
 It can be seen that the 12th digit of the fractional part is 1.
 
-If dn represents the nth digit of the fractional part, find the value of the following expression.
+If dn represents the nth digit of the fractional part, find the value of the
+following expression.
 
 d1 *  d10 *  d100 * d1000 *  d10000 * d100000 * d1000000
+
 """
+
+from time import time
+from optparse import OptionParser
+
 # Optparse setup
 usage = "usage: %prog [OPTIONS]"
 parser = OptionParser(usage=usage)
@@ -44,7 +48,7 @@ i=1
 num = '0.'
 while True:
     num += str(i)
-    if len(num) > 1000000 + 2:
+    if len(num) > 1000000 + 1:
         break
     i += 1
 

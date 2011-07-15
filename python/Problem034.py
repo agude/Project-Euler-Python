@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,33 +17,61 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
+""" 145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
+
+Find the sum of all numbers which are equal to the sum of the factorial of
+their digits.
+
+Note: as 1! = 1 and 2! = 2 are not sums they are not included.
+
+"""
+
 from time import time
 from optparse import OptionParser
 from math import factorial
-"""
-145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
 
-Find the sum of all numbers which are equal to the sum of the factorial of their digits.
-
-Note: as 1! = 1 and 2! = 2 are not sums they are not included.
-"""
 # Optparse setup
-#usage = "usage: %prog [OPTIONS] -a number -b number"
-#parser = OptionParser(usage=usage)
-#parser.add_option("-a", "--amax", action="store", type="int", dest="amax", default=100, help="calculate a^b for 2 < a < amax")
-#parser.add_option("-b", "--bmax", action="store", type="int", dest="bmax", default=100, help="calculate a^b for 2 < b < bmax")
+usage = "usage: %prog"
+parser = OptionParser(usage=usage)
 
-#(options, args) = parser.parse_args()
+(options, args) = parser.parse_args()
 
 # Functions
-def isDigitFactorial(num):
-    """ Returns true of the sum of the factorial of digits is equal to the number, else false """
+def is_digit_factorial(num):
+    """ Returns true if the sum of the factorial of digits is equal to the number, else false """
     if num < 10: # 1! and 2! do not count
         return False
     else:
         sum = 0
-        for i in range(len(str(num))):
-            sum += factorial(int(str(num)[i]))
+        snum = str(num)
+
+        if num > 362880:
+            pass
+        elif num <= 362880 and '9' in snum:
+            return False
+        elif num >40320:
+            pass
+        elif num <= 40320 and '8' in snum:
+            return False
+        elif num > 5040:
+            pass
+        elif num <= 5040 and '7' in snum:
+            return False
+        elif num > 720:
+            pass
+        elif num <= 720 and '6' in snum:
+            return False
+        elif num > 120:
+            pass
+        elif num <= 120 and '5' in snum:
+            return False
+        elif num > 24:
+            pass
+        elif  num <= 24 and '4' in snum:
+            return False
+
+        for i in snum:
+            sum += factorial(int(i))
             if sum > num:
                 return False
         if sum == num:
@@ -55,8 +83,8 @@ def isDigitFactorial(num):
 s = time()
 
 nsum = 0
-for i in range(50000):
-    if isDigitFactorial(i):
+for i in xrange(500000):
+    if is_digit_factorial(i):
         nsum += i
 
 print nsum,'in',time()-s,'secs'

@@ -17,19 +17,27 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-"""
-The nth term of the sequence of triangle numbers is given by, tn = (1/2)n(n+1); so the first ten triangle numbers are:
+""" The nth term of the sequence of triangle numbers is given by, tn =
+(1/2)n(n+1); so the first ten triangle numbers are:
 
 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
 
-By converting each letter in a word to a number corresponding to its alphabetical position and adding these values we form a word value. For example, the word value for SKY is 19 + 11 + 25 = 55 = t10. If the word value is a triangle number then we shall call the word a triangle word.
+By converting each letter in a word to a number corresponding to its
+alphabetical position and adding these values we form a word value. For
+example, the word value for SKY is 19 + 11 + 25 = 55 = t10. If the word value
+is a triangle number then we shall call the word a triangle word.
 
-Using words.txt (right click and 'Save Link/Target As...'), a 16K text file containing nearly two-thousand common English words, how many are triangle words?
+Using words.txt (right click and 'Save Link/Target As...'), a 16K text file
+containing nearly two-thousand common English words, how many are triangle
+words?
+
 """
+
+from time import time
+from optparse import OptionParser
+
 # Optparse setup
-usage = "usage: %prog [OPTIONS]"
+usage = "usage: %prog"
 parser = OptionParser(usage=usage)
 
 (options, args) = parser.parse_args()
@@ -42,8 +50,11 @@ def returnValue(name):
     """ Returns the value of a name, where A = 1, B = 2, etc. """
     points = { 'A':1, 'a':1, 'B':2, 'b':2, 'C':3, 'c':3, 'D':4, 'd':4, 'E':5, 'e':5, 'F':6, 'f':6, 'G':7, 'g':7, 'H':8, 'h':8, 'I':9, 'i':9, 'J':10, 'j':10, 'K':11, 'k':11, 'L':12, 'l':12, 'M':13, 'm':13, 'N':14, 'n':14, 'O':15, 'o':15, 'P':16, 'p':16, 'Q':17, 'q':17, 'R':18, 'r':18, 'S':19, 's':19, 'T':20, 't':20, 'U':21, 'u':21, 'V':22, 'v':22, 'W':23, 'w':23, 'X':24, 'x':24, 'Y':25, 'y':25, 'Z':26, 'z':26 }
     value = 0
-    for i in range(len(name)):
-        value += points[name[i]]
+    for i in name:
+        try:
+            value += points[i]
+        except KeyError:
+            return 0
 
     return value
 
@@ -52,11 +63,11 @@ s = time()
 
 ## Find the number of words with certain scores:
 counts = {}
-max = 0
+maxscore = 0
 for word in words:
     score = returnValue(word)
-    if score > max:
-        max = score
+    if score > maxscore:
+        maxscore = score
     try:
         counts[score] += 1
     except KeyError:
@@ -64,11 +75,11 @@ for word in words:
 
 ## Generate Triangle numbers
 total = 0
-for n in xrange(max+1):
+for n in xrange(maxscore+1):
     tri = (n*(n+1))/2
     try:
         total += counts[tri]
     except KeyError:
-            continue
+        continue
 
 print total,'in',time()-s,'secs' 

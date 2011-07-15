@@ -17,28 +17,49 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
 """
-Nim is a game played with heaps of stones, where two players take it in turn to remove any number of stones from any heap until no stones remain.
+Nim is a game played with heaps of stones, where two players take it in turn to
+remove any number of stones from any heap until no stones remain.
 
-We'll consider the three-heap normal-play version of Nim, which works as follows:
+We'll consider the three-heap normal-play version of Nim, which works as
+follows:
 - At the start of the game there are three heaps of stones.
-- On his turn the player removes any positive number of stones from any single heap.
+- On his turn the player removes any positive number of stones from any single
+  heap.
 - The first player unable to move (because no stones remain) loses.
 
-If (n1,n2,n3) indicates a Nim position consisting of heaps of size n1, n2 and n3 then there is a simple function X(n1,n2,n3) -- that you may look up or attempt to deduce for yourself -- that returns:
+If (n1,n2,n3) indicates a Nim position consisting of heaps of size n1, n2 and
+n3 then there is a simple function X(n1,n2,n3) -- that you may look up or
+attempt to deduce for yourself -- that returns:
 *zero if, with perfect strategy, the player about to move will eventually lose; or
 *non-zero if, with perfect strategy, the player about to move will eventually win.
 
-For example X(n1,n2,n3)=0 because, no matter what the current player does, his opponent can respond with a move that leaves two heaps of equal size, at which point every move by the current player can be mirrored by his opponent until no stones remain; so the current player loses. To illustrate:
+For example X(n1,n2,n3)=0 because, no matter what the current player does, his
+opponent can respond with a move that leaves two heaps of equal size, at which
+point every move by the current player can be mirrored by his opponent until no
+stones remain; so the current player loses. To illustrate:
 - current player moves to (1,2,1)
 - opponent moves to (1,0,1)
 - current player moves to (0,0,1)
 - opponent moves to (0,0,0), and so wins.
 
 For how many positive integers n <= 2**30 does X(n1,n2,n3)=0 ?
+
 """
+
+from time import time
+from optparse import OptionParser
+
+# Optparse setup
+usage = "usage: %prog [OPTIONS] -n NUM"
+parser = OptionParser(usage=usage)
+parser.add_option("-n", action="store", type="int", dest="NUM", default=2<<29, help="find the number of losing nim games up to NUM")
+
+(options, args) = parser.parse_args()
+
+# Constants
+NUM = options.NUM
+
 # Functions
 def nimSum(a,b,c):
     if not (a^b^c):
@@ -46,23 +67,14 @@ def nimSum(a,b,c):
     else:
         return False
 
-# Constants
-num=2**30
-total=0
-# Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
-parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=num, help="Finds number of losing games up to this number")
-
-(options, args) = parser.parse_args()
-
 # Solution
 s = time()
 
 a=1
 b=2
 c=3
-while a <= num:
+total=0
+while a <= NUM:
     if nimSum(a,b,c):
         total += 1
     a+=1

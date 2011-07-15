@@ -17,19 +17,24 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
+""" The decimal number, 585 = 10010010012 (binary), is palindromic in both
+bases.
+
+Find the sum of all numbers, less than one million, which are palindromic in
+base 10 and base 2.
+
+(Please note that the palindromic number, in either base, may not include
+leading zeros.)
+
+"""
+
 from time import time
 from optparse import OptionParser
-"""
-The decimal number, 585 = 10010010012 (binary), is palindromic in both bases.
 
-Find the sum of all numbers, less than one million, which are palindromic in base 10 and base 2.
-
-(Please note that the palindromic number, in either base, may not include leading zeros.)
-"""
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n","--num", action="store", type="int", dest="num", default=1000000, help="sum all numbers less than NUM that are palindromic in base 10 and base 2")
+parser.add_option("-n", action="store", type="int", dest="num", default=1000000, help="sum all numbers less than NUM that are palindromic in base 10 and base 2")
 
 (options, args) = parser.parse_args()
 

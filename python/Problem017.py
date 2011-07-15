@@ -17,19 +17,26 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
+""" If the numbers 1 to 5 are written out in words: one, two, three, four,
+five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
+
+If all the numbers from 1 to 1000 (one thousand) inclusive were written out in
+words, how many letters would be used?
+
+NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and
+forty-two) contains 23 letters and 115 (one hundred and fifteen)
+contains 20 letters. The use of "and" when writing out numbers is in compliance
+with British usage.
+
+"""
+
 from time import time
 from optparse import OptionParser
-"""
-If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
 
-If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
-
-NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. The use of "and" when writing out numbers is in compliance with British usage.
-"""
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=1000, help="find the number of letters to write the first NUM numbers")
+parser.add_option("-n", action="store", type="int", dest="num", default=1000, help="find the number of letters to write the first NUM numbers")
 
 (options, args) = parser.parse_args()
 
@@ -67,8 +74,6 @@ def get_char_len(num):
     else:
         string += teens[one]
         
-    #print num,string.replace(' ','')
-
     return len(string.replace(' ',''))
 
 # Constants

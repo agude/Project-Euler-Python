@@ -17,9 +17,6 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
 """
 A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
 
@@ -35,11 +32,17 @@ A unit fraction contains 1 in the numerator. The decimal representation of the u
 Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be seen that 1/7 has a 6-digit recurring cycle.
 
 Find the value of d  1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
+
 """
+
+from time import time
+from optparse import OptionParser
+from numpy import array, ceil, floor, sqrt, bool, nonzero, ones, int64
+
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n MAX"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="max", default=1000, help="find the longest cycle of 1/d for d less than or equal to MAX")
+parser.add_option("-n", action="store", type="int", dest="MAX", default=1000, help="find the longest cycle of 1/d for d less than or equal to MAX")
 
 (options, args) = parser.parse_args()
 

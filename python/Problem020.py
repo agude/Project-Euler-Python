@@ -1,4 +1,4 @@
-#  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,36 +17,40 @@
 #  The most recent version of this program is avaible at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
-from time import time
-from optparse import OptionParser
-"""
-2**15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+""" 2**15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
 
 What is the sum of the digits of the number 2**1000?
+
 """
+
+from time import time
+from optparse import OptionParser
+
 # Optparse setup
-usage = "usage: %prog [OPTIONS] -n number"
+usage = "usage: %prog [OPTIONS] -n NUM"
 parser = OptionParser(usage=usage)
-parser.add_option("-n", "--number", action="store", type="int", dest="num", default=100, help="find the sum of the digits of NUM")
+parser.add_option("-n", action="store", type="int", dest="NUM", default=100, help="find the sum of the digits of NUM")
 
 (options, args) = parser.parse_args()
+
+# Constants
+NUM = options.NUM
 
 # Solution
 s = time()
 
 finalnum = 1
-for j in range(options.num):
-    num = j + 1
-    finalnum = finalnum * num
+for j in xrange(1,NUM+1):
+    finalnum *= j
 
-strnum = repr(finalnum)
+strnum = str(finalnum)
 
-tosum = []
+total = 0
 for i in range(len(strnum)):
     term = strnum[i]
     if term == 'L':
         continue
     else:
-        tosum.append(int(term))
+        total += int(term)
 
-print sum(tosum),'in',time()-s,'secs'
+print total,'in',time()-s,'secs'
