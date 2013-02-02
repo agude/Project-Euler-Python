@@ -14,7 +14,7 @@
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
-#  The most recent version of this program is avaible at:
+#  The most recent version of this program is available at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
 """ 2520 is the smallest number that can be divided by each of the numbers from

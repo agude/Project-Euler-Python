@@ -14,7 +14,7 @@
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
-#  The most recent version of this program is avaible at:
+#  The most recent version of this program is available at:
 #  http://github.com/Falcorian/Project-Euler-Solutions
 
 """ If the numbers 1 to 5 are written out in words: one, two, three, four,
