@@ -13,9 +13,6 @@
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
-#  The most recent version of this program is available at:
-#  http://github.com/Falcorian/Project-Euler-Solutions
-
 """ The number 3797 has an interesting property. Being prime itself, it is
 possible to continuously remove digits from left to right, and remain prime at
 each stage: 3797, 797, 97, and 7. Similarly we can work from right to left:

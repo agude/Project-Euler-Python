@@ -13,9 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#
-#  The most recent version of this program is available at:
-#  http://github.com/Falcorian/Project-Euler-Solutions
 
 """ If we list all the natural numbers below 10 that are multiples of 3 or 5,
 we get 3, 5, 6 and 9. The sum of these multiples is 23.

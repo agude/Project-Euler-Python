@@ -13,9 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#
-#  The most recent version of this program is available at:
-#  http://github.com/Falcorian/Project-Euler-Solutions
 
 """ If the numbers 1 to 5 are written out in words: one, two, three, four,
 five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
