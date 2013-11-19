@@ -31,16 +31,16 @@ attempt to deduce for yourself -- that returns:
 *zero if, with perfect strategy, the player about to move will eventually lose; or
 *non-zero if, with perfect strategy, the player about to move will eventually win.
 
-For example X(n1,n2,n3)=0 because, no matter what the current player does, his
+For example X(n1, n2, n3)=0 because, no matter what the current player does, his
 opponent can respond with a move that leaves two heaps of equal size, at which
 point every move by the current player can be mirrored by his opponent until no
 stones remain; so the current player loses. To illustrate:
-- current player moves to (1,2,1)
-- opponent moves to (1,0,1)
-- current player moves to (0,0,1)
-- opponent moves to (0,0,0), and so wins.
+- current player moves to (1, 2, 1)
+- opponent moves to (1, 0, 1)
+- current player moves to (0, 0, 1)
+- opponent moves to (0, 0, 0), and so wins.
 
-For how many positive integers n <= 2**30 does X(n1,n2,n3)=0 ?
+For how many positive integers n <= 2**30 does X(n, 2n, 3n) = 0 ?
 
 """
 
@@ -57,25 +57,18 @@ parser.add_option("-n", action="store", type="int", dest="NUM", default=2<<29, h
 # Constants
 NUM = options.NUM
 
-# Functions
-def nimSum(a,b,c):
-    if not (a^b^c):
-        return True
-    else:
-        return False
-
 # Solution
 s = time()
 
-a=1
-b=2
-c=3
-total=0
+a = 1
+b = 2
+c = 3
+total = 0
 while a <= NUM:
-    if nimSum(a,b,c):
+    if not (a ^ b ^ c):
         total += 1
-    a+=1
-    b+=2
-    c+=3
+    a += 1
+    b += 2
+    c += 3
 
-print total,'in',time()-s,'secs'
+print total, 'in', time()-s, 'secs'
