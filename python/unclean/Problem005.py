@@ -55,7 +55,9 @@ b = nums.pop()
 # Find the smallest number divisible by all the coprime numbers
 i=0
 while True:
-    i += a*b # We know the number has to be divisible by a, and b, so we incriment by this number
+    # We know the number has to be divisible by a and b, so we incriment by
+    # this number
+    i += a*b 
     for j in nums: 
         if i%j:
             break
