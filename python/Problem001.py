@@ -26,13 +26,12 @@ get 3, 5, 6 and 9. The sum of these multiples is 23.
 Find the sum of all the multiples of 3 or 5 below 1000.
 """
 
-from time import time
-
 # Only runs if executed directly
 if __name__ == '__main__':
+    from optparse import OptionParser
+    from time import time
 
     # Optparse setup
-    from optparse import OptionParser
     usage = "usage: %prog [OPTIONS] -n MAX"
     parser = OptionParser(usage=usage)
     parser.add_option("-n", action="store", type="int", dest="MAX", default=1000, help="find the sum of the multiples of 3 or 5 below MAX")

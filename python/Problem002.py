@@ -31,10 +31,10 @@ four million.
 
 # Only runs if executed directly
 if __name__ == '__main__':
+    from optparse import OptionParser
     from time import time
 
     # Optparse setup
-    from optparse import OptionParser
     usage = "usage: %prog [OPTIONS] -n MAX"
     parser = OptionParser(usage=usage)
     parser.add_option("-n", action="store", type="int", dest="MAX", default=4000000, help="find the sum of the even numbers in the Fibonacci sequence below MAX")
