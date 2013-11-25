@@ -63,4 +63,4 @@ if __name__ == '__main__':
     result = a * b * c
     total_time = time() - start_time
 
-    print(result, 'in', total_time, 'secs')
+    print(result, "=", a, "*", b, "*", c, 'in', total_time, 'secs')
