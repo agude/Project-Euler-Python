@@ -57,11 +57,11 @@ if __name__ == '__main__':
     number = ""
     target_num = options.NTH - 1  # -1 because the list is zero indexed
 
-    # We figure out the Nth number by combinatorics. We know that the first (N-1)!
-    # numbers will start with 0, and then the next set of (N-1)! will start with 1,
-    # and so on. This allows us to fixed the first digit (that is, the digit to the
-    # far left). We repeat this process will all remaining numbers until we reach
-    # our goal.
+    # We figure out the Nth number by combinatorics. We know that the first
+    # (N-1)!  numbers will start with 0, and then the next set of (N-1)! will
+    # start with 1, and so on. This allows us to fix the first digit (that is,
+    # the digit to the far left). We repeat this process for all remaining
+    # numbers until we reach our goal.
     while digits:
         # Number of digits left in our list
         digits_len = len(digits)
