@@ -63,7 +63,7 @@ var
 sdist
 develop-eggs
 .installed.cfg
-lib
+lib/*
 lib64
 __pycache__
 
@@ -101,3 +101,6 @@ nosetests.xml
 *.lai
 *.la
 *.a
+
+# Don't ignore the library
+!alexlib.*
