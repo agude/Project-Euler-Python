@@ -55,7 +55,7 @@ def returnPrimes(num):
 
     return array(nonzero(isPrime)[0],dtype=int64) # Return the index values of True, that is primes
 
-def returnPrimeFactors(num,inputPrimes=[]):
+def returnPrimeFactors(num, inputPrimes=None):
     """ 
     Return the prime factors of a number in a dictionary
 
@@ -64,7 +64,8 @@ def returnPrimeFactors(num,inputPrimes=[]):
     """
     onum = num
 
-    if inputPrimes == []: # If we got an empty list, make the list
+    if inputPrimes is None: # If we got an empty list, make the list
+        inputPrimes = []
         inputPrimes = returnPrimes(num+1) # Get all the primes up to num
 
     if num in inputPrimes: # The number is prime! Return itself
@@ -84,7 +85,7 @@ def returnPrimeFactors(num,inputPrimes=[]):
     #print onum,primeFactors
     return primeFactors
         
-def returnEulerTotient(num,inputPrimes=[]):
+def returnEulerTotient(num, inputPrimes=None):
     """ 
     Returns Euler's Totient of num, the number of numbers coprime with num
 
@@ -97,7 +98,7 @@ def returnEulerTotient(num,inputPrimes=[]):
         return 1 # 1 is the only number coprime to itself by definition; phi(0) := 1
     else:
         product = 1
-        primes = returnPrimeFactors(num,inputPrimes)
+        primes = returnPrimeFactors(num, inputPrimes)
         for prime in primes:
             k = primes[prime]
             product *= (prime - 1)*(prime**(k-1))
