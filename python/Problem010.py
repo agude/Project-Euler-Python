@@ -29,7 +29,7 @@ Find the sum of all the primes below two million.
 if __name__ == '__main__':
     from time import time
     from optparse import OptionParser
-    from library import PrimeSieve
+    from euler.primes import prime_sieve
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n MAX"
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     # Solution
     start_time = time()
 
-    primes = PrimeSieve(MAX)
+    primes = prime_sieve(MAX)
 
     result = primes.sum()
     total_time = time() - start_time

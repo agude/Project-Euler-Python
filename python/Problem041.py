@@ -44,7 +44,7 @@ if __name__ == '__main__':
     from math import factorial, floor
     from optparse import OptionParser
     from time import time
-    from library import PrimeSieve
+    from euler.primes import prime_sieve
     from sys import exit
 
     # Optparse setup
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # Solution
     start_time = time()
 
-    primes = PrimeSieve(MAX_NUM)
+    primes = prime_sieve(MAX_NUM)
     print(len(primes), "primes found!")
 
     answer = None

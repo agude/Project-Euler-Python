@@ -28,7 +28,7 @@ What is the 10001st prime number?
 
 # Only runs if executed directly
 if __name__ == '__main__':
-    from library import PrimeSieve
+    from euler.primes import prime_sieve
     from math import log
     from optparse import OptionParser
     from time import time
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     # P_n <= n * log(n) + n log(log(n)) for n >= 6
     if NUM >= 6:
         MAX = NUM * log(NUM) + NUM * log(log(NUM))
-        primes = PrimeSieve(MAX)
+        primes = prime_sieve(MAX)
     elif NUM > 0:
         primes = [2, 3, 5, 7, 11]
     else:

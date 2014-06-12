@@ -30,7 +30,7 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 if __name__ == '__main__':
     from time import time
     from optparse import OptionParser
-    from library import Palindromic
+    from euler.palindromic import is_palindromic
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -m MAX -n MIN"
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     for a in range(MAX, MIN, -1):
         for b in range(a, MIN - 1, -1):
             num = a * b
-            if Palindromic(num):
+            if is_palindromic(num):
                 break
             elif num < maxnum:
                 num = -1

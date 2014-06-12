@@ -27,7 +27,7 @@ What is the largest prime factor of the number 600851475143?
 
 # Only runs if executed directly
 if __name__ == '__main__':
-    from library import PrimeFactors
+    from euler.primes import prime_factors
     from optparse import OptionParser
     from time import time
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     s = time()
     start_time = time()
 
-    prime_factors = PrimeFactors(NUM)
+    prime_factors = prime_factors(NUM)
     max_prime = prime_factors[-1]
 
     total_time = time() - start_time
