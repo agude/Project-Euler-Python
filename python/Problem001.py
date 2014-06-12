@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#  Copyright (C) 2014  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,11 +44,11 @@ if __name__ == '__main__':
     # Solution
     start_time = time()
 
-    total = 0
-    # We try all numbers, incrementing by 3.
-    for i in range(1, MAX):
-        if (not i % 3) or (not i % 5):
-            total += i
+    # Generate the sets of numbers
+    threes = set(range(3, MAX, 3))
+    fives = set(range(5, MAX, 5))
+    all_nums = fives.union(threes)
+    total = sum(all_nums)
 
     end_time = time() - start_time
     print(total, 'in', end_time, 'secs')
