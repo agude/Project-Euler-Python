@@ -1,4 +1,8 @@
 import math
+try:
+    import euler.countable as countable
+except ImportError:
+    import countable
 
 
 def is_polygonal(number, multiplier, divisor):
@@ -29,8 +33,7 @@ def is_polygonal(number, multiplier, divisor):
         if divisor does not support / .
     """
     test_number = (math.sqrt(multiplier * number + 1) + 1) / divisor
-    print(test_number)
-    return (test_number > 0 and int(test_number) == test_number)
+    return (test_number > 0 and countable.is_integer(test_number))
 
 
 def is_triangular(number):
