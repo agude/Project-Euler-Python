@@ -30,12 +30,10 @@ What is the largest n-digit pandigital prime that exists?
 
 # Only runs if executed directly
 if __name__ == '__main__':
-    from math import factorial, floor
+    from euler.pandigital import pandigitals
+    from euler.primes import is_prime
     from optparse import OptionParser
     from time import time
-    from euler.primes import prime_sieve
-    from euler.pandigital import is_pandigital
-    from sys import exit
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -47,28 +45,14 @@ if __name__ == '__main__':
     # Read in options
     NTH = options.NTH
 
-    # The maximum number to check has NTH digits, and has digits from left to
-    # right of:
-    # N N-1 ... 1
-    num_list = []
-    for i in range(NTH, 0, -1):
-        num_list.append(str(i))
-    MAX_NUM = int(''.join(num_list))
-
     # Solution
     start_time = time()
 
-    primes = prime_sieve(MAX_NUM)
-    print(len(primes), "primes found!")
-
-    answer = None
-    i = 0
-    for test_num in reversed(primes):
-        if not i % 1000:
-            print(i)
-        i += 1
-        if is_pandigital(test_num):
-            answer = test_num
+    # Get all the pandigitals numbers (there are fewer pandigitals than primes)
+    # and test them for primality
+    for test_number in reversed(pandigitals(NTH)):
+        if is_prime(test_number):
+            answer = test_number
             break
 
     end_time = time() - start_time
