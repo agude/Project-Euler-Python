@@ -10,7 +10,7 @@ def is_integer(number):
     Raises:
         AttributeError: If number doesn't support number.is_integer()
     """
-    return number.is_integer()
+    return float(number).is_integer()
 
 
 def is_nonnegative_integer(number):
@@ -25,7 +25,7 @@ def is_nonnegative_integer(number):
     Raises:
         AttributeError: If number doesn't support number.is_integer()
     """
-    return (number >= 0 && is_integer(number))
+    return (number >= 0 and is_integer(number))
 
 
 def is_positive_integer(number):
@@ -40,7 +40,7 @@ def is_positive_integer(number):
     Raises:
         AttributeError: If number doesn't support number.is_integer()
     """
-    return (number >= 1 && is_integer(number))
+    return (number >= 1 and is_integer(number))
 
 
 def is_nonpositive_integer(number):
@@ -55,7 +55,7 @@ def is_nonpositive_integer(number):
     Raises:
         AttributeError: If number doesn't support number.is_integer()
     """
-    return (number <= 0 && is_integer(number))
+    return (number <= 0 and is_integer(number))
 
 
 def is_negative_integer(number):
@@ -70,4 +70,4 @@ def is_negative_integer(number):
     Raises:
         AttributeError: If number doesn't support number.is_integer()
     """
-    return (number <= -1 && is_integer(number))
+    return (number <= -1 and is_integer(number))

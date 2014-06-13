@@ -1,6 +1,10 @@
 import itertools
 import math
 import numpy
+try:
+    import euler.countable as countable
+except ImportError:
+    import countable
 
 
 def prime_sieve(max_number):
@@ -99,10 +103,10 @@ def is_prime(number):
         bool: True if number is prime, else False.
 
     Raises:
-        AttributeError: If number doesn't support number.is_integer()
+        ValueError: If number doesn't support int(number).
     """
     # 0,1, negative numbers, and floats are not prime
-    if number < 2 or not number.is_integer():
+    if number < 2 or not countable.is_integer(number):
         return False
     # 2, 3 are prime, others already excluded
     elif number < 4:
