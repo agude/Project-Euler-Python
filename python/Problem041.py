@@ -27,17 +27,6 @@ also prime.
 What is the largest n-digit pandigital prime that exists?
 """
 
-def is_pandigital(number):
-    test_numbers = []
-    str_number = str(number)
-    for i in range(1, len(str_number) + 1):
-        test_numbers.append(str(i))
-
-    for digit in test_numbers:
-        if digit not in str_number:
-            return False
-
-    return True
 
 # Only runs if executed directly
 if __name__ == '__main__':
@@ -45,6 +34,7 @@ if __name__ == '__main__':
     from optparse import OptionParser
     from time import time
     from euler.primes import prime_sieve
+    from euler.pandigital import is_pandigital
     from sys import exit
 
     # Optparse setup
