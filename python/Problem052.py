@@ -36,12 +36,12 @@ if __name__ == '__main__':
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
     parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="NTH", default=6, help="")
+    parser.add_option("-n", action="store", type="int", dest="n", default=6, help="check from 1 * int to n * int")
 
     (options, args) = parser.parse_args()
 
     # Read in options
-    NTH = options.NTH
+    N = options.n
 
     # Solution
     start_time = time()
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         starting_digits = str(answer)
         loop = True
         # Compute the multiples
-        for multiple in range(2, NTH + 1):
+        for multiple in range(2, N + 1):
             if not loop:
                 break
             # Make sure we have the same digits

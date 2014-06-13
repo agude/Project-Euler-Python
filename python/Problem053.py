@@ -45,7 +45,7 @@ if __name__ == '__main__':
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
     parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="NTH", default=100, help="")
+    parser.add_option("-n", action="store", type="int", dest="NTH", default=100, help="Check nCr from 1 to Nth [default 100]")
 
     (options, args) = parser.parse_args()
 
