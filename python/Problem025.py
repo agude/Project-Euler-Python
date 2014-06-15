@@ -1,4 +1,5 @@
-#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#!/usr/bin/python3
+#  Copyright (C) 2014  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,35 +36,31 @@ F_12 = 144
 The 12th term, F_12, is the first term to contain three digits.
 
 What is the first term in the Fibonacci sequence to contain 1000 digits?
-
 """
 
-from time import time
-from optparse import OptionParser
+if __name__ == '__main__':
+    from time import time
+    from optparse import OptionParser
+    from euler.fibonacci import fibonacci_generator
 
-# Optparse setup
-usage = "usage: %prog [OPTIONS] -n NUM"
-parser = OptionParser(usage=usage)
-parser.add_option("-n", action="store", type="int", dest="NUM", default=1000, help="find the first Fibonacci number with NUM digits")
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="NUM", default=1000, help="find the first Fibonacci number with NUM digits")
 
-(options, args) = parser.parse_args()
+    (options, args) = parser.parse_args()
 
-# Constants
-NUM = options.NUM
+    # Constants
+    NUM = options.NUM
 
-# Solution
-s = time()
+    # Solution
+    start_time = time()
 
-i=1
-j=1
-term = 2
-while True:
-    if len(str(i)) >= NUM:
-       break 
-    else:
-        k = i
-        i += j
-        j = k
+    term = -1
+    for number in fibonacci_generator():
         term += 1
+        if len(str(number)) >= NUM:
+            break
 
-print term,'in',time()-s,'secs'
+    end_time = time() - start_time
+    print(term, 'in', end_time, 'secs')
