@@ -1,5 +1,5 @@
 import math
-from decimal import Decimal
+import decimal
 
 
 def fibonacci(n, memoized={0: 0, 1: 1}):
@@ -83,3 +83,24 @@ def fibonacci_generator(n=None, mod=None):
             new_number %= mod
         elements.append(new_number)
         yield elements.pop(0)
+
+
+def fibonacci_binet(n, memoized={0: 0, 1: 1}):
+    """Returns the nth Fibonacci number using Binet's closed form solution.
+
+    Although this solution is quick to calculate, it loses accuracy due to
+    floating point imprecision after n~70.
+
+    Args:
+        n (int): The order of the Fibonacci number to calculate.
+
+    Returns:
+        int: The nth Fibonacci number.
+
+    Raises:
+        ValueError: n is not convertible to an integer.
+    """
+    s5 = decimal.Decimal(math.sqrt(5))
+    phi = decimal.Decimal((1 + s5) / 2)
+    psi = decimal.Decimal((1 - s5) / 2)
+    return int((phi ** n - psi ** n) / s5)
