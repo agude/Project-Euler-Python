@@ -72,7 +72,8 @@ def fibonacci_generator(n=None):
     # will stop when count is n. We start count at -1 so that we return up to
     # F(n), not F(n-1)
     count = -1 
-    while count is not n:
+    while n is None or count < n:
         count += 1
-        elements.append(elements[0] + elements[1])
+        new_number = elements[0] + elements[1]
+        elements.append(new_number)
         yield elements.pop(0)
