@@ -48,7 +48,7 @@ def fibonaccis(n):
     return [fibonacci(i) for i in range(n + 1)]
 
 
-def fibonacci_generator(n=None):
+def fibonacci_generator(n=None, mod=None):
     """Generates a generator over all Fibonacci numbers.
 
     This makes no use of fibonacci, and so no memoization is done. This is the
@@ -57,15 +57,19 @@ def fibonacci_generator(n=None):
     Args:
         n (int, optional): The order of the last Fibonacci number to yield; if
             not provided, runs forever.
+        mod (int, optional): Mod the numbers with mod. If None, then the full
+            number is returned.
 
     Yields:
         int: The next Fibonacci number, starting at F0 = 0.
 
-    Raises: ValueError if n is < 0.
+    Raises: ValueError if n is < 0, or if mod is < 1.
     """
     # F(-1) is undefined, so we raise an error
     if n is not None and n < 0:
         raise ValueError("n is less than 0")
+    if mod is not None and mod < 1:
+        raise ValueError("mod is less than 1")
 
     elements = [0, 1]
     # If n is none, the loop will never terminate (as we intend); otherwise it
@@ -75,5 +79,7 @@ def fibonacci_generator(n=None):
     while n is None or count < n:
         count += 1
         new_number = elements[0] + elements[1]
+        if mod is not None:
+            new_number %= mod
         elements.append(new_number)
         yield elements.pop(0)
