@@ -1,4 +1,6 @@
-#  Copyright (C) 2011  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
+#!/usr/bin/env python3
+
+#  Copyright (C) 2014  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -13,10 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-from time import time
-from optparse import OptionParser
-from math import sqrt,floor
+#
+#  The most recent version of this program is available at:
+#  https://github.com/agude/Project-Euler
 
 """
 A perfect number is a number for which the sum of its proper divisors is
@@ -38,57 +39,41 @@ Find the sum of all the positive integers which cannot be written as the sum of
 two abundant numbers.
 """
 
-# Optparse setup
-usage = "usage: %prog [OPTIONS]"
-parser = OptionParser(usage=usage)
+# Only runs if executed directly
+if __name__ == '__main__':
+    from time import time
+    from optparse import OptionParser
+    from euler.factorization import proper_factors
+    from bisect import insort
 
-(options, args) = parser.parse_args()
+    # Constants
+    # All numbers > 28123 are the sum of two abundant
+    LARGEST_NUMBER = 28123
 
-# Functions
-def returnProperFactorsSum(num):
-    """ Returns the sum of proper factors of a number """
-    fnum = float(num)
-    max = int(floor(sqrt(fnum)))
-    factors = []
-    for i in range(1,max+1):
-        if not num%i:
-            fact1 = i
-            fact2 = num / i
-            if fact1 == fact2:
-                if i != num:
-                    factors.append(i)
-            else:
-                if (num/i) != num:
-                    factors.append(num / i)
-                if i != num:
-                    factors.append(i)
+    # Solution
+    start_time = time()
 
-    return sum(factors)
+    # Generate abundant numbers. We store a set for quick checking, and a
+    # sorted list in order to loop through them when checking if the number is
+    # a sum.
+    abundant = set([])
+    sorted_abundant = []
+    for i in range(1, LARGEST_NUMBER + 2):
+        if sum(proper_factors(i)) > i:
+            abundant.add(i)
+            insort(sorted_abundant, i)
 
-# Constants
-max = 28123 # All numbers > 28123 are the sum of two abundant
+    # Check numbers
+    answer = 0
+    for i in range(1, LARGEST_NUMBER + 1):
+        for j in sorted_abundant:
+            # If we're here, it passes our criteria and we add it
+            if j >= i:
+                answer += i
+                break
+            # Sum of two abundant, reject
+            if i - j in abundant:
+                break
 
-# Solution
-s = time()
-
-## Generate abundant numbers
-abundant = []
-check = {} # Using {1:False, ..., 12: True, ...} to test if a number is abundant is MUCH faster than "if num in abundant"
-for i in xrange(0,max+2): 
-    if returnProperFactorsSum(i) > i:
-        abundant.append(i)
-        check[i] = True
-    else:
-        check[i] = False
-
-## Check numbers
-notsum = []
-for i in xrange(1, max+1):
-    for j in abundant:
-        if j >= i: # If we're here, it passes our criteria and we add it
-            notsum.append(i)
-            break
-        if check[i-j]: # Sum of two abundant, reject
-            break
-
-print sum(notsum),'in',time()-s,'secs' 
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
