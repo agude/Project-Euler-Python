@@ -5,6 +5,23 @@ except ImportError:
     import countable
 
 
+def triangulars(number=None, start=1):
+    """Returns an iterator over all triangular numbers.
+
+    Yields:
+        int: The next triangular number.
+    """
+    # Set up the run condition
+    run_forever = False
+    if number is None:
+        run_forever = True
+    # Loop over triangular numbers
+    n = start
+    while run_forever or n <= number:
+        yield (n * (n + 1) // 2)
+        n += 1
+
+
 def is_polygonal(number, multiplier, divisor):
     """Determine if a number is a specific type of polygonal number.
 
