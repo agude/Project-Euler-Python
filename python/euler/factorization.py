@@ -1,5 +1,9 @@
 import bisect
 import math
+try:
+    import euler.countable as countable
+except ImportError:
+    import countable
 
 
 def proper_factors(number):
@@ -13,16 +17,22 @@ def proper_factors(number):
 
     Returns:
         list: A sorted list of all the proper factors of the number.
+    elif number <= 0:
 
     Raises:
-        TypeError: number is not convertible to a float (for sqrt).
+        TypeError: number is not convertible to a float (for sqrt), of if
+            number is not a non-negative integer.
     """
-    bound = int(math.floor(math.sqrt(number)))
-    # All numbers are divisible by 1
-    if number == 1:
+    # Check that our input is legal
+    if not countable.is_positive_integer(number):
+        raise TypeError("can not factorize non-positive integers")
+    # If the number is 1, then it has no proper divisors
+    elif number == 1:
         return []
+    # Otherwise all numbers are divisible by 1
     factors = [1]
     # Try all divisors up to the square root of the number, add those
+    bound = int(math.floor(math.sqrt(number)))
     for i in range(2, bound + 1):
         if not number % i:
             fact1 = i
@@ -50,7 +60,8 @@ def factors(number):
         list: A sorted list of all the proper factors of the number.
 
     Raises:
-        TypeError: number is not convertible to a float (for sqrt).
+        TypeError: number is not convertible to a float (for sqrt), of if
+            number is not a non-negative integer.
     """
     return proper_factors(number) + [number]
 
@@ -70,7 +81,8 @@ def number_of_proper_factors(number):
         int: The number of factors.
 
     Raises:
-        TypeError: number is not convertible to a float (for sqrt).
+        TypeError: number is not convertible to a float (for sqrt), of if
+            number is not a non-negative integer.
     """
     return len(proper_factors(number))
 
@@ -90,6 +102,7 @@ def number_of_factors(number):
         int: The number of factors.
 
     Raises:
-        TypeError: number is not convertible to a float (for sqrt).
+        TypeError: number is not convertible to a float (for sqrt), of if
+            number is not a non-negative integer.
     """
     return len(factors(number))
