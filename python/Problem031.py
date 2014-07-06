@@ -32,22 +32,6 @@ It is possible to make $2 in the following way:
 How many different ways can $2 be made using any number of coins?
 """
 
-
-# Functions
-def coin_value(ones=0, twos=0, fives=0, tens=0, twenties=0, fifties=0,
-               pounds=0, twopounds=0):
-    """ Return the total value for a set of coins. """
-    total = 0
-    total += ones
-    total += (twos * 2)
-    total += (fives * 5)
-    total += (tens * 10)
-    total += (twenties * 20)
-    total += (fifties * 50)
-    total += (pounds * 100)
-    total += (twopounds * 200)
-    return total
-
 # Only runs if executed directly
 if __name__ == '__main__':
     from time import time
@@ -64,41 +48,27 @@ if __name__ == '__main__':
     NUM = options.NUM
 
     # Solution
-    # First we find the maximum of each type
     start_time = time()
-    max1 = NUM
 
-    # Then we loop over possible combinations
-    combos = 0
-    for ones in range(0, max1 + 1):
-        amount = coin_value(ones)
-        max2 = (NUM - amount) // 2
-        for twos in range(0, max2 + 1):
-            amount = coin_value(ones, twos)
-            max5 = (NUM - amount) // 5
-            for fives in range(0, max5 + 1):
-                amount = coin_value(ones, twos, fives)
-                max10 = (NUM - amount) // 10
-                for tens in range(0, max10 + 1):
-                    amount = coin_value(ones, twos, fives, tens)
-                    max20 = (NUM - amount) // 20
-                    for twents in range(0, max20 + 1):
-                        amount = coin_value(ones, twos, fives, tens, twents)
-                        max50 = (NUM - amount) // 50
-                        for fifts in range(0, max50 + 1):
-                            amount = coin_value(ones, twos, fives, tens,
-                                                twents, fifts)
-                            max100 = (NUM - amount) // 100
-                            for hunds in range(0, max100 + 1):
-                                amount = coin_value(ones, twos, fives, tens,
-                                                    twents, fifts, hunds)
-                                max200 = (NUM - amount) // 200
-                                for twohunds in range(0, max200 + 1):
-                                    amount = coin_value(ones, twos, fives,
-                                                        tens, twents, fifts,
-                                                        hunds, twohunds)
-                                    if amount == NUM:
-                                        combos += 1
+    # If we want to know how many ways we can make change for a total price of
+    # 4p, then using 1p coins it is equal to the number of ways we can make
+    # change for 3p. For 2p as my coin it is equal to the number of ways we can
+    # make change for 2p, etc. We therefore make a list of all the ways you can
+    # make change for np (where n is the index) and use this to build the
+    # solutions at each level.
+    coin_values = [1, 2, 5, 10, 20, 50, 100, 200]
+    combinations = [1] + NUM * [0]
+
+    for coin_value in coin_values:
+        # We loop starting at coin_value (because anything smaller would not
+        # yield a positive number) and go until we hit the target value. The
+        # number of combinations at each level is incremented by the number of
+        # legal ways we've found so far to make change for the current value
+        # minus the value of the coin.
+        for target in range(coin_value, NUM + 1):
+            combinations[target] += combinations[target - coin_value]
+
+    answer = combinations[NUM]
 
     end_time = time() - start_time
-    print(combos, 'in', end_time, 'secs')
+    print(answer, 'in', end_time, 'secs')
