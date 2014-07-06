@@ -1,3 +1,4 @@
+import collections
 import itertools
 import math
 import numpy
@@ -5,6 +6,10 @@ try:
     import euler.countable as countable
 except ImportError:
     import countable
+try:
+    import euler.converter as converter
+except ImportError:
+    import converter
 
 
 def prime_sieve(max_number):
@@ -133,3 +138,47 @@ def is_prime(number):
                 f += 6
         else:
             return True
+
+
+def circular_primes(number, prime_list=None):
+    """Returns a list of all the circular primes associated with number if
+    there are any, otherwise returns [].
+
+    This function uses is_prime unless prime_list is provided, in which case it
+    assumes that all possible primes it might need are in that list.
+
+    Args:
+        number (int): Number to check if it is part of a circular prime ring.
+        prime_list (list, optional): If None, this function uses the (slow)
+            is_prime function to test primality, otherwise it uses "test_number
+            in prime_list", which is hopefully very fast (something like a set
+            that does very fast 'in' checking is recommended).
+
+    Returns:
+        set: A set of the primes if number is part of a circular prime ring,
+            otherwise returns [].
+
+    Raises:
+        TypeError: If prime_list is not None and does not support "in".
+    """
+    circular_primes = set([])
+    # The input number must be prime
+    if prime_list is None:
+        if not is_prime(number):
+            return []
+    elif number not in prime_list:
+        return []
+    circular_primes.add(number)
+    # We now rotate the prime once for every digit to check all possible
+    # rotations (less one, since we have already checked the current number
+    prime_digits = collections.deque(converter.int_to_tuple(number))
+    for _ in range(len(prime_digits) - 1):
+        prime_digits.rotate()
+        new_number = converter.iterable_to_int(prime_digits)
+        if prime_list is None:
+            if not is_prime(new_number):
+                return []
+        elif new_number not in prime_list:
+            return []
+        circular_primes.add(new_number)
+    return circular_primes
