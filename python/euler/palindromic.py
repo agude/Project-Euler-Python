@@ -10,3 +10,18 @@ def is_palindromic(number):
     """
     test_number = str(number)
     return test_number == test_number[::-1]  # [::-1] reverses a list
+
+
+def is_binary_palindromic(number):
+    """Returns True if the number is palindromic in binary, that is, read the
+    same forward as backwards, otherwise returns False.
+
+    Args:
+        number (int): The number to test.
+
+    Returns:
+        bool: True if number's binary representation is palindromic, False
+            otherwise.
+    """
+    binary_string = bin(number)[2:]  # We strip the "0b" prefix
+    return binary_string == binary_string[::-1]  # [::-1] reverses a list
