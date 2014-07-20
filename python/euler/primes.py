@@ -182,3 +182,114 @@ def circular_primes(number, prime_list=None):
             return []
         circular_primes.add(new_number)
     return circular_primes
+
+
+def is_truncatable_prime(number, right_truncate=False):
+    """Returns true if number is a truncatable prime.
+
+    A prime is left-truncatable if it is prime and if, when digits are removed
+    from the left, all subsequent numbers are all prime. A right-truncatable
+    prime is the same, but with digits removed from the right.
+
+    By default, numbers are truncated from the left, and so the function checks
+    if a number if a left-truncatable prime.
+
+    Args:
+        number (int): the number to test
+        right_truncate (bool, False): truncate from the right instead of the
+            left
+
+    Returns:
+        bool: true if the number is a truncatable prime, False otherwise
+
+    Raises:
+        ValueError: If number is not integral
+        AttributeError: If number doesn't support number.is_integer()
+    """
+    if not is_prime(number):
+        return False
+    # Truncate the number until we have removed all the digits. If it is prime
+    # at all stages return True, otherwise return False.
+    while True:
+        # Truncate the primes from the left or right as desired
+        if right_truncate:
+            number = converter.right_truncate(number)
+        else:
+            number = converter.left_truncate(number)
+        # None is returned when there are no more digits to remove
+        if number is None:
+            break
+        if not is_prime(number):
+            return False
+
+    # Passed all of the tests
+    return True
+
+
+def is_right_truncatable_prime(number):
+    """Returns true if number is a right-truncatable prime.
+
+    A prime is right-truncatable if it is prime and if, when digits are removed
+    from the right, all subsequent numbers are all prime.
+
+    This is a simple wrapper around is_truncatable_prime. The source is:
+        is_truncatable_prime(number, right_truncate=True):
+
+    Args:
+        number (int): the number to test
+
+    Returns:
+        bool: true if the number is a right-truncatable prime, False otherwise
+
+    Raises:
+        ValueError: If number is not integral
+        AttributeError: If number doesn't support number.is_integer()
+    """
+    return is_truncatable_prime(number, right_truncate=True)
+
+
+def is_left_truncatable_prime(number):
+    """Returns true if number is a left-truncatable prime.
+
+    A prime is left-truncatable if it is prime and if, when digits are removed
+    from the left, all subsequent numbers are all prime.
+
+    This is a simple wrapper around is_truncatable_prime. The source is:
+        is_truncatable_prime(number, left_truncate=False):
+
+    Args:
+        number (int): the number to test
+
+    Returns:
+        bool: true if the number is a left-truncatable prime, False otherwise
+
+    Raises:
+        ValueError: If number is not integral
+        AttributeError: If number doesn't support number.is_integer()
+    """
+    return is_truncatable_prime(number, right_truncate=False)
+
+
+def is_two_sided_prime(number):
+    """Returns true if number is a two-sided prime, that is if it is both left
+    and right-truncatable.
+
+    A prime is left-truncatable if it is prime and if, when digits are removed
+    from the left, all subsequent numbers are all prime. A right-truncatable
+    prime is the same, but with digits removed from the right.
+
+    This is a simple wrapper around is_left_truncatable_prime and
+    is_right_truncatable_prime.
+
+    Args:
+        number (int): the number to test
+
+    Returns:
+        bool: true if the number is a two-sided prime, False otherwise
+
+    Raises:
+        ValueError: If number is not integral
+        AttributeError: If number doesn't support number.is_integer()
+    """
+    return (is_right_truncatable_prime(number)
+            and is_left_truncatable_prime(number))
