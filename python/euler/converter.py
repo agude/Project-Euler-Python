@@ -134,3 +134,36 @@ def left_truncate(number):
         AttributeError: If number doesn't support number.is_integer()
     """
     return truncate(number, right_truncate=False)
+
+
+def reverse_int(number):
+    """ Given an integer, returns the reverse of the integer.
+
+    For negative numbers, the digits are reversed but the number remains
+    negative.
+
+    Args:
+        number (int): returns the reverse of this number
+
+    Returns:
+        int: the reversed number
+
+    Raises:
+        ValueError: If number is none integral
+        AttributeError: If number doesn't support number.is_integer()
+    """
+    # Only integers are supported
+    if not countable.is_integer:
+        raise ValueError("Input is non-integral")
+    # For negative numbers, we remember that they are negative and strip the
+    # sign
+    is_negative = number < 0
+    number = abs(number)
+
+    # Convert to string to reverse
+    str_number = str(number)
+    reversed_number = int(str_number[::-1])  # [::-1] reversed a string
+    if is_negative:
+        reversed_number *= -1
+
+    return reversed_number
