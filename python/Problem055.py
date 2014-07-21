@@ -63,54 +63,29 @@ if __name__ == '__main__':
 
     (options, args) = parser.parse_args()
 
+    # Constants
+    MAX = options.MAX
+
     # Solution
     start_time = time()
 
-    MAX = options.MAX
-
-    lychrels = set([])
-    not_lychrels = set([])
+    answer = 0
+    # We brute force check every possible number
     for number in range(MAX):
         test_number = number
-        # As we test numbers, we generate a whole series of "kin" numbers (the
-        # pair of numbers from each iteration) which, if their "seed" is
-        # lychrel, we know to be lychrel numbers themselves. Likewise, we
-        # know that non-lychrel numbers produce kin which are in turn
-        # non-lychrel numbers. We cache these to save time
-        if test_number in lychrels or test_number in not_lychrels:
-            continue
-
         number_of_attempts = 0
-        potential_lychrels = set([])
-        while number_of_attempts < 51:
+        # Test 50 times; if we don't have a palindrome by then, assume it is a
+        # lychrel number
+        while number_of_attempts <= 50:
             number_of_attempts += 1
-            # Cache values, as explained above
-            if test_number <= MAX:
-                potential_lychrels.add(test_number)
-
-            # We cache the reversed number only if
-            # reverse_int(reverse_int(number)) == number. If they fail this,
-            # then we are stripping off 0s in the reversal, and so risk adding
-            # junk to our potential numbers.
-            reversed_number = reverse_int(test_number)
-            if (reversed_number <= MAX
-                    and reverse_int(reversed_number) == test_number):
-                potential_lychrels.add(reversed_number)
-
-            # Complete the reverse and add process and test if the result is
-            # palindromic, if it is the number is not a lynchrel number (and
-            # neither are its kin), so add the numbers generated to the
-            # not_lychrels set
-            test_number += reversed_number
-            if is_palindromic(test_number):
-                not_lychrels = not_lychrels.union(potential_lychrels)
+            new_number = test_number + reverse_int(test_number)
+            if is_palindromic(new_number):
                 break
-        # The else clause only runs if we don't break, which means we have a
-        # set of lychrel numbers
+            test_number = new_number
+        # The else on the while loop only runs if we don't break early, in
+        # which case we know we have a lychrel number
         else:
-            lychrels = lychrels.union(potential_lychrels)
-
-    answer = len(lychrels)
+            answer += 1
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
