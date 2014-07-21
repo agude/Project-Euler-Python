@@ -5,20 +5,51 @@ except ImportError:
     import countable
 
 
-def triangulars(number=None, start=1):
+def triangulars(stop=None, start=1):
     """Returns an iterator over all triangular numbers.
+
+    Computes all triangular numbers from n = 1 to infinity by default, although
+    the starting and stopping values of n can be adjusted with the arguments.
+
+    Args:
+        stop (int, None): Stop when n exceeds this number
+        start (int, None): Start with n equal to this number
 
     Yields:
         int: The next triangular number.
     """
     # Set up the run condition
     run_forever = False
-    if number is None:
+    if stop is None:
         run_forever = True
     # Loop over triangular numbers
     n = start
-    while run_forever or n <= number:
-        yield (n * (n + 1) // 2)
+    while run_forever or n <= stop:
+        yield n * (n + 1) // 2
+        n += 1
+
+
+def hexagonals(stop=None, start=1):
+    """Returns an iterator over all hexagonal numbers.
+
+    Computes all hexagonal numbers from n = 1 to infinity by default, although
+    the starting and stopping values of n can be adjusted with the arguments.
+
+    Args:
+        stop (int, None): Stop when n exceeds this number
+        start (int, None): Start with n equal to this number
+
+    Yields:
+        int: The next hexagonal number.
+    """
+    # Set up the run condition
+    run_forever = False
+    if stop is None:
+        run_forever = True
+    # Loop over triangular numbers
+    n = start
+    while run_forever or n <= stop:
+        yield n * (2 * n - 1)
         n += 1
 
 
