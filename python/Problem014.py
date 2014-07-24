@@ -55,35 +55,51 @@ if __name__ == '__main__':
     # Solution
     start_time = time()
 
-    # Set up a dictionary mapping a number to the next number for all numbers
-    # up to MAX so that we only have to compute the numbers once ever
-    links = {number: (number // 2) for number in range(2, MAX, 2)}
-    links.update({number: (3 * number + 1) for number in range(3, MAX, 2)})
+    # Set up a dictionary mapping a number to the length of the chain for that number
+    links_length = {1:1}
 
-    # Using our lookup table, we follow our way through it until we hit 1. If
-    # we hit a number we don't yet know, we add it.
     max_count = 0
     max_number = None
     # Check every number
     for number in range(2, MAX):
-        modable_number = number
-        # Compute the chain length using the lookup table
+        # Get chain length using the lookup table (it will exist if it has been computed before)
         count = 0
-        while modable_number != 1:
-            try:
-                modable_number = links[modable_number]
-            # If we fail, compute the value and save it in the table
-            except KeyError:
-                # We need to add the number and its result to our dictionary
+        try:
+            count = links_length[number]
+        # If we fail, compute the values until we make connection with the
+        # table, and save all the values to speed up future computations
+        except KeyError:
+            modable_number = number
+            stack = [number]
+
+            while True:
+                # Compute the new result
                 if modable_number % 2:  # Odd
                     result = 3 * modable_number + 1
                 else:  # Even
                     result = modable_number // 2
-                links[modable_number] = result
-                modable_number = result
-            # Always increment the chain length, exception or not
-            finally:
-                count += 1
+
+                # If the result is in the table, we're done, so we go back and
+                # add all the numbers we have encountered so far
+                if result in links_length:
+                    base_length = links_length[result]
+                    # We now go through the stack, with the last value being a
+                    # distance 1 from the number we just found in the
+                    # dictionary. We add the index value, as this tells us how
+                    # far into the stack we are, and every level deeper is one
+                    # more link in the chain we have to add to the total
+                    # length.
+                    for index, value in enumerate(reversed(stack)):
+                        links_length[value] = base_length + 1 + index
+                    break
+
+                # Otherwise, keep generating numbers
+                else:
+                    stack.append(result)
+                    modable_number = result
+
+            # Now that we've updated the table, get the value
+            count = links_length[number]
 
         # If the count length is a new max, save it
         if count > max_count:
@@ -91,4 +107,6 @@ if __name__ == '__main__':
             max_number = number
 
     end_time = time() - start_time
+    if MAX < 100:
+        print(links_length)
     print(max_number, "with chain length", max_count, "in", end_time, "secs")
