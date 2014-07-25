@@ -61,7 +61,7 @@ if __name__ == '__main__':
     max_count = 0
     max_number = None
     # Check every number
-    for number in range(2, MAX):
+    for number in range(MAX, 2, -1):
         # Get chain length using the lookup table (it will exist if it has been computed before)
         count = 0
         try:
