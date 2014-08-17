@@ -57,8 +57,8 @@ if __name__ == '__main__':
     # number of  digits or less, and all of the number - 1 or less. We subtract
     # the sets to get only pandigitals with the right number of digits.
     products = set([])
-    all_pandigitals = set(pandigitals(DIGITS))
-    some_pandigitals = set(pandigitals(DIGITS - 1))
+    all_pandigitals = set(pandigitals(maximum_digits=DIGITS))
+    some_pandigitals = set(pandigitals(maximum_digits=DIGITS-1))
     pandigitals_to_check = all_pandigitals - some_pandigitals
     # For each 9 digit pandigital we check every possible combination of
     # multiplicand, multiplier, and product by moving the * and = through the

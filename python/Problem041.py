@@ -50,7 +50,8 @@ if __name__ == '__main__':
 
     # Get all the pandigitals numbers (there are fewer pandigitals than primes)
     # and test them for primality
-    for test_number in reversed(pandigitals(NTH)):
+    pandigital_tuple = tuple(pandigitals(maximum_digits=NTH))
+    for test_number in reversed(pandigital_tuple):
         if is_prime(test_number):
             answer = test_number
             break
