@@ -67,33 +67,36 @@ def primes():
 def prime_factors(number):
     """Returns a list of numbers containing all the prime factors of number.
 
-    This function uses a sieve of Eratosthenes, and hence needs to store at
-    least as many numbers as sqrt(number).
-
     Args:
         number (int): The number to find the prime factors of.
 
     Returns:
-        array: A numpy array of prime numbers.
+        array: A list the prime factors, or [] for negative numbers, 0, and 1.
 
     Raises:
         TypeError: number doesn't support sqrt().
     """
-    # We only need to test up to the square root of the number
-    bound = math.ceil(math.sqrt(number))
-    primes = prime_sieve(bound)
+    # Prime factors only make sense for positive numbers greater than 2,
+    # otherwise we return [].
+    if number <= 1:
+        return []
 
+    factors = []
+    new_number = number
     # We divide through by primes until we reach 1, repeating with each prime
     # until it no longer divides through evenly.
-    factors = []
-    for prime in primes:
-        while number % prime == 0:
-            number = number / prime
+    for prime in primes():
+        while new_number % prime == 0:
+            new_number = new_number / prime
             factors.append(prime)
-            if number <= 1:
+
+            # We have divided out all the primes
+            if new_number <= 1:
                 return factors
 
-    return number  # Failed, it is prime
+        # If our number is prime, we only need to test up to half its value.
+        if not factors and prime > math.sqrt(number):
+            return [number]
 
 
 def is_prime(number):
