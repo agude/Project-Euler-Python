@@ -56,7 +56,7 @@ if __name__ == '__main__':
     start_time = time()
 
     # Get the primes
-    primes = prime_sieve(MAX + 1)
+    primes = prime_sieve(MAX)
     prime_set = set(primes)
     number_of_primes = len(primes)
 
@@ -70,7 +70,6 @@ if __name__ == '__main__':
         if total > MAX:
             break
         max_length += 1
-    print(max_length)
 
     # We try all possible numbers of primes to sum, starting from the largest
     # number so that when we find one we know that we are done

@@ -51,7 +51,7 @@ if __name__ == '__main__':
     # Solution
     start_time = time()
 
-    primes = set(prime_sieve(NUM))
+    primes = set(prime_sieve(NUM - 1))
     final_primes = set([])
     for prime in primes:
         # Avoid double counting sets

@@ -44,7 +44,7 @@ if __name__ == '__main__':
     # Solution
     start_time = time()
 
-    primes = prime_sieve(MAX)
+    primes = prime_sieve(MAX - 1)
 
     result = primes.sum()
     total_time = time() - start_time

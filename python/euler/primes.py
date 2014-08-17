@@ -28,7 +28,7 @@ def prime_sieve(max_number):
         TypeError: max_number is not convertible to an integer.
     """
     # An array of bools, we use the index to store if a number is prime or not
-    is_prime = numpy.ones(max_number, dtype=numpy.bool)
+    is_prime = numpy.ones(max_number + 1, dtype=numpy.bool)
     is_prime[0] = is_prime[1] = False  # 0,1 not prime
     for i in range(2, int(math.ceil(math.sqrt(max_number)))):
         if is_prime[i]:  # False if already proven to be not prime
