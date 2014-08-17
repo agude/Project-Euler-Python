@@ -65,6 +65,5 @@ if __name__ == '__main__':
             if is_pandigital(front_int):
                 answer = count
                 break
-    print(count)
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
