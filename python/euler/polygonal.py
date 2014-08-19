@@ -5,6 +5,51 @@ except ImportError:
     import countable
 
 
+def polygonals(multiplier, divisor, offset, stop=None, start=1):
+    """ A generator for generic polygonal numbers.
+
+    This generator uses the following formula:
+
+        n * ((multiplier * n) + offset) // divisor
+
+    Where n is an integer greater than or equal to 0, and multiplier, offset,
+    and divisor are numbers. By properly setting the constants multiplier,
+    offset, and divisor various polygonal number sequences are generated. These
+    constants are correctly set by the various wrapping functions (triangulars,
+    etc.).
+
+    Args:
+        multiplier (int): The multiplier used in the general formula.
+        divisor (int): The divisor used in the general formula.
+        offset (int): The offset used in the general formula.
+        stop (int, None): Stop when n exceeds this number
+        start (int, 1): Start with n equal to this number
+
+    Yields:
+        int: The next polygonal number.
+
+    Raises:
+        ValueError: If stop or start are not integers greater than or equal to
+            zero.
+    """
+    # Test the input values
+    if stop is not None and not countable.is_nonnegative_integer(stop):
+        raise ValueError("stop must be a nonnegative integer")
+    if not countable.is_nonnegative_integer(start):
+        raise ValueError("start must be a nonnegative integer")
+
+    # Set up the run condition
+    run_forever = False
+    if stop is None:
+        run_forever = True
+
+    # Loop over triangular numbers
+    n = start
+    while run_forever or n <= stop:
+        yield n * ((multiplier * n) + offset) // divisor
+        n += 1
+
+
 def triangulars(stop=None, start=1):
     """Returns an iterator over all triangular numbers.
 
@@ -13,20 +58,12 @@ def triangulars(stop=None, start=1):
 
     Args:
         stop (int, None): Stop when n exceeds this number
-        start (int, None): Start with n equal to this number
+        start (int, 1): Start with n equal to this number
 
     Yields:
         int: The next triangular number.
     """
-    # Set up the run condition
-    run_forever = False
-    if stop is None:
-        run_forever = True
-    # Loop over triangular numbers
-    n = start
-    while run_forever or n <= stop:
-        yield n * (n + 1) // 2
-        n += 1
+    return polygonals(1, 2, 1, stop, start)
 
 
 def pentagonals(stop=None, start=1):
@@ -37,20 +74,12 @@ def pentagonals(stop=None, start=1):
 
     Args:
         stop (int, None): Stop when n exceeds this number
-        start (int, None): Start with n equal to this number
+        start (int, 1): Start with n equal to this number
 
     Yields:
         int: The next pentagonal number.
     """
-    # Set up the run condition
-    run_forever = False
-    if stop is None:
-        run_forever = True
-    # Loop over triangular numbers
-    n = start
-    while run_forever or n <= stop:
-        yield n * ((3 * n) - 1) // 2
-        n += 1
+    return polygonals(3, 2, -1, stop, start)
 
 
 def hexagonals(stop=None, start=1):
@@ -61,20 +90,12 @@ def hexagonals(stop=None, start=1):
 
     Args:
         stop (int, None): Stop when n exceeds this number
-        start (int, None): Start with n equal to this number
+        start (int, 1): Start with n equal to this number
 
     Yields:
         int: The next hexagonal number.
     """
-    # Set up the run condition
-    run_forever = False
-    if stop is None:
-        run_forever = True
-    # Loop over triangular numbers
-    n = start
-    while run_forever or n <= stop:
-        yield n * (2 * n - 1)
-        n += 1
+    return polygonals(2, 1, -1, stop, start)
 
 
 def is_polygonal(number, multiplier, divisor):
