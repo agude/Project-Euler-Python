@@ -29,6 +29,30 @@ def triangulars(stop=None, start=1):
         n += 1
 
 
+def pentagonals(stop=None, start=1):
+    """Returns an iterator over all pentagonal numbers.
+
+    Computes all pentagonal numbers from n = 1 to infinity by default, although
+    the starting and stopping values of n can be adjusted with the arguments.
+
+    Args:
+        stop (int, None): Stop when n exceeds this number
+        start (int, None): Start with n equal to this number
+
+    Yields:
+        int: The next pentagonal number.
+    """
+    # Set up the run condition
+    run_forever = False
+    if stop is None:
+        run_forever = True
+    # Loop over triangular numbers
+    n = start
+    while run_forever or n <= stop:
+        yield n * ((3 * n) - 1) // 2
+        n += 1
+
+
 def hexagonals(stop=None, start=1):
     """Returns an iterator over all hexagonal numbers.
 
