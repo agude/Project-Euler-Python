@@ -36,23 +36,31 @@ def check_number_slope(number):
     Raises:
         ValueError: If number is < 0, or not an integer.
     """
+    # Only defined for integers
     if not countable.is_positive_integer(number):
         raise ValueError("input is not an integer")
-    # We make a two lists out of the digits and sort them. If the results are
-    # the same, then the number is increasing.
-    first_list = list(converter.int_to_tuple(number))
-    second_list = list(converter.int_to_tuple(number))
-    second_list.sort()
-    if first_list == second_list:
+    number_tuple = converter.int_to_tuple(number)
+
+    # Check through the number from left-to-right and keep track if it can be a
+    # decreasing or increasing number.
+    decreasing = True
+    increasing = True
+    for i in range(len(number_tuple) - 1):
+        # Check if increasing
+        if increasing and not number_tuple[i] <= number_tuple[i+1]:
+            increasing = False
+        # Check if decreasing
+        if decreasing and not number_tuple[i] >= number_tuple[i+1]:
+            decreasing = False
+        # If we have already shown it is neither, it must be bouncy
+        if not decreasing and not increasing:
+            return NumberSlope.bouncy
+
+    # At this point it is either decrease XOR decreasing
+    if increasing:
         return NumberSlope.increasing
-
-    # For decreasing numbers, we need to also reverse the list so that the
-    # largest digits are on the left
-    second_list.reverse()
-    if first_list == second_list:
+    else:
         return NumberSlope.decreasing
-
-    return NumberSlope.bouncy
 
 
 def is_decreasing(number):
