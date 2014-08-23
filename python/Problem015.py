@@ -27,7 +27,7 @@ How many such routes are there through a 20x20 grid?
 """
 
 if __name__ == '__main__':
-    from math import factorial
+    from euler.combinatorics import n_choose_k
     from optparse import OptionParser
     from time import time
 
@@ -49,6 +49,6 @@ if __name__ == '__main__':
     # must be n 1s and n 0s. Then to specify a path we just need to specify the
     # location of the 1s. The number of ways we can do this is 2n choose n.
 
-    answer = int(factorial(2 * MAX) / (factorial(MAX)**2))
+    answer = n_choose_k(2 * MAX, MAX)
     end_time = time() - start_time
     print(answer, "in", end_time, "secs")
