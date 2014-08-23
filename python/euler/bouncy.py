@@ -10,15 +10,16 @@ except ImportError:
 
 
 class NumberSlope(Enum):
-    """ Enumerates the three possible number slopes. """
+    """ Enumerates the four possible number slopes. """
     decreasing = -1
     bouncy = 0
     increasing = 1
+    both = 2
 
 
 def check_number_slope(number):
     """ A general function to check if a number is a decreasing number, an
-    increasing number, or neither (called "bouncy").
+    increasing number, both, or neither (called "bouncy").
 
     A number is decreasing if its digits, read left-to-right, are always
     smaller than or equal to the digits that preceded them.  A number is
@@ -31,7 +32,8 @@ def check_number_slope(number):
 
     Returns:
         NumberSlope: An element of the NumberSlope Enum, with -1 meaning
-            decreasing, 1 meaning increasing, and 0 meaning neither.
+            decreasing, 1 meaning increasing, 2 meaning both, and 0 meaning
+            neither.
 
     Raises:
         ValueError: If number is < 0, or not an integer.
@@ -57,7 +59,9 @@ def check_number_slope(number):
             return NumberSlope.bouncy
 
     # At this point it is either decrease XOR decreasing
-    if increasing:
+    if increasing and decreasing:
+        return NumberSlope.both
+    elif increasing:
         return NumberSlope.increasing
     else:
         return NumberSlope.decreasing
@@ -78,7 +82,8 @@ def is_decreasing(number):
     Raises:
         ValueError: If number is < 0, or not an integer.
     """
-    return check_number_slope(number) == NumberSlope.decreasing
+    result = check_number_slope(number)
+    return result == NumberSlope.decreasing or result == NumberSlope.both
 
 
 def is_increasing(number):
@@ -96,7 +101,8 @@ def is_increasing(number):
     Raises:
         ValueError: If number is < 0, or not an integer.
     """
-    return check_number_slope(number) == NumberSlope.increasing
+    result = check_number_slope(number)
+    return result == NumberSlope.increasing or result == NumberSlope.both
 
 
 def is_bouncy(number):
