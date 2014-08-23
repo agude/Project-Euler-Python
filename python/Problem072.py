@@ -37,7 +37,7 @@ d <= 1,000,000?
 
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.totient import eulers_totient
+    from euler.totient import totient_sieve
     from optparse import OptionParser
     from time import time
 
@@ -58,11 +58,10 @@ if __name__ == '__main__':
     # of coprime numbers less than d. This is, of course, Euler's Totient, so
     # we simply loop over denominators and calculate the totient.
     answer = 0
-    for denominator in range(2, MAX + 1):
-        if not denominator % 1000:
-            print(denominator)
-        et = eulers_totient(denominator)
-        answer += et
+    totients = totient_sieve(MAX)
+    # We subtract 1 because we don't want phi(1) = 1, since 1/1 is not a fully
+    # reduced fraction.
+    answer = sum(totients) - 1
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
