@@ -85,22 +85,41 @@ def fibonacci_generator(n=None, mod=None):
         yield elements.pop(0)
 
 
-def fibonacci_binet(n):
+def fibonacci_binet(n, suppress_exception=False):
     """Returns the nth Fibonacci number using Binet's closed form solution.
+
+    The closed form solution is of the form:
+
+        phi = (1 + sqrt(5)) / 2
+        psi = (1 - sqrt(5)) / 2
+
+        F_n = (phi^n - psi^n) / sqrt(5)
+
+    In practice, we ignore the psi term as it vanishes for large n, and is
+    always smaller than 0.5, so the rounding done to return an integer
+    correctly compensates for it in all cases.
 
     Although this solution is quick to calculate, it loses accuracy due to
     floating point imprecision after n~70.
 
     Args:
         n (int): The order of the Fibonacci number to calculate.
+        suppress_exception (bool): Allow n > 70 without throwing an exception.
 
     Returns:
         int: The nth Fibonacci number.
 
     Raises:
         ValueError: n is not convertible to an integer.
+        ArithmeticError: n > 70, at which point the function fails to compute
+            the correct answer. This exception can be turned off with the
+            suppress_exception argument.
     """
+    # Floating point error gives us the wrong answer after n = 70
+    if not suppress_exception and n > 70:
+        raise ArithmeticError("results are inaccurate for n greater than 70")
+
     s5 = decimal.Decimal(math.sqrt(5))
     phi = decimal.Decimal((1 + s5) / 2)
-    psi = decimal.Decimal((1 - s5) / 2)
-    return int((phi ** n - psi ** n) / s5)
+    ans = (phi ** n) / s5
+    return int(round(ans))

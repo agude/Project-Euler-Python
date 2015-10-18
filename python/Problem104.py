@@ -59,7 +59,7 @@ if __name__ == '__main__':
             continue
         # If the first 9 digits are pan
         if is_pandigital(number):
-            full_fibonacci = fibonacci_binet(count)
+            full_fibonacci = fibonacci_binet(count, suppress_exception=True)
             front_tuple = int_to_tuple(full_fibonacci)[:9]
             front_int = iterable_to_int(front_tuple)
             if is_pandigital(front_int):
