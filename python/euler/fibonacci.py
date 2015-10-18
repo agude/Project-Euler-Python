@@ -20,8 +20,12 @@ def fibonacci(n, memoized={0: 0, 1: 1}):
         int: The nth Fibonacci number.
 
     Raises:
-        ValueError: n is not convertible to an integer.
+        ValueError: n is not convertible to an integer or n < 0.
     """
+    # F(-1) is undefined, so we raise an error
+    if n < 0:
+        raise ValueError("n is less than 0")
+
     n_int = int(n)
     if n_int not in memoized:
         memoized[n_int] = (fibonacci(n_int - 1) + fibonacci(n_int - 2))
@@ -43,8 +47,12 @@ def fibonaccis(n):
         list: A list of Fibonacci numbers of length n + 1.
 
     Raises:
-        ValueError: n is not convertible to an integer.
+        ValueError: n is not convertible to an integer or n < 0.
     """
+    # F(-1) is undefined, so we raise an error
+    if n < 0:
+        raise ValueError("n is less than 0")
+
     return [fibonacci(i) for i in range(n + 1)]
 
 
@@ -75,7 +83,7 @@ def fibonacci_generator(n=None, mod=None):
     # If n is none, the loop will never terminate (as we intend); otherwise it
     # will stop when count is n. We start count at -1 so that we return up to
     # F(n), not F(n-1)
-    count = -1 
+    count = -1
     while n is None or count < n:
         count += 1
         new_number = elements[0] + elements[1]
@@ -110,11 +118,14 @@ def fibonacci_binet(n, suppress_exception=False):
         int: The nth Fibonacci number.
 
     Raises:
-        ValueError: n is not convertible to an integer.
+        ValueError: n is not convertible to an integer or n < 0.
         ArithmeticError: n > 70, at which point the function fails to compute
             the correct answer. This exception can be turned off with the
             suppress_exception argument.
     """
+    # F(-1) is undefined, so we raise an error
+    if n < 0:
+        raise ValueError("n is less than 0")
     # Floating point error gives us the wrong answer after n = 70
     if not suppress_exception and n > 70:
         raise ArithmeticError("results are inaccurate for n greater than 70")
