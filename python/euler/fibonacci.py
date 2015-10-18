@@ -85,7 +85,7 @@ def fibonacci_generator(n=None, mod=None):
         yield elements.pop(0)
 
 
-def fibonacci_binet(n, memoized={0: 0, 1: 1}):
+def fibonacci_binet(n):
     """Returns the nth Fibonacci number using Binet's closed form solution.
 
     Although this solution is quick to calculate, it loses accuracy due to
