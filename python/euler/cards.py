@@ -163,6 +163,13 @@ class PokerHand(object):
             ValueError: Raised if cards is invalid.
         """
         self.cards = tuple(sorted(cards))
+        # Tie breakers are used to break ties when both players have
+        # identically valued hands. First the 0th value is compared,
+        # and if there is a still a tie the 1st value is compared. If
+        # there is still a tie, the value of all cards is compared is
+        # in order and the winner is the first hand to have a higher
+        # card. If there is still a tie, the hands are actually
+        # identical in value and it is a true tie.
         self.__tie_breakers = [0, 0]
 
         # Determine how many cards of each value exist
@@ -227,7 +234,7 @@ class PokerHand(object):
         # Four of a kind
         if quads:
             self.hand_type = PokerHandType.four_of_a_kind
-            self.__set_four_of_a_king_tie_breakers()
+            self.__set_four_of_a_kind_tie_breakers()
             #print("Four of a kind", self.cards)
         # Full House
         elif pairs and trips:
@@ -253,7 +260,7 @@ class PokerHand(object):
         else:
             self.hand_type = PokerHandType.high_card
 
-    def __set_four_of_a_king_tie_breakers(self):
+    def __set_four_of_a_kind_tie_breakers(self):
         for card_value, count in self.value_count.items():
             if count == 4:
                 self.__tie_breakers[0] = card_value
