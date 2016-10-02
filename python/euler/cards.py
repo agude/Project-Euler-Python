@@ -45,7 +45,7 @@ class PokerHandType(IntEnum):
     royal_flush = 9
 
 
-class PlayingCard:
+class PlayingCard(object):
     """Represent a standard American playing card.
 
     Cards are comparable by value using the standard operators (<, >, <=, >=),
@@ -156,7 +156,7 @@ class PlayingCard:
         return NotImplemented
 
 
-class PokerHand:
+class PokerHand(object):
     """Represent a hand in poker.
 
     The various python operators are used to compare the values of hands as
