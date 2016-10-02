@@ -1,4 +1,5 @@
 from enum import Enum, IntEnum, unique
+from functools import total_ordering
 import operator
 
 @unique
@@ -45,6 +46,7 @@ class PokerHandType(IntEnum):
     royal_flush = 9
 
 
+@total_ordering
 class PlayingCard(object):
     """Represent a standard American playing card.
 
@@ -125,29 +127,9 @@ class PlayingCard(object):
             return self.value < other.value
         return NotImplemented
 
-    def __le__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value <= other.value
-        return NotImplemented
-
     def __eq__(self, other):
         if self.__class__ is other.__class__:
             return self.value == other.value
-        return NotImplemented
-
-    def __ne__(self, other):
-        if self.__class__ is other.__class__:
-            return self.name != other.name
-        return NotImplemented
-
-    def __gt__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value > other.value
-        return NotImplemented
-
-    def __ge__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value >= other.value
         return NotImplemented
 
 
