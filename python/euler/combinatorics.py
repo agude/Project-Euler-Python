@@ -15,6 +15,8 @@ def n_choose_k(n, k):
     For a number of objects n, which k choices allowed, this function reports
     the number of ways to make the selection if order is disregarded.
 
+    We define n choose k == 0 for k > n.
+
     Args:
         n (int): A positive integer indicating the possible number of items to
             select.
@@ -31,5 +33,9 @@ def n_choose_k(n, k):
         raise ValueError("n is a not a non-negative integer")
     if not countable.is_nonnegative_integer(k):
         raise ValueError("k is a not a non-negative integer")
+    # We define n choose k for k > n as 0, that is, there are no way
+    # to choose more items than exist in a set.
+    if k > n:
+        return 0
     # Compute and return
     return math.factorial(n) // (math.factorial(k) * math.factorial(n - k))
