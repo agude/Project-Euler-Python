@@ -132,7 +132,7 @@ class PlayingCard(object):
             return self.value == other.value
         return NotImplemented
 
-
+@total_ordering
 class PokerHand(object):
     """Represent a hand in poker.
 
@@ -310,40 +310,19 @@ class PokerHand(object):
     def __repr__(self):
         return self.cards.__repr__()
 
-    def __lt__(self, other):
-        if self.__class__ is other.__class__:
-            if self.hand_type == other.hand_type:
-                if self.__tie_breakers[0] != other.__tie_breakers[0]:
-                    return self.__tie_breakers[0] < other.__tie_breakers[0]
-                elif self.__tie_breakers[1] != other.__tie_breakers[1]:
-                    return self.__tie_breakers[1] < other.__tie_breakers[1]
-                else:
-                    return self.__compare_cards(operator.lt, other)
-            else:
-                return self.hand_type < other.hand_type
-        return NotImplemented
-
-    def __le__(self, other):
-        if self.__class__ is other.__class__:
-            if self.hand_type == other.hand_type:
-                if self.__tie_breakers[0] != other.__tie_breakers[0]:
-                    return self.__tie_breakers[0] <= other.__tie_breakers[0]
-                elif self.__tie_breakers[1] != other.__tie_breakers[1]:
-                    return self.__tie_breakers[1] <= other.__tie_breakers[1]
-                else:
-                    return self.__compare_cards(operator.le, other)
-            else:
-                return self.hand_type <= other.hand_type
-        return NotImplemented
-
     def __eq__(self, other):
         if self.__class__ is other.__class__:
-            return self.hand_type == other.hand_type
-        return NotImplemented
-
-    def __ne__(self, other):
-        if self.__class__ is other.__class__:
-            return self.hand_type != other.hand_type
+            if self.hand_type == other.hand_type:
+                if not self.__tie_breakers[0] == other.__tie_breakers[0]:
+                    return False
+                elif not self.__tie_breakers[1] == other.__tie_breakers[1]:
+                    return False
+                elif not self.__compare_cards(operator.eq, other):
+                    return False
+                else:
+                    return True
+            else:
+                return self.hand_type == other.hand_type
         return NotImplemented
 
     def __gt__(self, other):
@@ -357,17 +336,4 @@ class PokerHand(object):
                     return self.__compare_cards(operator.gt, other)
             else:
                 return self.hand_type > other.hand_type
-        return NotImplemented
-
-    def __ge__(self, other):
-        if self.__class__ is other.__class__:
-            if self.hand_type == other.hand_type:
-                if self.__tie_breakers[0] != other.__tie_breakers[0]:
-                    return self.__tie_breakers[0] >= other.__tie_breakers[0]
-                elif self.__tie_breakers[1] != other.__tie_breakers[1]:
-                    return self.__tie_breakers[1] >= other.__tie_breakers[1]
-                else:
-                    return self.__compare_cards(operator.ge, other)
-            else:
-                return self.hand_type >= other.hand_type
         return NotImplemented
