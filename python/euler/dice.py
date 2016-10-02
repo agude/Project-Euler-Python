@@ -36,11 +36,11 @@ def roll_probability(s, n, k):
         raise ValueError("k is a not a non-negative integer")
 
     # Coefficient
-    coef = 1 / s**n
+    coef = 1. / s**n
 
     # Sum
     sum_terms = 0
-    ending_term = floor((k - n) / s)
+    ending_term = int(floor((k - n) / s))
     for i in range(0, ending_term + 1):
         term = 1
         term *= ((-1)**i) * combinatorics.n_choose_k(n, i)
