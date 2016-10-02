@@ -81,46 +81,41 @@ class PlayingCard(object):
         self.__set_number()
 
     def __set_suit(self):
-        if "C" in self.name:
-            self.suit = CardSuit.clubs
-        elif "D" in self.name:
-            self.suit = CardSuit.diamonds
-        elif "H" in self.name:
-            self.suit = CardSuit.hearts
-        elif "S" in self.name:
-            self.suit = CardSuit.spades
-        else:
-            raise ValueError("Suit is invalid")
+        suit_map = {
+            "C": CardSuit.clubs,
+            "D": CardSuit.diamonds,
+            "H": CardSuit.hearts,
+            "S": CardSuit.spades,
+        }
+        suit = self.name[1]
+
+        try:
+            self.suit = suit_map[suit]
+        except KeyError:
+            raise ValueError("Suit '" + suit + "' from '" + self.name + "' is invalid")
 
     def __set_number(self):
-        if "2" in self.name:
-            self.value = CardValue.two
-        elif "3" in self.name:
-            self.value = CardValue.three
-        elif "4" in self.name:
-            self.value = CardValue.four
-        elif "5" in self.name:
-            self.value = CardValue.five
-        elif "6" in self.name:
-            self.value = CardValue.six
-        elif "7" in self.name:
-            self.value = CardValue.seven
-        elif "8" in self.name:
-            self.value = CardValue.eight
-        elif "9" in self.name:
-            self.value = CardValue.nine
-        elif "T" in self.name:
-            self.value = CardValue.ten
-        elif "J" in self.name:
-            self.value = CardValue.jack
-        elif "Q" in self.name:
-            self.value = CardValue.queen
-        elif "K" in self.name:
-            self.value = CardValue.king
-        elif "A" in self.name:
-            self.value = CardValue.ace
-        else:
-            raise ValueError("Number is invalid")
+        value_map = {
+            "2": CardValue.two,
+            "3": CardValue.three,
+            "4": CardValue.four,
+            "5": CardValue.five,
+            "6": CardValue.six,
+            "7": CardValue.seven,
+            "8": CardValue.eight,
+            "9": CardValue.nine,
+            "T": CardValue.ten,
+            "J": CardValue.jack,
+            "Q": CardValue.queen,
+            "K": CardValue.king,
+            "A": CardValue.ace,
+        }
+        value = self.name[0]
+
+        try:
+            self.value = value_map[value]
+        except KeyError:
+            raise ValueError("Value '" + value + "' from '" + self.name + "' is invalid")
 
     def __repr__(self):
         return self.name
