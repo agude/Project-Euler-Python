@@ -1,0 +1,12 @@
+language: python
+
+python:
+  - "2.7"
+
+# Install requirements
+install: "pip install numpy enum34"
+
+# Run the unit tests
+script:
+    - cd python
+    - python -m pytest -v
