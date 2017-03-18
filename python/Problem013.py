@@ -227,9 +227,22 @@ NUMBERS_TO_SUM = (
     53503534226472524250874054075591789781264330331690,
 )
 
+def problem_013(number=10, numbers_to_sum=NUMBERS_TO_SUM):
+    from time import time
+
+    # Solution
+    start_time = time()
+
+    total = sum(numbers_to_sum)
+    digits = str(total)[:number]
+
+    end_time = time() - start_time
+    print(digits, 'in', end_time, 'secs')
+    return int(digits)
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
 
     # Optparse setup
@@ -242,11 +255,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    total = sum(NUMBERS_TO_SUM)
-    digits = str(total)[:NUM]
-
-    end_time = time() - start_time
-    print(digits, 'in', end_time, 'secs')
+    problem_013(NUM, NUMBERS_TO_SUM)
