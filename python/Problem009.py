@@ -29,29 +29,17 @@ There exists exactly one Pythagorean triplet for which a + b + c = 1000. Find
 the product abc.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
+def problem_009(number=1000):
     from time import time
-    from optparse import OptionParser
-
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS] -n NUM"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--num", action="store", type="int", dest="NUM", default=1000, help="find a, b, c such that a**2+b**2 == c**2 and a+b+c == NUM")
-
-    (options, args) = parser.parse_args()
-
-    # Constants
-    NUM = options.NUM
 
     # Solution
     start_time = time()
 
     # We make all possible Pythagorean triplets that satisfy the conditions
     run = True
-    for c in range(NUM - 3, 1, -1):
-        for b in range(NUM - c - 1, 1, -1):
-            a = NUM - b - c
+    for c in range(number - 3, 1, -1):
+        for b in range(number - c - 1, 1, -1):
+            a = number - b - c
             if not a < b < c or a < 0:
                 continue
             elif a ** 2 + b ** 2 == c ** 2:
@@ -64,3 +52,21 @@ if __name__ == '__main__':
     total_time = time() - start_time
 
     print(result, "=", a, "*", b, "*", c, 'in', total_time, 'secs')
+    return result
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS] -n NUM"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--num", action="store", type="int", dest="NUM", default=1000, help="find a, b, c such that a**2+b**2 == c**2 and a+b+c == NUM")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    NUM = options.NUM
+
+    problem_009(NUM)
