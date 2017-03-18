@@ -33,9 +33,27 @@ Find the difference between the sum of the squares of the first one hundred
 natural numbers and the square of the sum.
 """
 
+def problem_006(max_num=100):
+    from time import time
+
+    # Solution
+    start_time = time()
+
+    x = 0
+    x2 = 0
+    for i in range(max_num + 1): # We just brute force it
+        x += i
+        x2 += i * i
+
+    result = x * x - x2
+
+    total_time = time() - start_time
+    print(result, 'in', total_time, 'secs')
+    return result
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
 
     # Optparse setup
@@ -48,16 +66,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    x = 0
-    x2 = 0
-    for i in range(MAX + 1): # We just brute force it
-        x += i
-        x2 += i * i
-
-    result = x * x - x2
-
-    total_time = time() - start_time
-    print(result, 'in', total_time, 'secs')
+    problem_006(MAX)
