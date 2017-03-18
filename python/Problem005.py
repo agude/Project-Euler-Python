@@ -27,26 +27,14 @@ What is the smallest number that is evenly divisible by all of the numbers from
 1 to 20?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
+def problem_005(max_num=20):
     from time import time
-    from optparse import OptionParser
-
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS] -n MAX"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="MAX", default=20, help="answer must be divisible by 1, 2, 3 ... MAX")
-
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
 
     # Solution
     start_time = time()
 
     # Find the set of coprime numbers in our set
-    divs = [True] * MAX
+    divs = [True] * max_num
     for i in range(len(divs)):
         numi = i + 1
         for j in range(len(divs)):
@@ -77,3 +65,21 @@ if __name__ == '__main__':
 
     total_time = time() - start_time
     print(i, 'in', total_time, 'secs')
+    return i
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS] -n MAX"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="MAX", default=20, help="answer must be divisible by 1, 2, 3 ... MAX")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+
+    problem_005(MAX)
