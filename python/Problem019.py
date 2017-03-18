@@ -39,10 +39,33 @@ How many Sundays fell on the first of the month during the twentieth century (1
 Jan 1901 to 31 Dec 2000)?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
+
+def problem_019(start_year=1901, end_year=2000):
     from datetime import date
     from time import time
+
+    # Constant
+    SUNDAY = 6
+
+    # Solution
+    start_time = time()
+
+    # We simply loop over all the firsts of the month and check if they are
+    # Sunday (using datatime, which does all the hard work for us, but then,
+    # why wouldn't we take advatnage of it?)
+    answer = 0
+    for year in range(start_year, end_year + 1):
+        for month in range(1, 13):
+            if date(year, month, 1).weekday() is SUNDAY:
+                answer += 1
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
     from optparse import OptionParser
 
     # Optparse setup
@@ -56,19 +79,5 @@ if __name__ == '__main__':
     # Constants
     START_YEAR = options.START_YEAR
     END_YEAR = options.END_YEAR
-    SUNDAY = 6
 
-    # Solution
-    start_time = time()
-
-    # We simply loop over all the firsts of the month and check if they are
-    # Sunday (using datatime, which does all the hard work for us, but then,
-    # why wouldn't we take advatnage of it?)
-    answer = 0
-    for year in range(START_YEAR, END_YEAR + 1):
-        for month in range(1, 13):
-            if (date(year, month, 1).weekday() is SUNDAY):
-                answer += 1
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_019(START_YEAR, END_YEAR)
