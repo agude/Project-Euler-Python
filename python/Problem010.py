@@ -25,11 +25,24 @@ The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 Find the sum of all the primes below two million.
 """
 
+def problem_010(max_num=2000000):
+    from time import time
+    from euler.primes import prime_sieve
+
+    # Solution
+    start_time = time()
+
+    primes = prime_sieve(max_num - 1)
+
+    result = primes.sum()
+    total_time = time() - start_time
+    print(result, 'in', total_time, 'secs')
+    return result
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
-    from euler.primes import prime_sieve
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n MAX"
@@ -41,11 +54,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    primes = prime_sieve(MAX - 1)
-
-    result = primes.sum()
-    total_time = time() - start_time
-    print(result, 'in', total_time, 'secs')
+    problem_010(MAX)
