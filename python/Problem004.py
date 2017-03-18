@@ -19,6 +19,7 @@
 #  The most recent version of this program is available at:
 #  https://github.com/agude/Project-Euler
 
+
 """
 A palindromic number reads the same both ways. The largest palindrome made from
 the product of two 2-digit numbers is 9009 = 91 x 99.
@@ -26,30 +27,16 @@ the product of two 2-digit numbers is 9009 = 91 x 99.
 Find the largest palindrome made from the product of two 3-digit numbers.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
+def problem_004(min_num=100, max_num=999):
     from time import time
-    from optparse import OptionParser
     from euler.palindromic import is_palindromic
-
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS] -m MAX -n MIN"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-m", action="store", type="int", dest="MAX", default=999, help="find a palindromic number by multiplying numbers <= MAX")
-    parser.add_option("-n", action="store", type="int", dest="MIN", default=100, help="find a palindromic number by multiplying numbers >= MIN")
-
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
-    MIN = options.MIN
 
     # Solution
     start_time = time()
 
     maxnum = 0
-    for a in range(MAX, MIN, -1):
-        for b in range(a, MIN - 1, -1):
+    for a in range(max_num, min_num, -1):
+        for b in range(a, min_num - 1, -1):
             num = a * b
             if is_palindromic(num):
                 break
@@ -63,3 +50,23 @@ if __name__ == '__main__':
 
     total_time = time() - start_time
     print(maxnum, 'in', total_time, 'secs')
+    return maxnum
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS] -m MAX -n MIN"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-m", action="store", type="int", dest="MAX", default=999, help="find a palindromic number by multiplying numbers <= MAX")
+    parser.add_option("-n", action="store", type="int", dest="MIN", default=100, help="find a palindromic number by multiplying numbers >= MIN")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+    MIN = options.MIN
+
+    problem_004(MIN, MAX)
