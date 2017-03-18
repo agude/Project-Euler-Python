@@ -72,15 +72,21 @@ INPUT = (
     (4,  62, 98, 27, 23,  9, 70, 98, 73, 93, 38, 53, 60,  4, 23),
 )
 
-if __name__ == '__main__':
+
+def problem_018(input_graph=INPUT):
     from time import time
     from euler.graphs import PyramidGraph
 
     # Solution
     start_time = time()
 
-    pyramid = PyramidGraph(INPUT)
+    pyramid = PyramidGraph(input_graph)
     answer = pyramid.largest_sum()
 
     end_time = time() - start_time
     print(answer, "in", end_time, "secs")
+    return answer
+
+
+if __name__ == '__main__':
+    problem_018(INPUT)
