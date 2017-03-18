@@ -25,11 +25,25 @@ The prime factors of 13195 are 5, 7, 13 and 29.
 What is the largest prime factor of the number 600851475143?
 """
 
+def problem_003(number=600851475143):
+    from time import time
+    from euler.primes import prime_factors
+
+    # Solution
+    s = time()
+    start_time = time()
+
+    prime_factors = prime_factors(number)
+    max_prime = prime_factors[-1]
+
+    total_time = time() - start_time
+    print(max_prime, 'in', total_time, 'secs')
+    return max_prime
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.primes import prime_factors
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n NUM"
@@ -41,12 +55,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.num
 
-    # Solution
-    s = time()
-    start_time = time()
-
-    prime_factors = prime_factors(NUM)
-    max_prime = prime_factors[-1]
-
-    total_time = time() - start_time
-    print(max_prime, 'in', total_time, 'secs')
+    problem_003(NUM)
