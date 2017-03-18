@@ -26,10 +26,26 @@ the right and down, there are exactly 6 routes to the bottom right corner.
 How many such routes are there through a 20x20 grid?
 """
 
-if __name__ == '__main__':
+def problem_015(max_num=20):
     from euler.combinatorics import n_choose_k
-    from optparse import OptionParser
     from time import time
+
+    # Solution
+    start_time = time()
+
+    # We notice that we can encode a path as a binary number, where 1 means
+    # "right" and 0 means "down". Then paths must be of length 2n, and there
+    # must be n 1s and n 0s. Then to specify a path we just need to specify the
+    # location of the 1s. The number of ways we can do this is 2n choose n.
+
+    answer = n_choose_k(2 * max_num, max_num)
+    end_time = time() - start_time
+    print(answer, "in", end_time, "secs")
+    return answer
+
+
+if __name__ == '__main__':
+    from optparse import OptionParser
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -41,14 +57,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    # We notice that we can encode a path as a binary number, where 1 means
-    # "right" and 0 means "down". Then paths must be of length 2n, and there
-    # must be n 1s and n 0s. Then to specify a path we just need to specify the
-    # location of the 1s. The number of ways we can do this is 2n choose n.
-
-    answer = n_choose_k(2 * MAX, MAX)
-    end_time = time() - start_time
-    print(answer, "in", end_time, "secs")
+    problem_015(MAX)
