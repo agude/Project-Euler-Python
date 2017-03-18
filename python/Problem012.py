@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 #  Copyright (C) 2014  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
@@ -43,13 +43,26 @@ What is the value of the first triangle number to have over five hundred
 divisors?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
+def problem_012(number=500):
     from euler.factorization import number_of_factors
     from euler.polygonal import triangulars
-    from optparse import OptionParser
     from sys import exit
     from time import time
+
+    # Solution
+    start_time = time()
+
+    for triangular in triangulars():
+        length = number_of_factors(triangular)
+        if length >= number:
+            end_time = time() - start_time
+            print(triangular, 'in', end_time, 'secs')
+            return triangular
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n number"
@@ -61,12 +74,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    for triangular in triangulars():
-        length = number_of_factors(triangular)
-        if length >= NUM:
-            end_time = time() - start_time
-            print(triangular, 'in', end_time, 'secs')
-            exit()
+    problem_012(NUM)
