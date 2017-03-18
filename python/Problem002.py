@@ -28,12 +28,31 @@ Find the sum of all the even-valued terms in the sequence which do not exceed
 four million.
 """
 
+def problem_002(max_num=4000000):
+    from time import time
+    from euler.fibonacci import fibonacci_generator
+
+    # Solution
+    start_time = time()
+
+    # We compute all the Fibonacci numbers and check them
+    total = 0
+    for number in fibonacci_generator():
+        # Break when we hit the limit
+        if number > max_num:
+            break
+        # Add only if even
+        elif not number % 2:
+            total += number
+
+    end_time = time() - start_time
+    print(total, 'in', end_time, 'secs')
+    return total
+
 
 # Only runs if executed directly
 if __name__ == '__main__':
     from optparse import OptionParser
-    from time import time
-    from euler.fibonacci import fibonacci_generator
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n MAX"
@@ -45,18 +64,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    # We compute all the Fibonacci numbers and check them
-    total = 0
-    for number in fibonacci_generator():
-        # Break when we hit the limit
-        if number > MAX:
-            break
-        # Add only if even
-        elif not number % 2:
-            total += number
-
-    end_time = time() - start_time
-    print(total, 'in', end_time, 'secs')
+    problem_002(MAX)
