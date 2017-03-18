@@ -26,12 +26,36 @@ the 6th prime is 13.
 What is the 10001st prime number?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
+def problem_007(number=10001):
     from euler.primes import prime_sieve
     from math import log
-    from optparse import OptionParser
     from time import time
+
+    # Solution
+    start_time = time()
+
+    # We need an upper bound on the prime to use the fast sieve:
+    # P_n <= n * log(n) + n log(log(n)) for n >= 6
+    if number >= 6:
+        MAX = number * log(number) + number * log(log(number))
+        primes = prime_sieve(MAX)
+    elif number > 0:
+        primes = [2, 3, 5, 7, 11]
+    else:
+        primes = None
+
+    total_time = time() - start_time
+    if primes is not None:
+        print(primes[number - 1], 'in', total_time, 'secs')
+        return primes[number - 1]
+    else:
+        print(primes, 'in', total_time, 'secs')
+        return primes
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n NUM"
@@ -43,21 +67,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    # We need an upper bound on the prime to use the fast sieve:
-    # P_n <= n * log(n) + n log(log(n)) for n >= 6
-    if NUM >= 6:
-        MAX = NUM * log(NUM) + NUM * log(log(NUM))
-        primes = prime_sieve(MAX)
-    elif NUM > 0:
-        primes = [2, 3, 5, 7, 11]
-    else:
-        primes = None
-
-    total_time = time() - start_time
-    if primes is not None:
-        print(primes[NUM - 1], 'in', total_time, 'secs')
-    else:
-        print(primes, 'in', total_time, 'secs')
+    problem_007(NUM)
