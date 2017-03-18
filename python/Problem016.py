@@ -25,11 +25,24 @@
 What is the sum of the digits of the number 2**1000?
 """
 
+
+def problem_016(number=2**1000):
+    from euler.converter import int_to_tuple
+    from time import time
+
+    # Solution
+    start_time = time()
+
+    answer = sum(int_to_tuple(number))
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.converter import int_to_tuple
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n NUM"
@@ -41,10 +54,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    answer = sum(int_to_tuple(NUM))
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_016(NUM)
