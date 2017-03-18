@@ -26,10 +26,26 @@ get 3, 5, 6 and 9. The sum of these multiples is 23.
 Find the sum of all the multiples of 3 or 5 below 1000.
 """
 
+def problem_001(max_num=1000):
+    from time import time
+
+    # Solution
+    start_time = time()
+
+    # Generate the sets of numbers
+    threes = set(range(3, max_num, 3))
+    fives = set(range(5, max_num, 5))
+    all_nums = fives.union(threes)
+    total = sum(all_nums)
+
+    end_time = time() - start_time
+    print(total, 'in', end_time, 'secs')
+    return total
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n MAX"
@@ -41,14 +57,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    # Generate the sets of numbers
-    threes = set(range(3, MAX, 3))
-    fives = set(range(5, MAX, 5))
-    all_nums = fives.union(threes)
-    total = sum(all_nums)
-
-    end_time = time() - start_time
-    print(total, 'in', end_time, 'secs')
+    problem_001(MAX)
