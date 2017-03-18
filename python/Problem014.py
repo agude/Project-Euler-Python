@@ -38,19 +38,9 @@ Which starting number, under one million, produces the longest chain?
 NOTE: Once the chain starts the terms are allowed to go above one million.
 """
 
-if __name__ == '__main__':
-    from optparse import OptionParser
+
+def problem_014(max_num=1000000):
     from time import time
-
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=1000000, help="find the number that produces the longest chain searching from 0 to MAX")
-
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
 
     # Solution
     start_time = time()
@@ -61,7 +51,7 @@ if __name__ == '__main__':
     max_count = 0
     max_number = None
     # Check every number
-    for number in range(MAX, 2, -1):
+    for number in range(max_num, 2, -1):
         # Get chain length using the lookup table (it will exist if it has been computed before)
         count = 0
         try:
@@ -107,6 +97,22 @@ if __name__ == '__main__':
             max_number = number
 
     end_time = time() - start_time
-    if MAX < 100:
+    if max_num < 100:
         print(links_length)
     print(max_number, "with chain length", max_count, "in", end_time, "secs")
+    return max_number
+
+
+if __name__ == '__main__':
+    from optparse import OptionParser
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "-m", "--max", action="store", type="int", dest="MAX", default=1000000, help="find the number that produces the longest chain searching from 0 to MAX")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+
+    problem_014(MAX)
