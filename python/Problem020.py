@@ -28,12 +28,26 @@ digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
 Find the sum of the digits in the number 100!
 """
 
+from euler.converter import int_to_tuple
+from math import factorial
+from time import time
+
+
+def problem_020(num=100):
+    # Solution
+    start_time = time()
+
+    factorial_number = factorial(num)
+    answer = sum(int_to_tuple(factorial_number))
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.converter import int_to_tuple
-    from math import factorial
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n NUM"
@@ -45,11 +59,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    factorial_number = factorial(NUM)
-    answer = sum(int_to_tuple(factorial_number))
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_020(NUM)
