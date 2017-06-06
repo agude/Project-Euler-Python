@@ -35,7 +35,7 @@ the coefficients, -79 and 1601, is -126479.
 
 Considering quadratics of the form:
 
-n**2 + an + b, where |a| < 1000 and |b| < 1000
+n**2 + a*n + b, where |a| < 1000 and |b| < 1000
 
 where |n| is the modulus/absolute value of n e.g. |11| = 11 and |-4| = 4
 
@@ -44,11 +44,47 @@ that produces the maximum number of primes for consecutive values of n,
 starting with n = 0.
 """
 
+from euler.primes import is_prime
+from time import time
+
+
+def problem_027(a_max=1000, b_max=1000):
+    start_time = time()
+
+    best_result = [0, 0, 0]  # Count, a, b
+    for a in range(-a_max, a_max + 1):
+        for b in range(-b_max, b_max + 1):
+            # Count the number of primes generated
+            consecutive_primes = 0
+            n = 0
+            while is_prime(n*n + a*n + b):
+                consecutive_primes += 1
+                n += 1
+
+            # Save the result if it is better
+            if consecutive_primes > best_result[0]:
+                best_result[0] = consecutive_primes
+                best_result[1] = a
+                best_result[2] = b
+
+    # Report the result
+    end_time = time() - start_time
+
+    result = best_result[1] * best_result[2]
+    output_str = "{result} from n**2 + {a}*n + {b}, which yields {primes} primes, in {time} seconds".format(
+        result=result,
+        a=best_result[1],
+        b=best_result[2],
+        primes=best_result[0],
+        time=end_time,
+    )
+    print(output_str)
+    return result
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.primes import is_prime
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -62,23 +98,4 @@ if __name__ == '__main__':
     A_MAX = options.AMAX
     B_MAX = options.BMAX
 
-    # Solution
-    start_time = time()
-
-    best = 0
-    best_a = 0
-    best_b = 0
-    for a in range(-A_MAX, A_MAX + 1):
-        for b in range(-B_MAX, B_MAX + 1):
-            consecutive_primes = 0
-            n = 0
-            while is_prime(n*n + a*n + b):
-                consecutive_primes += 1
-                n += 1
-            if consecutive_primes > best:
-                best_a = a
-                best_b = b
-                best = consecutive_primes
-
-    end_time = time() - start_time
-    print(best, 'in', end_time, 'secs')
+    problem_027(A_MAX, B_MAX)
