@@ -35,38 +35,26 @@ Find the sum of all the numbers that can be written as the sum of fifth powers
 of their digits.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.converter import int_to_tuple
-    from optparse import OptionParser
-    from time import time
+from euler.converter import int_to_tuple
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-p", action="store", type="int", dest="POW", default=5, help="find the sum of all numbers that are the sum of their digits to the POW power")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    POW = options.POW
-
-    # Solution
+def problem_030(power=5):
     start_time = time()
 
     # Create a mapping of digits to power to speed the process (We could, of
     # course, use a list indexed by the digit, but this is the same speed and,
     # I feel, less clear than the explicit mapping a dictionary implies).
-    powered_digits = {i: i**POW for i in range(0, 10)}
+    powered_digits = {i: i**power for i in range(0, 10)}
 
-    # For a fixed POW, the largest number we'll need to sum is 9**POW. Then the
-    # largest number we can get from summing n digits like this is n *
-    # (9**POW). When the number of digits in this number is the same as N, we
+    # For a fixed power, the largest number we'll need to sum is 9**power. Then
+    # the largest number we can get from summing n digits like this is
+    # n * (9**power). When the number of digits in this number is the same as N, we
     # have found the largest number we'll need to check, as all larger numbers
     # are too big to be generated.
     n = 1
     while True:
-        stopping_point = n * (9 ** POW)
+        stopping_point = n * (9 ** power)
         if len(int_to_tuple(stopping_point)) <= n:
             break
         n += 1
@@ -78,8 +66,25 @@ if __name__ == '__main__':
         number_tuple = int_to_tuple(i)
         sum_of_digits = sum((powered_digits[i] for i in number_tuple))
         if sum_of_digits == i:
-            #print("Found a number:", i)
             total += sum_of_digits
 
     end_time = time() - start_time
     print(total, 'in', end_time, 'secs')
+    return total
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-p", action="store", type="int", dest="POW", default=5, help="find the sum of all numbers that are the sum of their digits to the POW power")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    POW = options.POW
+
+    problem_030(POW)
