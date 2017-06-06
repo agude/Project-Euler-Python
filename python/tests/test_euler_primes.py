@@ -134,10 +134,8 @@ def test_is_two_sided_prime(truncatable_primes):
     both = left.intersection(right)
 
     for prime in both:
-        print prime
         assert eu.is_two_sided_prime(prime)
 
     neither = left.symmetric_difference(right)
     for prime in neither:
-        print prime
         assert not eu.is_two_sided_prime(prime)

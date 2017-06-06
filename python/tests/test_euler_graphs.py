@@ -22,7 +22,6 @@ def test_largest_sum(pyramid):
 def test_getitem(pyramid):
     graph = pyramid[0]
     tup = pyramid[2]
-    print tup
     for i in range(len(tup)):
         assert graph[i] == tup[i]
 
