@@ -25,6 +25,12 @@ def test_prime_sieve(primes):
     assert test == primes
 
 
+def test_prime_sieve_float(primes):
+    max_num = float(primes[-1] + 1) + 0.5
+    test = tuple(eu.prime_sieve(max_num))
+    assert test == primes
+
+
 def test_primes(primes):
     test = []
     for prime in eu.primes():

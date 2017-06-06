@@ -28,7 +28,7 @@ What is the 10001st prime number?
 
 def problem_007(number=10001):
     from euler.primes import prime_sieve
-    from math import log
+    from math import log, ceil
     from time import time
 
     # Solution
@@ -37,7 +37,7 @@ def problem_007(number=10001):
     # We need an upper bound on the prime to use the fast sieve:
     # P_n <= n * log(n) + n log(log(n)) for n >= 6
     if number >= 6:
-        MAX = number * log(number) + number * log(log(number))
+        MAX = int(ceil(number * log(number) + number * log(log(number))))
         primes = prime_sieve(MAX)
     elif number > 0:
         primes = [2, 3, 5, 7, 11]

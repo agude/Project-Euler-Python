@@ -18,6 +18,8 @@ def prime_sieve(max_number):
     This function uses a sieve of Eratosthenes, and hence needs to store at
     least as many numbers in memory as max_number.
 
+    max_number is converted to an int using int(math.ceil(max_number)).
+
     Args:
         max_number (int): The largest number to test up to.
 
@@ -27,6 +29,9 @@ def prime_sieve(max_number):
     Raises:
         TypeError: max_number is not convertible to an integer.
     """
+    # max_number must be in int, so we ciel it. This guarntees that we do not
+    # cut off a number that the user cares about.
+    max_number = int(math.ceil(max_number))
     # An array of bools, we use the index to store if a number is prime or not
     is_prime = numpy.ones(max_number + 1, dtype=numpy.bool)
     is_prime[0] = is_prime[1] = False  # 0,1 not prime
