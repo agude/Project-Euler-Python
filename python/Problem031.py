@@ -32,9 +32,38 @@ It is possible to make $2 in the following way:
 How many different ways can $2 be made using any number of coins?
 """
 
+from time import time
+
+def problem_031(num=200):
+    start_time = time()
+
+    # If we want to know how many ways we can make change for a total price of
+    # 4p, then using 1p coins it is equal to the number of ways we can make
+    # change for 3p. For 2p as my coin it is equal to the number of ways we can
+    # make change for 2p, etc. We therefore make a list of all the ways you can
+    # make change for np (where n is the index) and use this to build the
+    # solutions at each level.
+    coin_values = [1, 2, 5, 10, 20, 50, 100, 200]
+    combinations = [1] + num * [0]
+
+    for coin_value in coin_values:
+        # We loop starting at coin_value (because anything smaller would not
+        # yield a positive number) and go until we hit the target value. The
+        # number of combinations at each level is incremented by the number of
+        # legal ways we've found so far to make change for the current value
+        # minus the value of the coin.
+        for target in range(coin_value, num + 1):
+            combinations[target] += combinations[target - coin_value]
+
+    answer = combinations[num]
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
 
     # Optparse setup
@@ -47,28 +76,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    # If we want to know how many ways we can make change for a total price of
-    # 4p, then using 1p coins it is equal to the number of ways we can make
-    # change for 3p. For 2p as my coin it is equal to the number of ways we can
-    # make change for 2p, etc. We therefore make a list of all the ways you can
-    # make change for np (where n is the index) and use this to build the
-    # solutions at each level.
-    coin_values = [1, 2, 5, 10, 20, 50, 100, 200]
-    combinations = [1] + NUM * [0]
-
-    for coin_value in coin_values:
-        # We loop starting at coin_value (because anything smaller would not
-        # yield a positive number) and go until we hit the target value. The
-        # number of combinations at each level is incremented by the number of
-        # legal ways we've found so far to make change for the current value
-        # minus the value of the coin.
-        for target in range(coin_value, NUM + 1):
-            combinations[target] += combinations[target - coin_value]
-
-    answer = combinations[NUM]
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_031(NUM)
