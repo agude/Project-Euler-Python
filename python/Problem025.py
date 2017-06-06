@@ -38,10 +38,26 @@ The 12th term, F_12, is the first term to contain three digits.
 What is the first term in the Fibonacci sequence to contain 1000 digits?
 """
 
+from time import time
+from euler.fibonacci import fibonacci_generator
+
+
+def problem_025(num=1000):
+    start_time = time()
+
+    term = -1
+    for number in fibonacci_generator():
+        term += 1
+        if len(str(number)) >= num:
+            break
+
+    end_time = time() - start_time
+    print(term, 'in', end_time, 'secs')
+    return term
+
+
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
-    from euler.fibonacci import fibonacci_generator
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -53,14 +69,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    term = -1
-    for number in fibonacci_generator():
-        term += 1
-        if len(str(number)) >= NUM:
-            break
-
-    end_time = time() - start_time
-    print(term, 'in', end_time, 'secs')
+    problem_025(NUM)
