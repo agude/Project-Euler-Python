@@ -40,45 +40,42 @@ Find the value of d  1000 for which 1/d contains the longest recurring cycle in
 its decimal fraction part.
 """
 
-from euler.countable import is_positive_integer
+from euler.fractions import cycle_length_prime
+from euler.primes import prime_sieve
+from time import time
 
 
-# Functions
-def cycle_length(number):
-    """ Return the length of cycle of repeating digits of 1/number.
+def problem_026(max_num=1000):
+    # Solution
+    start_time = time()
 
-    This function uses the fact that, for certain primes, the length is equal
-    to p where ((10 ** p) - 1) % number == 0.
+    # We look only at primes. If n has a cycle of length m, then so do all
+    # multiples of n. Therefore only primes have a chance at a new cycle
+    # length.
+    primes = prime_sieve(max_num)
 
-    Args:
-        number (int): The number to use to calculate the length of the cycle of
-            repeating digits in 1/number.
+    # We start at the end as the maximum cycle length is number - 1
+    biggest_cycle = 0
+    biggest_number = 0
+    for i in reversed(primes):
+        # Cycle is larger then remaining numbers, so their cycles must be
+        # shorter
+        if biggest_cycle >= i:
+            break
 
-    Returns:
-        int: The length of the cycle of repeating digits.
+        length = cycle_length_prime(i)
+        if length > biggest_cycle:
+            biggest_cycle = length
+            biggest_number = i
 
-    Raises:
-        ValueError: number is <= 0, or a non-integer, or is not convertible to
-        a float.
-    """
-    # Test that number is valid
-    if not is_positive_integer(number):
-        raise ValueError("input is not a positive intger")
-    # Otherwise test the number
-    d = 1
-    while True:
-        power = 10 ** d
-        if (power - 1) % number == 0:
-            return d
-        d += 1
-        if d == number:
-            return 0
+    end_time = time() - start_time
+    print(biggest_number, 'with cycle length', biggest_cycle, 'in', end_time, 'secs')
+    return biggest_number
+
 
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.primes import prime_sieve
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -90,27 +87,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    # We look only at primes. If n has a cycle of length m, then so do all
-    # multiples of n. Therefore only primes have a chance at a new cycle
-    # length.
-    primes = prime_sieve(MAX)
-
-    # We start at the end as the maximum cycle length is number - 1
-    biggest_cycle = 0
-    biggest_number = 0
-    for i in reversed(primes):
-        # Cycle is larger then remaining numbers, so their cycles must be
-        # shorter
-        if biggest_cycle >= i:
-            break
-
-        length = cycle_length(i)
-        if length > biggest_cycle:
-            biggest_cycle = length
-            biggest_number = i
-
-    end_time = time() - start_time
-    print(biggest_number, 'with cycle length', biggest_cycle, 'in', end_time, 'secs')
+    problem_026(MAX)
