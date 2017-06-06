@@ -31,31 +31,28 @@ What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5,
 6, 7, 8 and 9?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from math import factorial, floor
-    from optparse import OptionParser
-    from time import time
+from math import factorial, floor
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS] digits"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="NTH", default=1000000, help="find the Nth number in the permutations")
 
-    (options, args) = parser.parse_args()
-
+def problem_024(nth=1000000, args=None):
     # Set up input list of digits
-    if not args:
+    if args is None:
         digits = [int(i) for i in range(0, 10)]
     else:
         digits = [int(i) for i in args]
     digits.sort()
 
+    # If nth is too large, we will fail because there are not enough
+    # permutations
+    if factorial(len(digits)) < nth:
+        raise ValueError("nth is larger than the number of possible combinations")
+
     # Solution
     start_time = time()
 
     number = ""
-    target_num = options.NTH - 1  # -1 because the list is zero indexed
+    target_num = nth - 1  # -1 because the list is zero indexed
 
     # We figure out the Nth number by combinatorics. We know that the first
     # (N-1)!  numbers will start with 0, and then the next set of (N-1)! will
@@ -76,3 +73,21 @@ if __name__ == '__main__':
     end_time = time() - start_time
 
     print(number, 'in', end_time, 'secs')
+    return number
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS] digits"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="NTH", default=1000000, help="find the Nth number in the permutations")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    NTH = options.NTH
+
+    problem_024(NTH, args)
