@@ -33,11 +33,39 @@ and 110; therefore d(220) = 284. The proper divisors of 284 are 1, 2, 4, 71 and
 Evaluate the sum of all the amicable numbers under 10000.
 """
 
+from euler.factorization import proper_factors
+from time import time
+
+
+def problem_021(num=10000):
+    # Solution
+    start_time = time()
+
+    # We run through all numbers and test to see if they are amicable. If they
+    # are, we add them to a set and use this to reject duplicates.
+    pairs = set([])
+    for number in range(1, num):
+        if number not in pairs:
+            number_to_check = sum(proper_factors(number))
+            # We have already checked all numbers smaller than our number. This
+            # also correctly rejects perfect numbers (numbers where d(n) = n).
+            if number_to_check > number:
+                is_amicable = sum(proper_factors(number_to_check)) == number
+                if is_amicable:
+                    pairs.add(number)
+                    pairs.add(number_to_check)
+
+    # Finally sum our amicable numbers to get the answer
+    answer = sum(pairs)
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
-    from euler.factorization import proper_factors
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n number"
@@ -49,24 +77,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    # We run through all numbers and test to see if they are amicable. If they
-    # are, we add them to a set and use this to reject duplicates.
-    pairs = set([])
-    for number in range(1, NUM):
-        if number not in pairs:
-            number_to_check = sum(proper_factors(number))
-            # We have already checked all numbers smaller than our number. This
-            # also correctly rejects perfect numbers (numbers where d(n) = n).
-            if number_to_check > number:
-                if sum(proper_factors(number_to_check)) == number:
-                    pairs.add(number)
-                    pairs.add(number_to_check)
-
-    # Finally sum our amicable numbers to get the answer
-    answer = sum(pairs)
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_021(NUM)
