@@ -44,28 +44,35 @@ that produces the maximum number of primes for consecutive values of n,
 starting with n = 0.
 """
 
-from euler.primes import is_prime
+from euler.primes import is_prime, prime_sieve
 from time import time
 
 
 def problem_027(a_max=1000, b_max=1000):
     start_time = time()
 
+    # We are limited (as shown in the example above with 41) by b. It should be
+    # prime to maximize the number of primes generated.
+    primes = prime_sieve(b_max + 1)
+
     best_result = [0, 0, 0]  # Count, a, b
     for a in range(-a_max, a_max + 1):
-        for b in range(-b_max, b_max + 1):
-            # Count the number of primes generated
-            consecutive_primes = 0
-            n = 0
-            while is_prime(n*n + a*n + b):
-                consecutive_primes += 1
-                n += 1
+        for b in primes:
+            # We must try both -b, and b
+            for multiple in (-1, 1):
+                test_b = multiple * b
+                # Count the number of primes generated
+                consecutive_primes = 0
+                n = 0
+                while is_prime(n*n + a*n + test_b):
+                    consecutive_primes += 1
+                    n += 1
 
-            # Save the result if it is better
-            if consecutive_primes > best_result[0]:
-                best_result[0] = consecutive_primes
-                best_result[1] = a
-                best_result[2] = b
+                # Save the result if it is better
+                if consecutive_primes > best_result[0]:
+                    best_result[0] = consecutive_primes
+                    best_result[1] = a
+                    best_result[2] = test_b
 
     # Report the result
     end_time = time() - start_time
