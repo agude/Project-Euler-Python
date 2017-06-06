@@ -39,14 +39,12 @@ Find the sum of all the positive integers which cannot be written as the sum of
 two abundant numbers.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from time import time
-    from optparse import OptionParser
-    from euler.factorization import proper_factors
-    from bisect import insort
+from bisect import insort
+from euler.factorization import proper_factors
+from time import time
 
-    # Constants
+
+def problem_023():
     # All numbers > 28123 are the sum of two abundant
     LARGEST_NUMBER = 28123
 
@@ -77,3 +75,9 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    problem_023()
