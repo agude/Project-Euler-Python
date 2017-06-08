@@ -33,12 +33,11 @@ If the product of these four fractions is given in its lowest common terms,
 find the value of the denominator.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from fractions import Fraction
-    from time import time
+from fractions import Fraction
+from time import time
 
-    # Solution
+
+def problem_033():
     start_time = time()
 
     # We brute force the solution. Since we know that two of the numbers must
@@ -63,4 +62,9 @@ if __name__ == '__main__':
     fraction = Fraction(total_numerator, total_denominator)
 
     end_time = time() - start_time
-    print(fraction, 'in', end_time, 'secs')
+    print(fraction.denominator, 'in', end_time, 'secs')
+    return fraction.denominator
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    problem_033()
