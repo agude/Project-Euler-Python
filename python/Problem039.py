@@ -28,21 +28,13 @@ If p is the perimeter of a right angle triangle with integral length sides,
 For which value of p <= 1000, is the number of solutions maximised?
 """
 
-if __name__ == '__main__':
-    from euler.countable import is_integer
-    from math import sqrt
-    from optparse import OptionParser
-    from time import time
+from euler.countable import is_integer
+from math import sqrt
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="MAX", default=1000, help="find the perimeter that maximizes number of right triangles up to MAX")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
+def problem_039(max_num=1000):
+    start_time = time()
 
     # We note that are three cases:
     #  a even, b even -> c even -> p even
@@ -56,13 +48,10 @@ if __name__ == '__main__':
     # c > a or b, hence p / 2 > c or a or b, so a and be need only run up
     # to p/2
 
-    # Solution
-    start_time = time()
-
     best_parameter = 0
     best_combos = 0
     # Remember we need only check even values
-    for parameter in range(12, MAX+1, 2):  # 12 is smallest perimeter
+    for parameter in range(12, max_num+1, 2):  # 12 is smallest perimeter
         half_parameter = parameter // 2
         combos = 0
         # a, b, and c are constrained to be less than half of the parameter
@@ -72,7 +61,7 @@ if __name__ == '__main__':
             b_max = min(parameter - a, half_parameter)
             for b in range(a, b_max):
                 c = sqrt(a * a + b * b)
-                # Checking a + b + c == parameter is faster than the interger
+                # Checking a + b + c == parameter is faster than the integer
                 # check, so we put it first
                 if a + b + c == parameter and is_integer(c):
                     combos += 1
@@ -83,3 +72,20 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(best_parameter, 'in', end_time, 'secs')
+    return best_parameter
+
+
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="MAX", default=1000, help="find the perimeter that maximizes number of right triangles up to MAX")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+
+    problem_039(MAX)
