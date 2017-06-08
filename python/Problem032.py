@@ -33,33 +33,22 @@ HINT: Some products can be obtained in more than one way so be sure to only
 include it once in your sum.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.converter import int_to_tuple, iterable_to_int
-    from euler.pandigital import pandigitals
-    from optparse import OptionParser
-    from time import time
+from euler.converter import int_to_tuple, iterable_to_int
+from euler.pandigital import pandigitals
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS] -n MAX"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="DIGITS", default=9, help="check only pandigital numbers with this number of digits")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    DIGITS = options.DIGITS
-
-    # Solution
+def problem_032(digits=9):
     start_time = time()
 
     # We make a list of every single pandigital number with the requested
     # number of  digits or less, and all of the number - 1 or less. We subtract
     # the sets to get only pandigitals with the right number of digits.
     products = set([])
-    all_pandigitals = set(pandigitals(maximum_digits=DIGITS))
-    some_pandigitals = set(pandigitals(maximum_digits=DIGITS-1))
+    all_pandigitals = set(pandigitals(maximum_digits=digits))
+    some_pandigitals = set(pandigitals(maximum_digits=digits-1))
     pandigitals_to_check = all_pandigitals - some_pandigitals
+
     # For each 9 digit pandigital we check every possible combination of
     # multiplicand, multiplier, and product by moving the * and = through the
     # number from left to right, insure that the = is always ahead of the *
@@ -85,3 +74,21 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS] -n MAX"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="DIGITS", default=9, help="check only pandigital numbers with this number of digits")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    DIGITS = options.DIGITS
+
+    problem_032(DIGITS)
