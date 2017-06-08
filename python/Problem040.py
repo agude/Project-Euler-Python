@@ -19,7 +19,7 @@
 #  The most recent version of this program is available at:
 #  https://github.com/agude/Project-Euler
 
-""" 
+"""
 An irrational decimal fraction is created by concatenating the positive
 integers:
 
@@ -33,11 +33,10 @@ following expression.
     d_1 *  d_10 *  d_100 * d_1000 *  d_10000 * d_100000 * d_1000000
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from time import time
+from time import time
 
-    # Solution
+
+def problem_040():
     start_time = time()
 
     # Generate the number as a string for easy slicing
@@ -51,3 +50,9 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    problem_040()
