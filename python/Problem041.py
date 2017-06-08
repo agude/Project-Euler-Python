@@ -27,13 +27,31 @@ also prime.
 What is the largest n-digit pandigital prime that exists?
 """
 
+from euler.pandigital import pandigitals
+from euler.primes import is_prime
+from time import time
+
+
+def problem_041(nth=9):
+    start_time = time()
+
+    # Get all the pandigitals numbers (there are fewer pandigitals than primes)
+    # and test them for primality
+    pandigital_tuple = tuple(pandigitals(maximum_digits=nth))
+    for test_number in reversed(pandigital_tuple):
+        if is_prime(test_number):
+            answer = test_number
+            break
+
+    end_time = time() - start_time
+
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
 
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.pandigital import pandigitals
-    from euler.primes import is_prime
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -45,17 +63,4 @@ if __name__ == '__main__':
     # Read in options
     NTH = options.NTH
 
-    # Solution
-    start_time = time()
-
-    # Get all the pandigitals numbers (there are fewer pandigitals than primes)
-    # and test them for primality
-    pandigital_tuple = tuple(pandigitals(maximum_digits=NTH))
-    for test_number in reversed(pandigital_tuple):
-        if is_prime(test_number):
-            answer = test_number
-            break
-
-    end_time = time() - start_time
-
-    print(answer, 'in', end_time, 'secs')
+    problem_041(NTH)
