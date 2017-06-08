@@ -20,7 +20,7 @@
 #  https://github.com/agude/Project-Euler
 
 """
-The decimal number, 585 = 10010010012 (binary), is palindromic in both bases.
+The decimal number, 585 = 1001001001 (binary), is palindromic in both bases.
 
 Find the sum of all numbers, less than one million, which are palindromic in
 base 10 and base 2.
@@ -29,11 +29,28 @@ base 10 and base 2.
 leading zeros.)
 """
 
+from euler.palindromic import is_palindromic, is_binary_palindromic
+from time import time
+
+
+def problem_036(num=1000000):
+    start_time = time()
+
+    # We search all numbers and check them
+    answer_numbers = []
+    for i in range(1, num):
+        if is_palindromic(i) and is_binary_palindromic(i):
+            answer_numbers.append(i)
+
+    answer = sum(answer_numbers)
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
-    from euler.palindromic import is_palindromic, is_binary_palindromic
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n NUM"
@@ -45,16 +62,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    # We search all numbers and check them
-    answer_numbers = []
-    for i in range(1, NUM):
-        if is_palindromic(i) and is_binary_palindromic(i):
-            answer_numbers.append(i)
-
-    answer = sum(answer_numbers)
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_036()
