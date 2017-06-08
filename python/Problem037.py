@@ -31,18 +31,18 @@ right and right to left.
 NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
 """
 
-if __name__ == '__main__':
-    from time import time
-    from euler.primes import is_left_truncatable_prime as is_ltp
-    from euler.primes import is_right_truncatable_prime as is_rtp
+from time import time
+from euler.primes import is_left_truncatable_prime as is_ltp
+from euler.primes import is_right_truncatable_prime as is_rtp
+
+
+def problem_037():
+    start_time = time()
 
     # Right/Left Truncatable Primes (RTP/LTP) are a proper superset of
     # Truncatable Primes (TP). The union of RTP and LTP is equal to TP. The
     # size of RTP is much smaller than LTP, so we calculate that first, and
     # then find the union with LTP
-
-    # Solution
-    start_time = time()
 
     # All RTPs must end with a single digit prime
     starts = ('2', '3', '5', '7')
@@ -74,3 +74,7 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+if __name__ == '__main__':
+    problem_037()
