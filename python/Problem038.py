@@ -37,25 +37,23 @@ What is the largest 1 to 9 pandigital 9-digit number that can be formed as the
 concatenated product of an integer with (1,2, ... , n) where n  1?
 """
 
+from euler.pandigital import is_pandigital
+from euler.primes import is_prime
+from time import time
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.pandigital import is_pandigital
-    from euler.primes import is_prime
-    from time import time
 
-    # Solution
+def problem_038():
     start_time = time()
 
     # The fixed_number must start with 9 since we are given that the number is
     # larger than 918273645. Then we have the following cases for the length of
     # the fixed_number:
     #
-    #     * 1 Digit: Already tried in the example
-    #     * 2 Digit: Multiplication leads to an output with 2, 5, 8, 11 digits
-    #     * 3 Digit: Multiplication leads to an output with 3, 7, 11 digits
-    #     * 4 Digit: Multiplication leads to an output with 4, 9 digits
-    #     * 5 Digit: Multiplication leads to an output with 5, 11 digits
+    #     - 1 Digit: Already tried in the example
+    #     - 2 Digit: Multiplication leads to an output with 2, 5, 8, 11 digits
+    #     - 3 Digit: Multiplication leads to an output with 3, 7, 11 digits
+    #     - 4 Digit: Multiplication leads to an output with 4, 9 digits
+    #     - 5 Digit: Multiplication leads to an output with 5, 11 digits
     #
     # Therefore only the 4 digit case is possible as only it yields a case with
     # 9 digits. Further we now know that we have to multiple only by (1, 2).
@@ -72,3 +70,9 @@ if __name__ == '__main__':
     end_time = time() - start_time
 
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    problem_038()
