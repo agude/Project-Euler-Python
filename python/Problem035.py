@@ -30,28 +30,15 @@ There are thirteen such primes below 100:
 How many circular primes are there below one million?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from collections import deque
-    from euler.converter import int_to_tuple, iterable_to_int
-    from euler.primes import prime_sieve, circular_primes
-    from optparse import OptionParser
-    from time import time
+from euler.primes import prime_sieve, circular_primes
+from optparse import OptionParser
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS] -n number"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--number", action="store", type="int", dest="NUM", default=1000000, help="find the number of circular primes below NUM.")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    NUM = options.NUM
-
-    # Solution
+def problem_035(num=1000000):
     start_time = time()
 
-    primes = set(prime_sieve(NUM - 1))
+    primes = set(prime_sieve(num - 1))
     final_primes = set([])
     for prime in primes:
         # Avoid double counting sets
@@ -67,3 +54,20 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS] -n number"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--number", action="store", type="int", dest="NUM", default=1000000, help="find the number of circular primes below NUM.")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    NUM = options.NUM
+
+    problem_035(NUM)
