@@ -26,9 +26,25 @@ Find the last ten digits of the series:
     1^(1) + 2^(2) + 3^(3) + ... + 1000^(1000)
 """
 
+from time import time
+
+
+def problem_048(num=1000):
+    start_time = time()
+
+    # No tricks, we just compute the number and grab the last 10 digits
+    sum_of_squares = sum((i ** i for i in range(1, num + 1)))
+
+    number_string = str(sum_of_squares)
+    answer = int(number_string[-10:])
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from time import time
     from optparse import OptionParser
 
     # Optparse setup
@@ -41,14 +57,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    # No tricks, we just compute the number and grab the last 10 digits
-    sum_of_squares = sum((i ** i for i in range(1, NUM + 1)))
-
-    number_string = str(sum_of_squares)
-    answer = int(number_string[-10:])
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_048(NUM)
