@@ -34,29 +34,16 @@ Which prime, below one-million, can be written as the sum of the most
 consecutive primes?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
+from time import time
+from euler.primes import prime_sieve
+from sys import exit
 
-    from time import time
-    from optparse import OptionParser
-    from euler.primes import prime_sieve
-    from sys import exit
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="MAX", default=1000000, help="find the prime below NUM that can be writen as the sum of the most consecutive primes")
-
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
-
-    # Solution
+def problem_050(max_num=1000000):
     start_time = time()
 
     # Get the primes
-    primes = prime_sieve(MAX)
+    primes = prime_sieve(max_num)
     prime_set = set(primes)
     number_of_primes = len(primes)
 
@@ -67,7 +54,7 @@ if __name__ == '__main__':
     max_length = 0
     for i in range(len(primes)):
         total += primes[i]
-        if total > MAX:
+        if total > max_num:
             break
         max_length += 1
 
@@ -87,7 +74,7 @@ if __name__ == '__main__':
             # primes, we know that as soon as the sum exceeds our max, all
             # further sums of this many digits will too.
             # break
-            if test_num > MAX:
+            if test_num > max_num:
                 break
             # As soon as we find one prime, we are done
             if test_num in prime_set:
@@ -97,3 +84,22 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, "from summing", number_to_sum, "primes in", end_time, "secs")
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="MAX", default=1000000, help="find the prime below NUM that can be writen as the sum of the most consecutive primes")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+
+    problem_050(MAX)
