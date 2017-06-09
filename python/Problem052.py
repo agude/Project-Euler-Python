@@ -27,11 +27,53 @@ Find the smallest positive integer, x, such that 2x, 3x, 4x, 5x, and 6x,
 contain the same digits.
 """
 
+from time import time
+from sys import exit
+
+
+def check_multiples(input_number, n):
+    """Give an input number, checks if the first n multiples hav the same
+    digits.
+
+    Args:
+        input_number (int): Number to check.
+        n (int): Number of multiples to check.
+
+    Returns:
+        bool: True if the first n multiples all have the same digits as the
+            input_number.
+    """
+    starting_digits = str(input_number)
+
+    # Compute the multiples
+    for multiple in range(2, n + 1):
+        # Make sure we have the same digits
+        test_number = str(input_number * multiple)
+        for digit in test_number:
+            if digit not in starting_digits:
+                return False
+
+    return True
+
+
+def problem_052(n=6):
+    start_time = time()
+
+    # Brute force numbers
+    answer = 0
+    found_answer = False
+    while not found_answer:
+        answer += 1
+        found_answer = check_multiples(answer, n)
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
     from optparse import OptionParser
-    from time import time
-    from sys import exit
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -43,27 +85,4 @@ if __name__ == '__main__':
     # Read in options
     N = options.n
 
-    # Solution
-    start_time = time()
-
-    # Brute force numbers
-    answer = 0
-    while True:
-        answer += 1
-        starting_digits = str(answer)
-        loop = True
-        # Compute the multiples
-        for multiple in range(2, N + 1):
-            if not loop:
-                break
-            # Make sure we have the same digits
-            test_number = str(answer * multiple)
-            for digit in test_number:
-                if digit not in starting_digits:
-                    loop = False
-                    break
-        if loop:
-            # We're done
-            end_time = time() - start_time
-            print(answer, 'in', end_time, 'secs')
-            exit(0)
+    problem_052(N)
