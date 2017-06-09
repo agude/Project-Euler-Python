@@ -37,7 +37,12 @@ Using words.txt, a 16K text file containing nearly two-thousand common English
 words, how many are triangle words?
 """
 
-words = (
+from euler.polygonal import is_triangular
+from string import ascii_lowercase
+from time import time
+
+
+WORDS = (
     "A",
     "ABILITY",
     "ABLE",
@@ -1826,51 +1831,32 @@ words = (
     "YOUTH",
 )
 
-points = {
-    'A': 1, 'a': 1,
-    'B': 2, 'b': 2,
-    'C': 3, 'c': 3,
-    'D': 4, 'd': 4,
-    'E': 5, 'e': 5,
-    'F': 6, 'f': 6,
-    'G': 7, 'g': 7,
-    'H': 8, 'h': 8,
-    'I': 9, 'i': 9,
-    'J': 10, 'j': 10,
-    'K': 11, 'k': 11,
-    'L': 12, 'l': 12,
-    'M': 13, 'm': 13,
-    'N': 14, 'n': 14,
-    'O': 15, 'o': 15,
-    'P': 16, 'p': 16,
-    'Q': 17, 'q': 17,
-    'R': 18, 'r': 18,
-    'S': 19, 's': 19,
-    'T': 20, 't': 20,
-    'U': 21, 'u': 21,
-    'V': 22, 'v': 22,
-    'W': 23, 'w': 23,
-    'X': 24, 'x': 24,
-    'Y': 25, 'y': 25,
-    'Z': 26, 'z': 26
-}
+# The points for each letter is the letter's position in the alphabet, so we
+# create a mapping of letter to position to make the lookup fast.
+POINTS = {}
+for i, char in enumerate(ascii_lowercase):
+    score = i + 1
+    POINTS[char] = score
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from time import time
-    from euler.polygonal import is_triangular
 
-    # Solution
+def problem_042():
     start_time = time()
 
-    ## Find the number of words with certain scores:
+    # Find the number of words with certain scores:
     answer = 0
-    for word in words:
+    for word in WORDS:
         # Computer the score based on the letters
-        score = sum((points[letter] for letter in word))
+        score = sum((POINTS[letter.lower()] for letter in word))
         # Check if the score is triangular
         if is_triangular(score):
             answer += 1
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_042()
