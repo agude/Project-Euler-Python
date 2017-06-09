@@ -32,12 +32,12 @@ It can be verified that T285 = P165 = H143 = 40755.
 Find the next triangle number that is also pentagonal and hexagonal.
 """
 
-if __name__ == '__main__':
-    from time import time
-    from math import sqrt
-    from euler.polygonal import hexagonals, is_pentagonal
+from time import time
+from math import sqrt
+from euler.polygonal import hexagonals, is_pentagonal
 
-    # Solution
+
+def problem_045():
     start_time = time()
 
     # We compute Hexoginal numbers as there are fewer. We note that all
@@ -50,3 +50,9 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+if __name__ == '__main__':
+
+    problem_045()
