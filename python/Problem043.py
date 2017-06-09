@@ -38,13 +38,12 @@ the following:
 Find the sum of all 0 to 9 pandigital numbers with this property.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from time import time
-    from euler.pandigital import pandigitals
-    from euler.converter import iterable_to_int, int_to_tuple
+from time import time
+from euler.pandigital import pandigitals
+from euler.converter import iterable_to_int, int_to_tuple
 
-    # Solution
+
+def problem_043():
     start_time = time()
 
     # Hardcoded first digit, last digit + 1, and the prime number to compare to
@@ -74,3 +73,10 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, "in", end_time, "secs")
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_043()
