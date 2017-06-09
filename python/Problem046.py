@@ -35,8 +35,10 @@ What is the smallest odd composite that cannot be written as the sum of a prime
 and twice a square?
 """
 
-from math import sqrt
 from euler.countable import is_integer
+from euler.primes import primes
+from math import sqrt
+from time import time
 
 
 def is_counterexample(number, primes):
@@ -82,14 +84,7 @@ def is_counterexample(number, primes):
     return True
 
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.converter import int_to_tuple
-    from euler.primes import primes
-    from time import time
-    from sys import exit
-
-    # Solution
+def problem_046():
     start_time = time()
 
     last_prime = 2
@@ -103,7 +98,13 @@ if __name__ == '__main__':
             if is_counterexample(composite, prime_list):
                 end_time = time() - start_time
                 print(composite, 'in', end_time, 'secs')
-                exit()
+                return composite
         # No counter example yet, move on to the next prime and set the current
         # one to the lower bound.
         last_prime = prime
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_046()
