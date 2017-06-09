@@ -32,27 +32,17 @@ What 12-digit number do you form by concatenating the three terms in this
 sequence?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.converter import int_to_tuple, iterable_to_int
-    from euler.primes import prime_sieve
-    from optparse import OptionParser
-    from time import time
+from euler.converter import int_to_tuple, iterable_to_int
+from euler.primes import prime_sieve
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="NUM", default=4, help="check NUM-digit primes for a sequence")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    NUM = options.NUM
-    MIN = 10 ** (NUM - 1)
-    MAX = (10 ** NUM) - 1
-
-    # Solution
+def problem_049(num=4):
     start_time = time()
+
+    # Only search numbers with the correct number of digits
+    MIN = 10 ** (num - 1)
+    MAX = (10 ** num) - 1
 
     # Make a set of primes from MIN to MAX
     primes = prime_sieve(MAX)
@@ -96,3 +86,21 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="NUM", default=4, help="check NUM-digit primes for a sequence")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    NUM = options.NUM
+
+    problem_049(NUM)
