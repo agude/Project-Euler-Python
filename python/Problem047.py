@@ -35,11 +35,57 @@ Find the first four consecutive integers to have four distinct prime factors.
 What is the first of these numbers?
 """
 
+from time import time
+from euler.primes import prime_factors
+
+
+def problem_047(num=4):
+    start_time = time()
+
+    # We brute force search to find the answer
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    count = num
+    # The start number can't possibly be smaller than the product of the first
+    # num primes, or else it fails our first test
+    current_number = 1
+    for i, prime in enumerate(primes):
+        if i >= count:
+            break
+        current_number *= primes[i]
+    print(current_number)
+    previous_matches = 0
+    start_number = None
+    answer = None
+    while True:
+        factors = prime_factors(current_number)
+        number_of_unique_factors = len(set(factors))
+        # If the number has the right number of factors, increase by 1 the
+        # number of consecutive numbers with this property seen. If it does
+        # not, then reset the count.
+        if number_of_unique_factors == num:
+            previous_matches += 1
+            if previous_matches == 1:
+                start_number = current_number
+        else:
+            previous_matches = 0
+            start_number = None
+
+        # If we have as many numbers as we are looking for, end
+        if previous_matches == num:
+            answer = start_number
+            break
+
+        # Otherwise keep iterating
+        current_number += 1
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
     from optparse import OptionParser
-    from time import time
-    from euler.primes import prime_factors
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -51,35 +97,4 @@ if __name__ == '__main__':
     # Constants
     NUM = options.NUM
 
-    # Solution
-    start_time = time()
-
-    # We brute force search to find the answer
-    current_number = 2
-    previous_matches = 0
-    start_number = None
-    answer = None
-    while True:
-        factors = prime_factors(current_number)
-        number_of_unique_factors = len(set(factors))
-        # If the number has the right number of factors, increase by 1 the
-        # number of consecutive numbers with this property seen. If it does
-        # not, then reset the count.
-        if number_of_unique_factors == NUM:
-            previous_matches += 1
-            if previous_matches == 1:
-                start_number = current_number
-        else:
-            previous_matches = 0
-            start_number = None
-
-        # If we have as many numbers as we are looking for, end
-        if previous_matches == NUM:
-            answer = start_number
-            break
-
-        # Otherwise keep iterating
-        current_number += 1
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_047(NUM)
