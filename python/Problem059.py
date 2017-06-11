@@ -46,6 +46,12 @@ codes, and the knowledge that the plain text must contain common English words,
 decrypt the message and find the sum of the ASCII values in the original text.
 """
 
+from euler.words import is_basic_word
+from string import ascii_lowercase
+from itertools import product
+from time import time
+
+
 CIPHER_TEXT = (
     79, 59, 12, 2, 79, 35, 8, 28, 20, 2, 3, 68, 8, 9, 68, 45, 0, 12, 9, 67, 68,
     4, 7, 5, 23, 27, 1, 21, 79, 85, 78, 79, 85, 71, 38, 10, 71, 27, 12, 2, 79,
@@ -109,14 +115,8 @@ CIPHER_TEXT = (
     73,
 )
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.words import is_basic_word
-    from string import ascii_lowercase
-    from itertools import product
-    from time import time
 
-    # Solution
+def problem_059(cipher_text=CIPHER_TEXT):
     start_time = time()
 
     # We brute force all possible decryption keys, try them, and then look for
@@ -135,7 +135,7 @@ if __name__ == '__main__':
         i = -1
 
         # Decode using our key
-        for encrypted_char in CIPHER_TEXT:
+        for encrypted_char in cipher_text:
             i = (i + 1) % 3
             key_element = ascii_code_key[i]
             decrypted_ascii_code = encrypted_char ^ key_element
@@ -166,3 +166,10 @@ if __name__ == '__main__':
     print(best_text)
     print()
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_059(CIPHER_TEXT)
