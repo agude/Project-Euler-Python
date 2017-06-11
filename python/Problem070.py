@@ -33,28 +33,16 @@ Find the value of n, 1 < n < 10**7, for which phi(n) is a permutation of n and
 the ratio n/phi(n) produces a minimum.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.converter import int_to_tuple
-    from euler.totient import totient_sieve
-    from optparse import OptionParser
-    from time import time
+from euler.converter import int_to_tuple
+from euler.totient import totient_sieve
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="MAX", default=int(10**7), help="find the lowest n / phi where phi and n are permutations of each other from 2 to MAX")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
-
-    # Solution
+def problem_070(max_num=int(10**7)):
     start_time = time()
 
     # Calculate all the totients
-    totients = totient_sieve(MAX)
+    totients = totient_sieve(max_num)
 
     # Loop through all of them and find all pairs such that phi is a permutation
     # of the digits of n. For these, save the one with the lowest ratio
@@ -72,3 +60,21 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(min_n, 'in', end_time, 'secs')
+    return min_n
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="MAX", default=int(10**7), help="find the lowest n / phi where phi and n are permutations of each other from 2 to MAX")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+
+    problem_070(MAX)
