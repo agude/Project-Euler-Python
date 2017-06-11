@@ -42,23 +42,11 @@ side length of the square spiral for which the ratio of primes along both
 diagonals first falls below 10%?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.primes import is_prime
-    from optparse import OptionParser
-    from time import time
+from euler.primes import is_prime
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--number", action="store", type="float", dest="NUM", default=0.1, help="find when the percent of primes first falls below NUM")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    NUM = options.NUM
-
-    # Solution
+def problem_058(threshold=0.1):
     start_time = time()
 
     # We can generate just the diagonals by noting that the corners are each
@@ -85,9 +73,27 @@ if __name__ == '__main__':
 
         # Add the new numbers to the list and check the new ratio
         diagonals += new_numbers
-        if number_of_primes / len(diagonals) <= NUM:
+        if number_of_primes / len(diagonals) <= threshold:
             answer = side_length
             break
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--number", action="store", type="float", dest="NUM", default=0.1, help="find when the percent of primes first falls below NUM")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    NUM = options.NUM
+
+    problem_058(NUM)
