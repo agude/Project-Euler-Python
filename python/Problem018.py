@@ -54,6 +54,10 @@ containing one-hundred rows; it cannot be solved by brute force, and requires a
 clever method! ;o)
 """
 
+from euler.graphs import PyramidGraph
+from time import time
+
+
 INPUT = (
     (75,),
     (95, 64),
@@ -74,10 +78,6 @@ INPUT = (
 
 
 def problem_018(input_graph=INPUT):
-    from time import time
-    from euler.graphs import PyramidGraph
-
-    # Solution
     start_time = time()
 
     pyramid = PyramidGraph(input_graph)
@@ -89,4 +89,5 @@ def problem_018(input_graph=INPUT):
 
 
 if __name__ == '__main__':
+
     problem_018(INPUT)
