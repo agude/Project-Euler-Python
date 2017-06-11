@@ -26,42 +26,51 @@ There are exactly ten ways of selecting three from five, 12345:
 
 In combinatorics, we use the notation, 5C3 = 10.
 
-In general, nCr = n! / (r!(n−r)!), where r ≤ n, n! = n*(n−1)*...*3*2*1,
+In general, nCr = n! / (r!(n-r)!), where r <= n, n! = n*(n-1)*...*3*2*1,
 and 0! = 1.
 
 It is not until n = 23, that a value exceeds one-million: 23C10 = 1144066.
 
-How many, not necessarily distinct, values of  nCr, for 1 ≤ n ≤ 100, are
+How many, not necessarily distinct, values of nCr, for 1 <= n <= 100, are
 greater than one-million?
 """
+
+from math import factorial
+from time import time
+
+
+def problem_053(nth=100, max_val=1000000):
+    start_time = time()
+
+    # Check all possibilities
+    answer = 0
+    for n in range(0, nth + 1):
+        for r in range(1, n + 1):
+            ncr = factorial(n) / (factorial(r) * factorial(n - r))
+            if ncr > max_val:
+                answer += 1
+                print(n, r, ncr)
+
+    # We're done
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
 
 
 # Only runs if executed directly
 if __name__ == '__main__':
-    from math import factorial
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
     parser = OptionParser(usage=usage)
     parser.add_option("-n", action="store", type="int", dest="NTH", default=100, help="Check nCr from 1 to Nth [default 100]")
+    parser.add_option("-m", action="store", type="int", dest="MAX", default=1000000, help="Find the number of nCr values greater than MAX [default  1000000]")
 
     (options, args) = parser.parse_args()
 
     # Read in options
     NTH = options.NTH
+    MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    # Check all possibilities
-    answer = 0
-    for n in range(0, NTH + 1):
-        for r in range(1, n + 1):
-            if factorial(n) / (factorial(r) * factorial(n - r)) > 1000000:
-                answer += 1
-
-    # We're done
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_053(NTH, MAX)
