@@ -26,7 +26,7 @@ There are exactly ten ways of selecting three from five, 12345:
 
 In combinatorics, we use the notation, 5C3 = 10.
 
-In general, nCr = n! / (r!(n-r)!), where r <= n, n! = n*(n-1)*...*3*2*1,
+In general, nCk = n! / (k!(n-k)!), where k <= n, n! = n*(n-1)*...*3*2*1,
 and 0! = 1.
 
 It is not until n = 23, that a value exceeds one-million: 23C10 = 1144066.
@@ -36,20 +36,27 @@ greater than one-million?
 """
 
 from math import factorial
+from euler.combinatorics import n_choose_k
 from time import time
 
 
 def problem_053(nth=100, max_val=1000000):
     start_time = time()
 
-    # Check all possibilities
+    # Check only the first half of the binomial coefficients, because they are
+    # symmetric with regards to k, n-k.
     answer = 0
     for n in range(0, nth + 1):
-        for r in range(1, n + 1):
-            ncr = factorial(n) / (factorial(r) * factorial(n - r))
-            if ncr > max_val:
-                answer += 1
-                print(n, r, ncr)
+        half_way = n // 2
+        for k in range(0, half_way + 1):
+            nck = n_choose_k(n, k)
+            if nck > max_val:
+                # If n and k are even, then that value only appears once,
+                # otherwise the coefficients are symmetric so it appears twice.
+                if k == half_way and not n % 2:
+                    answer += 1
+                else:
+                    answer += 2
 
     # We're done
     end_time = time() - start_time
