@@ -50,28 +50,17 @@ NOTE: Wording was modified slightly on 24 April 2007 to emphasise the
 theoretical nature of Lychrel numbers.
 """
 
-if __name__ == '__main__':
-    from euler.converter import reverse_int
-    from euler.palindromic import is_palindromic
-    from optparse import OptionParser
-    from time import time
+from euler.converter import reverse_int
+from euler.palindromic import is_palindromic
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--max", action="store", type="int", dest="MAX", default=10000, help="the bound on the largest number to check")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
-
-    # Solution
+def problem_055(max_num=10000):
     start_time = time()
 
     answer = 0
     # We brute force check every possible number
-    for number in range(MAX):
+    for number in range(max_num):
         test_number = number
         number_of_attempts = 0
         # Test 50 times; if we don't have a palindrome by then, assume it is a
@@ -89,3 +78,20 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--max", action="store", type="int", dest="MAX", default=10000, help="the bound on the largest number to check")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+
+    problem_055(MAX)
