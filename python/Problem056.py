@@ -24,15 +24,38 @@ A googol (10**100) is a massive number: one followed by one-hundred zeros;
 100**100 is almost unimaginably large: one followed by two-hundred zeros.
 Despite their size, the sum of the digits in each number is only 1.
 
-Considering natural numbers of the form, a**b, where a, b  100, what is the
+Considering natural numbers of the form, a**b, where a, b < 100, what is the
 maximum digital sum?
 """
 
+from euler.converter import int_to_tuple
+from time import time
+
+
+def problem_056(max_base=100, max_power=100):
+    start_time = time()
+
+    # We simply brute force the solution
+    biggest_sum = 0
+    biggest_base = 0
+    biggest_power = 0
+    for base in range(1, max_base + 1):
+        for power in range(1, max_power + 1):
+            new_sum = sum(int_to_tuple(base ** power))
+            if new_sum > biggest_sum:
+                biggest_sum = new_sum
+                biggest_base = base
+                biggest_power = power
+
+    end_time = time() - start_time
+    from_str = "from {base}**{power}".format(base=biggest_base, power=biggest_power)
+    print(biggest_sum, from_str, 'in', end_time, 'secs')
+    return biggest_sum
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.converter import int_to_tuple
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS] -n MAX"
@@ -46,16 +69,4 @@ if __name__ == '__main__':
     MAX_BASE = options.MAX_BASE
     MAX_POWER = options.MAX_POWER
 
-    # Solution
-    start_time = time()
-
-    # We simply brute force the solution
-    biggest_sum = 0
-    for base in range(1, MAX_BASE + 1):
-        for power in range(1, MAX_POWER + 1):
-            new_sum = sum(int_to_tuple(base ** power))
-            if new_sum > biggest_sum:
-                biggest_sum = new_sum
-
-    end_time = time() - start_time
-    print(biggest_sum, 'in', end_time, 'secs')
+    problem_056(MAX_BASE, MAX_POWER)
