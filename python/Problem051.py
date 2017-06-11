@@ -113,7 +113,7 @@ def problem_051():
                         # set, it is not the solution. In this case, 121313,
                         # the smallest number in the set, is the solution.
                         print(base_prime, 'yields', new_primes[0], 'from the set', new_primes, 'in', end_time, 'sec')
-                        return base_prime
+                        return new_primes[0]
 
         # We have exhausted the current prime list and need a new one
         last_prime = base_prime
