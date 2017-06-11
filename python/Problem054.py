@@ -63,6 +63,10 @@ hand is in no specific order, and in each hand there is a clear winner.
 How many hands does Player 1 win?
 """
 
+from euler.cards import PlayingCard, PokerHand
+from time import time
+
+
 HANDS = frozenset([
     (("8C", "TS", "KC", "9H", "4S",), ("8D", "2S", "5D", "3S", "AC",)),
     (("5C", "AD", "5D", "AC", "9C",), ("7C", "5H", "8D", "TD", "KS",)),
@@ -1066,26 +1070,8 @@ HANDS = frozenset([
     (("AS", "KD", "3D", "JD", "8H",), ("7C", "8C", "5C", "QD", "6C",)),
 ])
 
-TEST_HANDS = [
-    # If you test hand_0 > hand_1, the correct answer should be:
-    # False
-    (("5H", "5C", "6S", "7S", "KD",), ("2C", "3S", "8S", "8D", "TD",)),
-    # True
-    (("5D", "8C", "9S", "JS", "AC",), ("2C", "5C", "7D", "8S", "QH",)),
-    # False
-    (("2D", "9C", "AS", "AH", "AC",), ("3D", "6D", "7D", "TD", "QD",)),
-    # True
-    (("4D", "6S", "9H", "QH", "QC",), ("3D", "6D", "7H", "QD", "QS",)),
-    # True
-    (("2H", "2D", "4C", "4D", "4S",), ("3C", "3D", "3S", "9S", "9D",)),
-]
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from time import time
-    from euler.cards import PlayingCard, PokerHand
-
-    # Solution
+def problem_054(hands=HANDS, verbose=False):
     start_time = time()
 
     # We lean heavily on the PlayingCard and PokerHand class, which implement
@@ -1097,10 +1083,30 @@ if __name__ == '__main__':
         player2_hand = PokerHand([PlayingCard(card) for card in player2_input])
         player1_wins = player1_hand > player2_hand
         if player1_wins:
-            print(player1_hand, ">", player2_hand)
+            if verbose:
+                print(player1_hand, ">", player2_hand)
             answer += 1
         else:
-            print(player1_hand, "<", player2_hand)
+            if verbose:
+                print(player1_hand, "<", player2_hand)
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-v", "--verbose", action="store_true", dest="VERBOSE", default=False, help="print status messages to stdout [default False]")
+
+    (options, args) = parser.parse_args()
+
+    # Read in options
+    VERBOSE = options.VERBOSE
+
+    problem_054(HANDS, VERBOSE)
