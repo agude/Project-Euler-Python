@@ -40,6 +40,10 @@ billion years to check them all. There is an efficient algorithm to solve it.
 ;o)
 """
 
+from euler.graphs import PyramidGraph
+from time import time
+
+
 INPUT = (
     (59,),
     (73, 41),
@@ -549,11 +553,8 @@ INPUT = (
     ),
 )
 
-if __name__ == '__main__':
-    from time import time
-    from euler.graphs import PyramidGraph
 
-    # Solution
+def problem_067(input_graph=INPUT):
     start_time = time()
 
     pyramid = PyramidGraph(INPUT)
@@ -561,3 +562,9 @@ if __name__ == '__main__':
 
     end_time = time() - start_time
     print(answer, "in", end_time, "secs")
+    return answer
+
+
+if __name__ == '__main__':
+
+    problem_067(INPUT)
