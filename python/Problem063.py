@@ -26,12 +26,10 @@ number, 134217728=8^9, is a ninth power.
 How many n-digit positive integers exist which are also an nth power?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from sys import exit
-    from time import time
+from time import time
 
-    # Solution
+
+def problem_063(verbose=False):
     start_time = time()
 
     answer = 0
@@ -50,7 +48,8 @@ if __name__ == '__main__':
             length = len(str(result))
             if length == power:
                 answer += 1
-                print(result, '=', base, '**', power)
+                if verbose:
+                    print(result, '=', base, '**', power)
             elif length > power:
                 break
 
@@ -61,5 +60,24 @@ if __name__ == '__main__':
             break
 
     end_time = time() - start_time
-    print()
+    if verbose:
+        print()
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-v", "--verbose", action="store_true", dest="VERBOSE", default=False, help="print status messages to stdout [default False]")
+
+    (options, args) = parser.parse_args()
+
+    # Read in options
+    VERBOSE = options.VERBOSE
+
+    problem_063(VERBOSE)
