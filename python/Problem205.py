@@ -32,13 +32,11 @@ What is the probability that Pyramidal Pete beats Cubic Colin? Give your answer
 rounded to seven decimal places in the form 0.abcdefg
 """
 
+from euler.dice import roll_under_probability, roll_probability
+from time import time
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.dice import roll_under_probability, roll_probability
-    from time import time
 
-    # Solution
+def problem_205():
     start_time = time()
 
     # Probability of rolling i for 9d4s
@@ -60,4 +58,14 @@ if __name__ == '__main__':
         total_probability += d4_prob[i] * d6_prob[i]
 
     end_time = time() - start_time
-    print(round(total_probability, 7), 'in', end_time, 'secs')
+
+    answer = round(total_probability, 7)
+
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_205()
