@@ -34,7 +34,11 @@ NOTE: The first two lines in the file represent the numbers in the example
 given above.
 """
 
-input_data = [
+from time import time
+from math import log
+
+
+INPUT_DATA = [
     (519432, 525806, 1),
     (632382, 518061, 2),
     (78864, 613712, 3),
@@ -1037,12 +1041,8 @@ input_data = [
     (13846, 725685, 1000),
 ]
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from time import time
-    from math import log
 
-    # Solution
+def problem_099(input_data=INPUT_DATA):
     start_time = time()
 
     # We observe that log(base^power) = power * log(base), and that since log
@@ -1061,3 +1061,9 @@ if __name__ == '__main__':
     answer = biggest_line
 
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_099(INPUT_DATA)
