@@ -37,40 +37,36 @@ How many starting numbers below ten million will arrive at 89?
 
 from euler.digits import square_and_add
 from time import time
-import numpy as np
 
 
 def problem_092(max_num=10000000):
     start_time = time()
 
     # Memoize numbers that lead to 1 or 89 chains
-    memo = np.zeros(max_num + 1)
-    memo[[4, 16, 20, 37, 42, 58, 85, 89, 145]] = 89
-    memo[[1, 10, 13, 32, 44]] = 1
+    eightynines = set([4, 16, 20, 37, 42, 58, 85, 89, 145])
+    ones = set([1, 10, 13, 32, 44])
 
     for i in range(2, max_num):
         # If we have already seen a number, then we know the answer
-        if memo[i]:
+        if i in ones or i in eightynines:
             continue
 
         # Otherwise check until we loop, or hit something in memo
-        seen = [i]
+        seen = set([i])
         while True:
             i = square_and_add(i)
-            seen.append(i)
+            seen.add(i)
             # We have hit a loop, mark all False
-            if i == 1 or memo[i] == 1:
-                memo[seen] = 1
+            if i == 1 or i in ones:
+                ones.update(seen)
                 break
             # We have hit 89 or a number we know leads there, mark all True
-            if i == 89 or memo[i] == 89:
-                memo[seen] = 89
+            if i == 89 or i in eightynines:
+                eightynines.update(seen)
                 break
 
     # Count the integers that belong to chains that end up in 89
-    values, counts = np.unique(memo, return_counts=True)
-    results = dict(zip(values, counts))
-    answer = results[89]
+    answer = len(eightynines)
 
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
