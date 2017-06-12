@@ -40,11 +40,33 @@ Find the least number for which the proportion of bouncy numbers is exactly
 99%.
 """
 
+from euler.bouncy import is_bouncy
+from time import time
+
+
+def problem_112(ratio=0.99):
+    start_time = time()
+
+    # We do a simple brute force calculation over all numbers until we reach
+    # the desired ratio. We start at 100, because no numbers under 100 are
+    # bouncy.
+    total = 99
+    bouncy = 0
+    while bouncy / total < ratio:
+        total += 1
+        if is_bouncy(total):
+            bouncy += 1
+
+    answer = total
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.bouncy import is_bouncy
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -56,20 +78,4 @@ if __name__ == '__main__':
     # Constants
     RATIO = options.RATIO
 
-    # Solution
-    start_time = time()
-
-    # We do a simple brute force calculation over all numbers until we reach
-    # the desired ratio. We start at 100, because no numbers under 100 are
-    # bouncy.
-    total = 99
-    bouncy = 0
-    while bouncy / total < RATIO:
-        total += 1
-        if is_bouncy(total):
-            bouncy += 1
-
-    answer = total
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_112(RATIO)
