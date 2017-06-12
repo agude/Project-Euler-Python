@@ -30,23 +30,11 @@ There are 120 reversible numbers below one-thousand.
 How many reversible numbers are there below one-billion (10^9)?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.converter import iterable_to_int, int_to_tuple
-    from optparse import OptionParser
-    from time import time
+from euler.converter import iterable_to_int, int_to_tuple
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="MAX", default=1000000000, help="find the number of reversible numbers below MAX")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    MAX = options.MAX
-
-    # Solution
+def problem_145(max_num=1000000000):
     start_time = time()
 
     # Loop over all the numbers and test. We note that we only have to loop
@@ -54,7 +42,7 @@ if __name__ == '__main__':
     # odd, the number itself must be odd. The only way to get an odd number is
     # to add an odd and an even number. Hence we loop only over odd numbers.
     reversibles = set([])
-    for number in range(1, MAX, 2):
+    for number in range(1, max_num, 2):
         reversed_tuple = int_to_tuple(number)[::-1]
 
         # Numbers that start with 0 are not allowed
@@ -78,3 +66,21 @@ if __name__ == '__main__':
     answer = len(reversibles)
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="MAX", default=1000000000, help="find the number of reversible numbers below MAX")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    MAX = options.MAX
+
+    problem_145(MAX)
