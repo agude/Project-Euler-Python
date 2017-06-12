@@ -35,11 +35,30 @@ How many elements would be contained in the set of reduced proper fractions for
 d <= 1,000,000?
 """
 
+from euler.totient import totient_sieve
+from time import time
+
+
+def problem_072(max_num=1000000):
+    start_time = time()
+
+    # The number of reduced fractions for a denominator d is simply the number
+    # of coprime numbers less than d. This is, of course, Euler's Totient, so
+    # we simply loop over denominators and calculate the totient.
+    answer = 0
+    totients = totient_sieve(max_num)
+    # We subtract 1 because we don't want phi(1) = 1, since 1/1 is not a fully
+    # reduced fraction.
+    answer = sum(totients) - 1
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
-    from euler.totient import totient_sieve
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -51,17 +70,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    # The number of reduced fractions for a denominator d is simply the number
-    # of coprime numbers less than d. This is, of course, Euler's Totient, so
-    # we simply loop over denominators and calculate the totient.
-    answer = 0
-    totients = totient_sieve(MAX)
-    # We subtract 1 because we don't want phi(1) = 1, since 1/1 is not a fully
-    # reduced fraction.
-    answer = sum(totients) - 1
-
-    end_time = time() - start_time
-    print(answer, 'in', end_time, 'secs')
+    problem_072(MAX)
