@@ -36,23 +36,11 @@ there are only 12951 numbers below one-million that are not bouncy and only
 How many numbers below a googol (10^100) are not bouncy?
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.combinatorics import n_choose_k
-    from optparse import OptionParser
-    from time import time
+from euler.combinatorics import n_choose_k
+from time import time
 
-    # Optparse setup
-    usage = "usage: %prog [OPTIONS]"
-    parser = OptionParser(usage=usage)
-    parser.add_option("-n", action="store", type="int", dest="NUM", default=100, help="find the number of bouncy numbers below 10**n")
 
-    (options, args) = parser.parse_args()
-
-    # Constants
-    NUM = options.NUM
-
-    # Solution
+def problem_113(num=100):
     start_time = time()
 
     # This can only be done with combinatorics.
@@ -72,7 +60,7 @@ if __name__ == '__main__':
     #
     # This means the number of increasing numbers is:
 
-    number_increasing = n_choose_k(NUM + 9, 9) - 1
+    number_increasing = n_choose_k(num + 9, 9) - 1
 
     # We consider a similar argument for decreasing numbers:
     #
@@ -89,17 +77,36 @@ if __name__ == '__main__':
     #
     # This means the number of increasing numbers is:
 
-    number_decreasing = n_choose_k(NUM + 10, 10) - (NUM + 1)
+    number_decreasing = n_choose_k(num + 10, 10) - (num + 1)
 
     # Double counting is much easier to account for. All double counted number
     # have the form where every digit is the same. Since there are exactly 9 of
     # these per power of 10, we subtract 9 * n.
 
-    double_counting = 9 * NUM
+    double_counting = 9 * num
 
     # We add the number of increasing and decreasing numbers, and subtract the
     # number double counted
     answer = number_increasing + number_decreasing - double_counting
 
     end_time = time() - start_time
+
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+    from optparse import OptionParser
+
+    # Optparse setup
+    usage = "usage: %prog [OPTIONS]"
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", action="store", type="int", dest="NUM", default=100, help="find the number of bouncy numbers below 10**n")
+
+    (options, args) = parser.parse_args()
+
+    # Constants
+    NUM = options.NUM
+
+    problem_113(NUM)
