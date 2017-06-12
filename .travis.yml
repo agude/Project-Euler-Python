@@ -6,7 +6,7 @@ python:
   - "3.6"
 
 # Install requirements
-install: "pip install numpy enum34"
+install: "pip install numpy enum34 pytest==3.0.*"
 
 # Run the unit tests
 script:
