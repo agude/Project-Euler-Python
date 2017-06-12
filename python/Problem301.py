@@ -50,10 +50,26 @@ until no stones remain; so the current player loses. To illustrate:
 For how many positive integers n <= 2**30 does X(n, 2n, 3n) = 0 ?
 """
 
+from time import time
+
+
+def problem_301(max_num=2**30):
+    start_time = time()
+
+    # There is nothing elegant here, we simply brute force
+    total = 0
+    for a in range(max_num):
+        if not (a ^ (a * 2) ^ (a * 3)):
+            total += 1
+
+    end_time = time() - start_time
+    print(total, "in", end_time, "secs")
+    return total
+
+
 # Only runs if executed directly
 if __name__ == '__main__':
     from optparse import OptionParser
-    from time import time
 
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
@@ -65,17 +81,4 @@ if __name__ == '__main__':
     # Constants
     MAX = options.MAX
 
-    # Solution
-    start_time = time()
-
-    # There is nothing elegant here, we simply brute force
-    total = 0
-    for a in range(MAX):
-        # Print progress
-        #if not a % 10000000:
-        #    print("{:.2%} done".format(a / MAX))
-        if not (a ^ (a * 2) ^ (a * 3)):
-            total += 1
-
-    end_time = time() - start_time
-    print(total, "in", end_time, "secs")
+    problem_301(MAX)
