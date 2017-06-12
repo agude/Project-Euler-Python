@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #  Copyright (C) 2010  Alexander Gude - alex.public.account+ProjectEulerSolutions@gmail.com
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -13,24 +15,36 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+#  The most recent version of this program is available at:
+#  https://github.com/agude/Project-Euler
 
-from time import time
-#from optparse import OptionParser
 """
-The first known prime found to exceed one million digits was discovered in 1999, and is a Mersenne prime of the form 269725931; it contains exactly 2,098,960 digits. Subsequently other Mersenne primes, of the form 2p1, have been found which contain more digits.
+The first known prime found to exceed one million digits was discovered in
+1999, and is a Mersenne prime of the form 2^6972593 - 1; it contains exactly
+2,098,960 digits. Subsequently other Mersenne primes, of the form 2^p - 1, have
+been found which contain more digits.
 
-However, in 2004 there was found a massive non-Mersenne prime which contains 2,357,207 digits: 2843327830457+1.
+However, in 2004 there was found a massive non-Mersenne prime which contains
+2,357,207 digits: 28433*2^7830457 + 1.
 
 Find the last ten digits of this prime number.
 """
-# Optparse setup
-#usage = "usage: %prog [OPTIONS] -n number"
-#parser = OptionParser(usage=usage)
-#parser.add_option("-n", "--number", action="store", type="int", dest="max", default=1000, help="finds sum of the multiples of 3 and 5 up to this number")
 
-#(options, args) = parser.parse_args()
+from time import time
 
-# Solution
-s = time()
 
-print ((28433*(2**7830457))+1) % 10000000000,'in',time()-s,'secs'
+def problem_097():
+    start_time = time()
+
+    answer = ((28433*(2**7830457))+1) % 10000000000
+
+    end_time = time() - start_time
+    print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_097()
