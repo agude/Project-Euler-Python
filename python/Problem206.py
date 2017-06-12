@@ -24,25 +24,21 @@ Find the unique positive integer whose square has the form 1_2_3_4_5_6_7_8_9_0,
 where each “_” is a single digit, but not necessarily the same.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.converter import iterable_to_int, int_to_tuple
-    from euler.countable import is_positive_integer
-    from itertools import permutations
-    from math import sqrt, floor, ceil
-    from sys import exit
-    from time import time
+from euler.converter import iterable_to_int, int_to_tuple
+from math import sqrt
+from time import time
 
-    # Solution
+
+def problem_206():
     start_time = time()
 
     # We brute force a solution by trying all permutations, but with some
     # limiting simplifications:
     #
-    # * Since our target number ends in 0 and the root is an integer, the root
+    # - Since our target number ends in 0 and the root is an integer, the root
     #   must also end in 0, but that means that our target number must end in
     #   00.
-    # * After removing the 00, we have a 9, but only 3^2 and 7^2 end in 9, so
+    # - After removing the 00, we have a 9, but only 3^2 and 7^2 end in 9, so
     #   we only need to check roots that end in [37]0.
 
     # We brute force check every root, but we can remove the ending 00, and
@@ -67,4 +63,9 @@ if __name__ == '__main__':
                 answer = new_root * 10
                 end_time = time() - start_time
                 print(answer, '** 2 =', answer**2, 'in', end_time, 'secs')
-                exit()
+                return answer
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_206()
