@@ -1,7 +1,7 @@
 try:
-    import euler.converter as converter
+    import euler.countable as countable
 except ImportError:
-    import converter
+    import countable
 
 
 def square_and_add(number):
@@ -14,10 +14,17 @@ def square_and_add(number):
         int: The sum of the square of the digits.
 
     Raises:
-        ValueError: If number is < 0.
+        ValueError: If number is < 0 or non-integral.
     """
+    # Only non-negative integers are supported
+    if not countable.is_nonnegative_integer(number):
+        raise ValueError("Input must be integral and non-negative")
+
+    # Use mod 10 and integer division to pull off digits
     result = 0
-    for i in converter.int_to_tuple(number):
-        result += i**2
+    while number:
+        digit = number % 10
+        number //= 10
+        result += digit * digit
 
     return result

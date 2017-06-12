@@ -13,3 +13,9 @@ def test_square_and_add():
 
     for val, answer in PAIRS:
         assert eu.square_and_add(val) == answer
+
+
+def test_valueerror():
+    for value in (-1, 1.5, -1.5):
+        with pytest.raises(ValueError) as e_info:
+            eu.square_and_add(value)
