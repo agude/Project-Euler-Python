@@ -34,14 +34,13 @@ Given that F_k is the first Fibonacci number for which the first nine digits
 AND the last nine digits are 1-9 pandigital, find k.
 """
 
-# Only runs if executed directly
-if __name__ == '__main__':
-    from euler.pandigital import is_pandigital
-    from euler.fibonacci import fibonacci_generator, fibonacci_binet
-    from euler.converter import int_to_tuple, iterable_to_int
-    from time import time
+from euler.pandigital import is_pandigital
+from euler.fibonacci import fibonacci_generator, fibonacci_binet
+from euler.converter import int_to_tuple, iterable_to_int
+from time import time
 
-    # Solution
+
+def problem_104():
     start_time = time()
 
     # We make use of the fact that we only need to check the last 9 digits,
@@ -57,7 +56,7 @@ if __name__ == '__main__':
         # slicing grabs as many characters as are available.
         if len(str(number)) < 3:
             continue
-        # If the first 9 digits are pan
+        # If the last 9 digits are pandigital, check the first 9 digits
         if is_pandigital(number):
             full_fibonacci = fibonacci_binet(count, suppress_exception=True)
             front_tuple = int_to_tuple(full_fibonacci)[:9]
@@ -65,5 +64,13 @@ if __name__ == '__main__':
             if is_pandigital(front_int):
                 answer = count
                 break
+
     end_time = time() - start_time
     print(answer, 'in', end_time, 'secs')
+    return answer
+
+
+# Only runs if executed directly
+if __name__ == '__main__':
+
+    problem_104()
