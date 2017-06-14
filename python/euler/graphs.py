@@ -1,3 +1,6 @@
+import collections
+
+
 class PyramidGraph:
     """ An object that stores a Pyramid shaped graph with numbers at each
     vertex and edges connecting each number with the two below it.
@@ -88,3 +91,147 @@ class PyramidGraph:
             str_sublist = (str(i) for i in sublist)
             lines.append(" ".join(str_sublist))
         return "\n".join(lines)
+
+
+class Vertex:
+    def __init__(self, number):
+        self.number = number
+        self.edges = set([])
+
+    def add_edge(self, edge):
+        """ Add an edge to the list of edges. """
+        self.edges.add(edge)
+
+    def add_edges(self, edges):
+        """ Add a list of edges to the list of edges. """
+        self.edges.update(edges)
+
+    def remove_edge(self, edge):
+        """ Remove an edge from the list of edges. """
+        if edge in self.edges:
+            self.edges.remove(edge)
+
+    def has_incoming(self):
+        """ Return true if any incoming edges, false otherwise. """
+        for edge in self.edges:
+            if edge.head.number == self.number:
+                return True
+        return False
+
+    def has_outgoing(self):
+        """ Return true if any outgoing edges, false otherwise. """
+        for edge in self.edges:
+            if edge.tail.number == self.number:
+                return True
+        return False
+
+    def outgoing_edges(self):
+        """ Return a list of vertices that have an incoming edge from this vertex. """
+        edges = set()
+        for edge in self.edges:
+            if edge.tail.number == self.number:
+                edges.add(edge)
+        return edges
+
+    def __iter__(self):
+        return self.edges.__iter__()
+
+    def __str__(self):
+        return self.number.__str__()
+
+    def __repr__(self):
+        return self.number.__repr__()
+
+    def __lt__(self, b):
+        return self.number.__lt__(b.number)
+
+
+class Edge:
+    def __init__(self, tail, head, directed=False, weight=1):
+        self.head = head
+        self.tail = tail
+        self.directed = directed
+        self.weight = weight
+
+    def __str__(self):
+        """ Allow printing. """
+        mid = "--"
+        if self.directed:
+            mid = "->"
+        out_str = "{tail}--({weight}){mid}{head}".format(
+            tail=self.tail,
+            weight=self.weight,
+            mid=mid,
+            head=self.head,
+        )
+        return out_str
+
+    def other_vertex(self, vertex):
+        """ Given the number of a vertex, returns the other vertex. That is, if
+        given the head, returns the tail, and vica versa. """
+        if vertex == self.head.number:
+            return self.tail
+        elif vertex == self.tail.number:
+            return self.head
+
+
+class Graph:
+    def __init__(self):
+        self.vertices = {}
+        self.edges = set()
+
+    def add_vertex(self, number):
+        v = Vertex(number)
+        self.vertices[number] = v
+
+    def add_edge(self, tail, head, directed=False, weight=1):
+        """ Creates a vertex between tail and head, and adds tail and head to
+        the graph if they don't already exist.
+
+        Args:
+            tail: The number of a vertex.
+            head: The number of a second vertex.
+            directed: Bool indicating if the edge is directed.
+            weight: A number indicating the edge weight.
+        """
+        # Try to get the tail from our list of vertices
+        try:
+            tail_v = self.vertices[tail]
+        except KeyError:
+            self.add_vertex(tail)
+            tail_v = self.vertices[tail]
+        # Try to get the head from our list of vertices
+        try:
+            head_v = self.vertices[head]
+        except KeyError:
+            self.add_vertex(head)
+            head_v = self.vertices[head]
+        # Make the edge
+        new_edge = Edge(tail_v, head_v, directed, weight)
+        self.edges.add(new_edge)
+        # Add the edge to the vertices
+        tail_v.add_edge(new_edge)
+        head_v.add_edge(new_edge)
+
+    def __iter__(self):
+        return self.edges.__iter__()
+
+    def __getitem__(self, key):
+        return self.vertices.__getitem__(key)
+
+    def __len__(self):
+        return self.vertices.__len__()
+
+    def __str__(self):
+        out_str = ""
+        keys = sorted(self.vertices.keys())
+        for key in keys:
+            out_str += "Vertex " + str(key) + '\n'
+            edge_strs = []
+            for edge in self[key]:
+                edge_strs.append(str(edge))
+            edge_strs.sort()
+            for edge_str in edge_strs:
+                out_str += '\t' + edge_str + '\n'
+
+        return out_str
