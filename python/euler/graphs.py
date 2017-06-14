@@ -1,3 +1,4 @@
+from functools import total_ordering
 import collections
 
 
@@ -93,6 +94,7 @@ class PyramidGraph:
         return "\n".join(lines)
 
 
+@total_ordering
 class Vertex:
     def __init__(self, number):
         self.number = number
@@ -142,8 +144,15 @@ class Vertex:
     def __repr__(self):
         return self.number.__repr__()
 
-    def __lt__(self, b):
-        return self.number.__lt__(b.number)
+    def __lt__(self, other):
+        if self.__class__ is other.__class__:
+            return self.number.__lt__(other.number)
+        return NotImplemented
+
+    def __eq__(self, other):
+        if self.__class__ is other.__class__:
+            return self.number.__eq__(other.number)
+        return NotImplemented
 
 
 class Edge:
