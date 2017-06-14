@@ -2,6 +2,7 @@ from enum import Enum, IntEnum, unique
 from functools import total_ordering
 import operator
 
+
 @unique
 class CardSuit(Enum):
     """ Playing card suits. """
@@ -131,6 +132,7 @@ class PlayingCard(object):
         if self.__class__ is other.__class__:
             return self.value == other.value
         return NotImplemented
+
 
 @total_ordering
 class PokerHand(object):

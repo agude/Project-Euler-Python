@@ -1,4 +1,4 @@
-def is_integer(number): 
+def is_integer(number):
     """Determine if a number is an integer.
 
     Args:
