@@ -1,3 +1,10 @@
+from itertools import chain
+try:
+    import euler.countable as countable
+except ImportError:
+    import countable
+
+
 class Grid(object):
     """ An object that stores a grid of numbers.
 
@@ -80,3 +87,54 @@ class Grid(object):
         # Make a reversed row
         rrows = [r[::-1] for r in self.rows]
         self.forward_diagonals = self.__make_diagonals(rrows)
+
+    def max_product(self, n):
+        """ Returns the max product of n numbers from within the grid.
+
+        For example, for the grid (with n=2):
+
+        1 2
+        3 4
+
+        It would look at all products (1*2, 1*3, 1*4, 3*2, 3*4) and
+        return the max 12.
+
+        Combinations that are two short (for example, the diagonal
+        (3,) or (2,), are ignored.
+
+        Args:
+            n (int): The number of numbers from the grid to take a
+                product with.
+
+        Returns:
+            int: The maximum product.
+
+        Raises:
+            ValueError: if n is non-positive.
+        """
+        # Check that the input if valid
+        if not countable.is_positive_integer(n):
+            print(n)
+            raise ValueError("n is a not a positive integer")
+        # Otherwise try all products and keep the max
+        max_product = float("-inf")
+        chained = chain(
+            self.rows,
+            self.cols,
+            self.backward_diagonals,
+            self.forward_diagonals,
+        )
+        for row in chained:
+            # If the row is too short, ignore it
+            if len(row) < n:
+                continue
+            # Compute the product, and save if it is larger than the
+            # previous max
+            for i in range(len(row) - n + 1):
+                product = 1
+                to_check = row[i:i+n]
+                for number in to_check:
+                    product *= number
+                max_product = max(product, max_product)
+
+        return max_product

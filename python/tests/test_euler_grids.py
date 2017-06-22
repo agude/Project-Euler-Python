@@ -38,3 +38,23 @@ def test_grid_bad_rows():
 def test_grid_bad_values():
     with pytest.raises(ValueError) as e_info:
         eu.Grid(["1 2", "duck 3"])
+
+
+def test_grid_max_product():
+    grid_start = (
+        "99  0   0   99  0",
+        "99  0   0   0   0",
+        "0   99  0   0   0",
+        "0   0   99  0   0",
+        "99  99  99  99  99",
+    )
+
+    g = eu.Grid(grid_start)
+    for i in range(1, 5):
+        assert g.max_product(i) == 99**i
+
+
+def test_grid_max_product_raise(grid_2x2):
+    g = grid_2x2
+    with pytest.raises(ValueError):
+        g.max_product(0)
