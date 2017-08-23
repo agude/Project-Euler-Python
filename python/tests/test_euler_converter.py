@@ -66,3 +66,30 @@ def test_int_to_tuple():
 
     for val, res in pairs:
         assert eu.reverse_int(val) == res
+
+
+def test_NumberWriter():
+    pairs = (
+        (0, "zero"),
+        (1, "one"),
+        (10, "ten"),
+        (11, "eleven"),
+        (57, "fifty-seven"),
+        (100, "one hundred"),
+        (1000, "one thousand"),
+        (1234, "one thousand two hundred and thirty-four"),
+        (10000, "ten thousand"),
+        (100000, "one hundred thousand"),
+        (1000000, "one million"),
+        (1000000000, "one billion"),
+        (1234567890, "one billion two hundred and thirty-four million five hundred and sixty-seven thousand eight hundred and ninety"),
+    )
+
+    for number, result in pairs:
+        n = eu.NumberWriter(number)
+        assert n.word == result
+
+
+def test_NumberWriter_raises():
+    with pytest.raises(ValueError) as e_info:
+        n = eu.NumberWriter(-1)

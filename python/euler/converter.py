@@ -167,3 +167,157 @@ def reverse_int(number):
         reversed_number *= -1
 
     return reversed_number
+
+
+NUMBER_WORDS = {
+    "ones": {
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven',
+        8: 'eight',
+        9: 'nine',
+        0: '',
+    },
+    "teens": {
+        1: 'eleven',
+        2: 'twelve',
+        3: 'thirteen',
+        4: 'fourteen',
+        5: 'fifteen',
+        6: 'sixteen',
+        7: 'seventeen',
+        8: 'eighteen',
+        9: 'nineteen',
+        0: 'ten',
+    },
+    "tens": {
+        1: 'ten',
+        2: 'twenty',
+        3: 'thirty',
+        4: 'forty',
+        5: 'fifty',
+        6: 'sixty',
+        7: 'seventy',
+        8: 'eighty',
+        9: 'ninety',
+        0: '',
+    },
+}
+
+
+class NumberWriter(object):
+    def __init__(self, number, number_words=NUMBER_WORDS):
+        """Takes a number and returns the number written out in words.
+
+        Supports numbers up to (1,000,000,000,000,000 - 1)
+
+        For example:
+
+            NumberWriter(342).word -> "three hundred and forty-two"
+
+        Args:
+            number (int): The number to convert to written English.
+            number_words (object): any object that supports the following access:
+
+                    object["ones"][ 0 through 9]
+                    object["teens"][ 0 through 9]
+                    object["tens"][ 0 through 9]
+
+                It should return a string indicating the number from
+                the digit in that place. For example,
+                object["teens"][3] should return "thirteen" for
+                English.
+
+        Raises:
+            ValueError: If number is < 0.
+        """
+        self.number_words = number_words
+        self.number_tuple = int_to_tuple(number)
+        self.values = ["", "thousand", "million", "billion", "trillion",]
+        self.__convert_to_blocks()
+
+        self.__create_string()
+
+    def __create_string(self):
+        self.word = ""
+
+        # Zero is a special case, because otherwise a 0 in the ones
+        # place has no word associated with it.
+        if self.blocks == [[0]]:
+            self.word = "zero"
+            return
+
+        # Otherwise recursively build the solution
+        for i, block in enumerate(reversed(self.blocks)):
+            current_value = self.values[i]
+            digit_count = len(block)
+            if digit_count == 1:
+                current_string = self.__handle_one(block)
+            if digit_count == 2:
+                current_string = self.__handle_two(block)
+            if digit_count == 3:
+                current_string = self.__handle_three(block)
+
+            # Some blocks, like 000, should produce no words, so don't
+            # add anything.
+            if current_string:
+                self.word = current_string + " " + current_value + " " + self.word
+
+        self.word = self.word.strip()
+
+    def __convert_to_blocks(self):
+        self.blocks = []
+        number = list(self.number_tuple[:])
+
+        # The leading digits are not always a group of 3, so get them first
+        first_offset = len(number) % 3
+        block = []
+        for _ in range(first_offset):
+            block.append(number.pop(0))
+        if block:
+            self.blocks.append(block)
+
+        # Now get all the rest, which are all three digits long
+        block = []
+        for i, digit in enumerate(number):
+            # Starting a new block
+            if not i % 3:
+                if block:
+                    self.blocks.append(block)
+                block = [digit]
+            else:
+                block.append(digit)
+        # The last set will not trigger the new block check above, so add it
+        # now
+        if block:
+            self.blocks.append(block)
+
+    def __handle_one(self, tup):
+        return self.number_words["ones"][tup[0]]
+
+    def __handle_two(self, tup):
+        # 10 - 19, which are weird
+        if tup[0] == 1:
+            return self.number_words["teens"][tup[1]]
+        else:
+            string = ""
+            string += self.number_words["tens"][tup[0]]
+            ones = self.__handle_one(tup[1:])
+            if ones:
+                string += "-" + ones
+            return string
+
+    def __handle_three(self, tup):
+        # Length 3
+        string = ""
+        leading_value = self.number_words["ones"][tup[0]]
+        if leading_value:
+            string += leading_value + " hundred"
+        tens = self.__handle_two(tup[1:])
+        if tens:
+            string += " and " + tens
+        return string
