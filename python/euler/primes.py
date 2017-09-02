@@ -144,8 +144,9 @@ def is_prime(number):
                 return False
             else:
                 f += 6
-        else:
-            return True
+
+    # After performing the 6n+-1 test, the number must be prime
+    return True
 
 
 def circular_primes(number, prime_list=None):
