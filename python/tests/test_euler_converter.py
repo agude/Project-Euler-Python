@@ -34,6 +34,13 @@ def test_int_to_tuple():
     for val, res in pairs:
         assert eu.int_to_tuple(val) == res
 
+def test_sort_digits():
+    assert eu.sort_digits(100) == 100
+    assert eu.sort_digits(10) == 10
+    assert eu.sort_digits(0) == 0
+    assert eu.sort_digits(1) == 1
+    assert eu.sort_digits(12345) == 54321
+
 
 def test_truncate():
     pairs = (

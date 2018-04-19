@@ -50,6 +50,26 @@ def int_to_tuple(number):
     return tuple([int(i) for i in str(number)])
 
 
+def sort_digits(number):
+    """Sort the digits of an integer and return a new integer.
+
+    This is useful for seeing if two numbers are permutations of each other.
+
+    Args:
+        number (int): An integer to sort.
+
+    Returns:
+        int: The sorted integer.
+
+    Raises:
+        ValueError: If number is < 0.
+
+    """
+    sorted_digits = sorted(int_to_tuple(number), reverse=True)
+
+    return iterable_to_int(sorted_digits)
+
+
 def truncate(number, right_truncate=False):
     """Truncate an integer and return the smaller integer.
 
