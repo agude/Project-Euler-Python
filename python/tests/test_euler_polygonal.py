@@ -66,3 +66,42 @@ def test_pentagonals(hexagons):
     stop = len(hexagons)
     test = tuple(eu.hexagonals(stop))
     assert test == hexagons
+
+
+@pytest.fixture(scope="function")
+def squares():
+    squares = (0, 1, 4, 9, 16, 25)
+
+    return squares
+
+
+def test_squares(squares):
+    stop = len(squares) - 1
+    test = tuple(eu.squares(stop, start=0))
+    assert test == squares
+
+
+@pytest.fixture(scope="function")
+def heptagonals():
+    heptagonals = (0, 1, 7, 18, 34, 55)
+
+    return heptagonals
+
+
+def test_heptagonals(heptagonals):
+    stop = len(heptagonals) - 1
+    test = tuple(eu.heptagonals(stop, start=0))
+    assert test == heptagonals
+
+
+@pytest.fixture(scope="function")
+def octagonals():
+    octagonals = (0, 1, 8, 21, 40, 65)
+
+    return octagonals
+
+
+def test_octagonals(octagonals):
+    stop = len(octagonals) - 1
+    test = tuple(eu.octagonals(stop, start=0))
+    assert test == octagonals

@@ -66,6 +66,22 @@ def triangulars(stop=None, start=1):
     return polygonals(1, 2, 1, stop, start)
 
 
+def squares(stop=None, start=1):
+    """Returns an iterator over all square numbers.
+
+    Computes all square numbers from n = 1 to infinity by default, although the
+    starting and stopping values of n can be adjusted with the arguments.
+
+    Args:
+        stop (int, None): Stop when n exceeds this number
+        start (int, 1): Start with n equal to this number
+
+    Yields:
+        int: The next square number.
+    """
+    return polygonals(1, 1, 0, stop, start)
+
+
 def pentagonals(stop=None, start=1):
     """Returns an iterator over all pentagonal numbers.
 
@@ -96,6 +112,38 @@ def hexagonals(stop=None, start=1):
         int: The next hexagonal number.
     """
     return polygonals(2, 1, -1, stop, start)
+
+
+def heptagonals(stop=None, start=1):
+    """Returns an iterator over all heptagonal numbers.
+
+    Computes all heptagonal numbers from n = 1 to infinity by default, although
+    the starting and stopping values of n can be adjusted with the arguments.
+
+    Args:
+        stop (int, None): Stop when n exceeds this number
+        start (int, 1): Start with n equal to this number
+
+    Yields:
+        int: The next heptagonal number.
+    """
+    return polygonals(5, 2, -3, stop, start)
+
+
+def octagonals(stop=None, start=1):
+    """Returns an iterator over all octagonal numbers.
+
+    Computes all octagonal numbers from n = 1 to infinity by default, although
+    the starting and stopping values of n can be adjusted with the arguments.
+
+    Args:
+        stop (int, None): Stop when n exceeds this number
+        start (int, 1): Start with n equal to this number
+
+    Yields:
+        int: The next octagonal number.
+    """
+    return polygonals(3, 1, -2, stop, start)
 
 
 def is_polygonal(number, multiplier, divisor):
