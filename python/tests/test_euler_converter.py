@@ -42,6 +42,14 @@ def test_sort_digits():
     assert eu.sort_digits(12345) == 54321
 
 
+def test_sum_digits():
+    assert eu.sum_digits(0) == 0
+    assert eu.sum_digits(1) == 1
+    assert eu.sum_digits(10) == 1
+    assert eu.sum_digits(12) == 3
+    assert eu.sum_digits(21) == 3
+
+
 def test_truncate():
     pairs = (
         # Number Right_Truncate Answer

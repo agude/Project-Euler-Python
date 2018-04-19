@@ -70,6 +70,22 @@ def sort_digits(number):
     return iterable_to_int(sorted_digits)
 
 
+def sum_digits(number):
+    """Sum the digits of an integer and return a new integer.
+
+    Args:
+        number (int): An integer to sum.
+
+    Returns:
+        int: The sum of the digits.
+
+    Raises:
+        ValueError: If number is < 0.
+
+    """
+    return sum(int_to_tuple(number))
+
+
 def truncate(number, right_truncate=False):
     """Truncate an integer and return the smaller integer.
 
