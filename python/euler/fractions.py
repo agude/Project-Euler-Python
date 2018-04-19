@@ -38,83 +38,99 @@ def cycle_length_prime(number):
             return 0
 
 
-def continued_fraction_numerator(n, a0, an, memoized={-2: 0, -1: 1}):
-    """Return the numerator of the nth convergent of a continued fraction.
+class ContinuedFraction:
+    """A class to compute the convergents of a continued fraction.
 
     Continued fractions are written in the form:
 
-        [a0; a1, a2, a3, ...] = a0 + 1/(a1 + 1/(a2 + 1/(a3 + ... )))
-
-    Then the nth numerator is:
-
-        h_{n} = a_{n} * h_{n-1} + h_{n-2}
-
-    With h_{-1} = 1 and h_{-2} = 0.
-
-    Args:
-        n (int): The nth convergent to calculate.
-        a0 (int): The value of the coefficient a0.
-        an (int -> int): A function that takes an integer, n, and returns the
-            coefficient an.
-        memoized (dict: int -> int): A dictionary mapping the n to the nth
-            convergent numerator.
-
-    Returns:
-        int: The numerator of the nth convergent.
-
-    Raises:
-        ValueError: number is < -2, or a non-integer.
+        [a_{0}; a_{1}, a_{2}, ...] = a_{0} + 1/(a_{1} + 1/(a_{2} + ... ))
     """
-    # Negative numbers are not defined, except to define n=0
-    if n < -2:
-        raise ValueError("n is less than -2")
 
-    if n not in memoized:
-        term_1 = continued_fraction_numerator(n-1, a0, an)
-        term_2 = continued_fraction_numerator(n-2, a0, an)
+    def __init__(self, a0, an):
+        """Set up the continued fraction.
 
-        a = an(n) if n else a0
-        memoized[n] = a * term_1 + term_2
+        Args:
+            a0 (int): The value of the coefficient a0.
+            an (int -> int): A function that takes an integer, n, and returns the
+                coefficient an.
+        """
+        # The coefficients of the fraction
+        self.a0 = a0
+        self.an = an
 
-    return memoized[n]
+        # The numerator and denominator terms
+        self.denominator_terms = {-2: 1, -1: 0}
+        self.numerator_terms   = {-2: 0, -1: 1}
+
+    def nth_convergent_numerator(self, n):
+        """Return the numerator of the nth convergent of a continued fraction.
+
+        Args:
+            n (int): The nth convergent to calculate.
+            terms (dict: int -> int): A dictionary mapping the n to the nth
+                convergent for numerators.
+
+        Returns:
+            int: The numerator of the nth convergent.
+
+        Raises:
+            ValueError: number is < -2, or a non-integer.
+        """
+        return self.__nth_convergent_helper(n, self.numerator_terms)
+
+    def nth_convergent_denominator(self, n):
+        """Return the denominator of the nth convergent of a continued fraction.
+
+        Args:
+            n (int): The nth convergent to calculate.
+            terms (dict: int -> int): A dictionary mapping the n to the nth
+                convergent for denominators.
+
+        Returns:
+            int: The denominator of the nth convergent.
+
+        Raises:
+            ValueError: number is < -2, or a non-integer.
+        """
+        return self.__nth_convergent_helper(n, self.denominator_terms)
+
+    def __nth_convergent_helper(self, n, terms):
+        """Helps to computer either the denominator or numerator of the nth
+        convergent of a continued fraction.
+
+        Continued fractions are written in the form:
+
+            [a_{0}; a_{1}, a_{2}, ...] = a_{0} + 1/(a_{1} + 1/(a_{2} + ... ))
+
+        Then the nth numerator/denominator is:
+
+            k_{n} = a_{n} * k_{n-1} + k_{n-2}
 
 
-def continued_fraction_denominator(n, a0, an, memoized={-2: 1, -1: 0}):
-    """Return the denominator of the nth convergent of a continued fraction.
+        For the denominator, we start with: k_{-1} = 0 and k_{-2} = 1.
 
-    Continued fractions are written in the form:
+        For the numerator, we start with:   k_{-1} = 1 and k_{-2} = 0.
 
-        [a0; a1, a2, a3, ...] = a0 + 1/(a1 + 1/(a2 + 1/(a3 + ... )))
+        Args:
+            n (int): The nth convergent to calculate.
+            terms (dict: int -> int): A dictionary mapping the n to the nth
+                convergent for either denominators or numerators.
 
-    Then the nth denominator is:
+        Returns:
+            int: The denominator or numerator of the nth convergent.
 
-        k_{n} = a_{n} * k_{n-1} + k_{n-2}
+        Raises:
+            ValueError: number is < -2, or a non-integer.
+        """
+        # Negative numbers are not defined, except to define n=0
+        if n < -2:
+            raise ValueError("n is less than -2")
 
-    With h_{-1} = 0 and h_{-2} = 1.
+        if n not in terms:
+            term_1 = self.__nth_convergent_helper(n-1, terms)
+            term_2 = self.__nth_convergent_helper(n-2, terms)
 
-    Args:
-        n (int): The nth convergent to calculate.
-        a0 (int): The value of the coefficient a0.
-        an (int -> int): A function that takes an integer, n, and returns the
-            coefficient an.
-        memoized (dict: int -> int): A dictionary mapping the n to the nth
-            convergent denominator.
+            a = self.an(n) if n else self.a0
+            terms[n] = a * term_1 + term_2
 
-    Returns:
-        int: The denominator of the nth convergent.
-
-    Raises:
-        ValueError: number is < -2, or a non-integer.
-    """
-    # Negative numbers are not defined, except to define n=0
-    if n < -2:
-        raise ValueError("n is less than -2")
-
-    if n not in memoized:
-        term_1 = continued_fraction_denominator(n-1, a0, an)
-        term_2 = continued_fraction_denominator(n-2, a0, an)
-
-        a = an(n) if n else a0
-        memoized[n] = a * term_1 + term_2
-
-    return memoized[n]
+        return terms[n]

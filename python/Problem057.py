@@ -44,20 +44,23 @@ with more digits than denominator?
 # Functions
 def problem_057(stop_after=1000):
     from time import time
-    from euler.fractions import continued_fraction_numerator, continued_fraction_denominator
+    from euler.fractions import ContinuedFraction
     from euler.converter import int_to_tuple
 
     # Solution
     start_time = time()
 
-    total = 0
 
+    # We need to define the coefficients for the continued fraction, which for Sqrt(2) are:
+    # [1; 2, 2, ... ]
     a0 = 1
     ai = lambda x: 2
+    sqrt2_continued_fraction = ContinuedFraction(a0, ai)
 
+    total = 0
     for i in range(0, stop_after+1):
-        num = continued_fraction_numerator(i, a0, ai)
-        den = continued_fraction_denominator(i, a0, ai)
+        num = sqrt2_continued_fraction.nth_convergent_numerator(i)
+        den = sqrt2_continued_fraction.nth_convergent_denominator(i)
         if len(int_to_tuple(num)) > len(int_to_tuple(den)):
             total += 1
 
