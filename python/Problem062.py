@@ -63,10 +63,12 @@ def problem_062(permutations=5):
 
         key_counter[key] += 1
 
-    end_time = time() - start_time
-    print(final, 'in', end_time, 'secs')
+    final_cube = final**3
 
-    return final
+    end_time = time() - start_time
+    print("{cube} from {final}**3 in {end_time} secs".format(cube=final_cube, final=final, end_time=end_time))
+
+    return final_cube
 
 
 # Only runs if executed directly
