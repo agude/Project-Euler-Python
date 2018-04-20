@@ -20,21 +20,40 @@
 #  https://github.com/agude/Project-Euler
 
 """
-The cube, 41063625 (345**3), can be permuted to produce two other cubes: 56623104
-(384**3) and 66430125 (405**3). In fact, 41063625 is the smallest cube which has
-exactly three permutations of its digits which are also cube.
+The square root of 2 can be written as an infinite continued fraction.
 
-Find the smallest cube for which exactly five permutations of its digits are
-cube.
+sqrt(2) = 1 + 1/(2 + 1/(2 + 1/(2 + ... ))) = 1.414213...
+
+The infinite continued fraction can be written, sqrt(2) = [1;(2)], (2)
+indicates that 2 repeats ad infinitum. In a similar way, sqrt(23) =
+[4;(1,3,1,8)].
+
+It turns out that the sequence of partial values of continued fractions for
+square roots provide the best rational approximations. Let us consider the
+convergents for sqrt(2).
+
+The first ten convergents of sqrt(2) are:
+
+1, 3/2, 7/5, 17/12, 41/29, 99/70, 239/169, 577/408, 1393/985, 3363/2378, ...
+
+What is most surprising is that the important mathematical constant,
+e = [2; 1,2,1, 1,4,1, 1,6,1 , ... , 1,2k,1, ...].
+
+The first ten terms in the sequence of convergents for e are:
+
+2, 3, 8/3, 11/4, 19/7, 87/32, 106/39, 193/71, 1264/465, 1457/536, ...
+
+The sum of digits in the numerator of the 10th convergent is 1+4+5+7=17.
+
+Find the sum of digits in the numerator of the 100th convergent of the
+continued fraction for e.
 """
 
 
-from itertools import count
 from euler.countable import is_integer
 
 
 # Functions
-
 def euler_an(n):
     # The first one doesn't follow the pattern
     if n == 1:
@@ -65,8 +84,9 @@ def problem_065(convergent=100):
     # count how many cubes have the same representation.
     cf = ContinuedFraction(2, euler_an)
 
+    # We index from 0 (to follow the a_{n} convention), but Project Euler
+    # refers to the "100th" convergent, which is 99 for us. So we subtract 1.
     numerator = cf.nth_convergent_numerator(convergent-1)
-    print(numerator)
 
     final = sum_digits(numerator)
 
@@ -83,7 +103,7 @@ if __name__ == '__main__':
     # Optparse setup
     usage = "usage: %prog [OPTIONS]"
     parser = OptionParser(usage=usage)
-    parser.add_option("-n", "--convergent", action="store", type="int", dest="CONV", default=100, help="The sum of the CONV convergent's numerator.")
+    parser.add_option("-n", "--convergent", action="store", type="int", dest="CONV", default=100, help="The sum of the CONV th convergent's numerator.")
 
     (options, args) = parser.parse_args()
 
