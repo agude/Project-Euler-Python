@@ -55,16 +55,23 @@ from euler.countable import is_integer
 
 # Functions
 def euler_an(n):
+    """Return the a_{n} coefficients for the continued fraction of e.
+
+    Args:
+        n (int): The number of the coefficient.
+
+    Returns:
+        int: The nth coefficient.
+    """
     # The first one doesn't follow the pattern
     if n == 1:
         return 1
 
-    # The rest of the pattern is 2, 1, 1, 4, 1, 1, 6, 1, 1 ...
-    # We start by adjusting so that the first two is the 0th index
+    # The rest of the pattern is 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, ...
+    # We start by adjusting so that the 2 is the 0th index
     new_n = n - 2
 
     mod = new_n / 3
-
     if not is_integer(mod):
         return 1
 
@@ -82,7 +89,7 @@ def problem_065(convergent=100):
     # The solution is pretty simple, just cube numbers, take the cube and sort
     # it so we have a unique representation of a set of permutations, and then
     # count how many cubes have the same representation.
-    cf = ContinuedFraction(2, euler_an)
+    cf = ContinuedFraction(a0=2, an=euler_an)
 
     # We index from 0 (to follow the a_{n} convention), but Project Euler
     # refers to the "100th" convergent, which is 99 for us. So we subtract 1.
