@@ -32,7 +32,7 @@ from sys import exit
 
 
 def check_multiples(input_number, n):
-    """Give an input number, checks if the first n multiples hav the same
+    """Given an input number, checks if the first n multiples have the same
     digits.
 
     Args:
