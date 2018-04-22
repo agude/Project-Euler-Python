@@ -28,9 +28,14 @@ If p is the perimeter of a right angle triangle with integral length sides,
 For which value of p <= 1000, is the number of solutions maximised?
 """
 
-from euler.countable import is_integer
+from collections import namedtuple
 from math import sqrt
 from time import time
+
+from euler.countable import is_integer
+
+
+CombosAndParameters = namedtuple("CombosAndParameters", ["combos", "parameters"])
 
 
 def problem_039(max_num=1000):
@@ -48,8 +53,7 @@ def problem_039(max_num=1000):
     # c > a or b, hence p / 2 > c or a or b, so a and be need only run up
     # to p/2
 
-    best_parameter = 0
-    best_combos = 0
+    best_seen = CombosAndParameters(0, 0)
     # Remember we need only check even values
     for parameter in range(12, max_num+1, 2):  # 12 is smallest perimeter
         half_parameter = parameter // 2
@@ -66,13 +70,12 @@ def problem_039(max_num=1000):
                 if a + b + c == parameter and is_integer(c):
                     combos += 1
         # Save the best
-        if combos > best_combos:
-            best_parameter = parameter
-            best_combos = combos
+        newest_seen = CombosAndParameters(combos, parameter)
+        best_seen = max(best_seen, newest_seen)
 
     end_time = time() - start_time
-    print(best_parameter, 'in', end_time, 'secs')
-    return best_parameter
+    print(best_seen.parameter, 'in', end_time, 'secs')
+    return best_seen.parameter
 
 
 if __name__ == '__main__':

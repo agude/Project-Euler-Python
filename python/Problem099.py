@@ -34,8 +34,9 @@ NOTE: The first two lines in the file represent the numbers in the example
 given above.
 """
 
-from time import time
+from collections import namedtuple
 from math import log
+from time import time
 
 
 INPUT_DATA = [
@@ -1042,23 +1043,26 @@ INPUT_DATA = [
 ]
 
 
+# A named tuples to store the computed number and the line it came from
+NumberAndLine = namedtuple("NumberAndLine", ["number", "line_number"])
+
+
 def problem_099(input_data=INPUT_DATA):
     start_time = time()
 
     # We observe that log(base^power) = power * log(base), and that since log
     # is monotonically increasing if a > b then log(a) > log(b). Then we
     # compute power * log(base) and find the largest.
-    biggest_number = 0
-    biggest_line = None
+    biggest = NumberAndLine(0, None)
     for base, power, line_number in input_data:
         large_number = power * log(base)
-        if large_number > biggest_number:
-            biggest_number = large_number
-            biggest_line = line_number
+        new_number = NumberAndLine(large_number, line_number)
+
+        biggest = max(biggest, new_number)
 
     end_time = time() - start_time
 
-    answer = biggest_line
+    answer = biggest.line_number
 
     print(answer, 'in', end_time, 'secs')
     return answer

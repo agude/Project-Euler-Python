@@ -44,8 +44,13 @@ that produces the maximum number of primes for consecutive values of n,
 starting with n = 0.
 """
 
-from euler.primes import is_prime, prime_sieve
+from collections import namedtuple
 from time import time
+
+from euler.primes import is_prime, prime_sieve
+
+
+EulerPrimeNumbers = namedtuple("EulerPrimeNumber", ["length", "a", "b"])
 
 
 def problem_027(a_max=1000, b_max=1000):
@@ -55,7 +60,7 @@ def problem_027(a_max=1000, b_max=1000):
     # prime to maximize the number of primes generated.
     primes = prime_sieve(b_max + 1)
 
-    best_result = [0, 0, 0]  # Count, a, b
+    best_result = EulerPrimeNumbers(0, 0, 0)
     for a in range(-a_max, a_max + 1):
         for b in primes:
             # We must try both -b, and b
@@ -69,20 +74,18 @@ def problem_027(a_max=1000, b_max=1000):
                     n += 1
 
                 # Save the result if it is better
-                if consecutive_primes > best_result[0]:
-                    best_result[0] = consecutive_primes
-                    best_result[1] = a
-                    best_result[2] = test_b
+                newest_result = EulerPrimeNumbers(consecutive_primes, a, test_b)
+                best_result = max(best_result, newest_result)
 
     # Report the result
     end_time = time() - start_time
 
-    result = best_result[1] * best_result[2]
+    result = best_result.a * best_result.b
     output_str = "{result} from n**2 + {a}*n + {b}, which yields {primes} primes, in {time} seconds".format(
         result=result,
-        a=best_result[1],
-        b=best_result[2],
-        primes=best_result[0],
+        a=best_result.a,
+        b=best_result.b,
+        primes=best_result.length,
         time=end_time,
     )
     print(output_str)

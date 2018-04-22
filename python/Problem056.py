@@ -28,29 +28,31 @@ Considering natural numbers of the form, a**b, where a, b < 100, what is the
 maximum digital sum?
 """
 
-from euler.converter import int_to_tuple
+from collections import namedtuple
 from time import time
+
+from euler.converter import int_to_tuple
+
+
+SumAndBaseAndPower = namedtuple("SumAndBaseAndPower", ["sum", "base", "power"])
 
 
 def problem_056(max_base=100, max_power=100):
     start_time = time()
 
     # We simply brute force the solution
-    biggest_sum = 0
-    biggest_base = 0
-    biggest_power = 0
+    biggest_seen = SumAndBaseAndPower(0, 0, 0)
     for base in range(1, max_base + 1):
         for power in range(1, max_power + 1):
             new_sum = sum(int_to_tuple(base ** power))
-            if new_sum > biggest_sum:
-                biggest_sum = new_sum
-                biggest_base = base
-                biggest_power = power
+
+            newest_seen = SumAndBaseAndPower(new_sum, base, power)
+            biggest_seen = max(biggest_seen, newest_seen)
 
     end_time = time() - start_time
-    from_str = "from {base}**{power}".format(base=biggest_base, power=biggest_power)
-    print(biggest_sum, from_str, 'in', end_time, 'secs')
-    return biggest_sum
+    from_str = "from {base}**{power}".format(base=biggest_seen.base, power=biggest_seen.power)
+    print(biggest_seen.sum, from_str, 'in', end_time, 'secs')
+    return biggest_seen.sum
 
 
 # Only runs if executed directly

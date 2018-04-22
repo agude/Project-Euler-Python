@@ -46,10 +46,12 @@ codes, and the knowledge that the plain text must contain common English words,
 decrypt the message and find the sum of the ASCII values in the original text.
 """
 
-from euler.words import is_basic_word
-from string import ascii_lowercase
+from collections import namedtuple
 from itertools import product
+from string import ascii_lowercase
 from time import time
+
+from euler.words import is_basic_word
 
 
 CIPHER_TEXT = (
@@ -116,6 +118,9 @@ CIPHER_TEXT = (
 )
 
 
+CountAndKeyAndText = namedtuple("CountAndKeyAndText", ["count", "key", "text"])
+
+
 def problem_059(cipher_text=CIPHER_TEXT):
     start_time = time()
 
@@ -124,9 +129,7 @@ def problem_059(cipher_text=CIPHER_TEXT):
     # with the largest number of common words is the correct plain text.
 
     # Variables to track the best candidate
-    best_count = 1
-    best_key = None
-    best_text = None
+    best_seen = CountAndKeyAndText(1, None, None)  # Count, key, text
 
     # Brute force loop over all decryption keys
     for key in product(ascii_lowercase, repeat=3):
@@ -149,22 +152,20 @@ def problem_059(cipher_text=CIPHER_TEXT):
                 word_count += 1
 
         # Check if we have a new best plain text
-        if word_count > best_count:
-            best_count = word_count
-            best_key = key
-            best_text = plain_text
+        newest_seen = CountAndKeyAndText(word_count, key, plain_text)
+        best_seen = max(best_seen, newest_seen)
 
     # Compute the requested sum
     answer = 0
-    for char in best_text:
+    for char in best_seen.text:
         answer += ord(char)
 
     end_time = time() - start_time
-    print("The decryption key is:", ''.join(best_key))
-    print("The decrypted plain text is:")
-    print()
-    print(best_text)
-    print()
+    output = "The decryption key is: '{key}'\n\nThe plain text is:\n\n{text}\n".format(
+        key=''.join(best_seen.key),
+        text=best_seen.text,
+    )
+    print(output)
     print(answer, 'in', end_time, 'secs')
     return answer
 

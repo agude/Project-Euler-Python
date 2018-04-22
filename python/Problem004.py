@@ -19,7 +19,6 @@
 #  The most recent version of this program is available at:
 #  https://github.com/agude/Project-Euler
 
-
 """
 A palindromic number reads the same both ways. The largest palindrome made from
 the product of two 2-digit numbers is 9009 = 91 x 99.
@@ -27,30 +26,31 @@ the product of two 2-digit numbers is 9009 = 91 x 99.
 Find the largest palindrome made from the product of two 3-digit numbers.
 """
 
-def problem_004(min_num=100, max_num=999):
-    from time import time
-    from euler.palindromic import is_palindromic
+from time import time
 
+from euler.palindromic import is_palindromic
+
+
+def problem_004(min_num=100, max_num=999):
     # Solution
     start_time = time()
 
-    maxnum = 0
+    largest_seen = 0
     for a in range(max_num, min_num, -1):
         for b in range(a, min_num - 1, -1):
-            num = a * b
-            if is_palindromic(num):
+            newest_number = a * b
+            if is_palindromic(newest_number):
                 break
-            elif num < maxnum:
-                num = -1
+            elif newest_number < largest_seen:
+                newest_number = -1
                 break
             else:
-                num = -1
-        if num > maxnum:
-            maxnum = num
+                newest_number = -1
+        largest_seen = max(largest_seen, newest_number)
 
     total_time = time() - start_time
-    print(maxnum, 'in', total_time, 'secs')
-    return maxnum
+    print(largest_seen, 'in', total_time, 'secs')
+    return largest_seen
 
 
 # Only runs if executed directly

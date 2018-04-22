@@ -40,9 +40,14 @@ Find the value of d  1000 for which 1/d contains the longest recurring cycle in
 its decimal fraction part.
 """
 
+from collections import namedtuple
+from time import time
+
 from euler.fractions import cycle_length_prime
 from euler.primes import prime_sieve
-from time import time
+
+
+LengthAndNumber = namedtuple("LengthAndNumber", ["cycle_length", "number"])
 
 
 def problem_026(max_num=1000):
@@ -55,22 +60,20 @@ def problem_026(max_num=1000):
     primes = prime_sieve(max_num)
 
     # We start at the end as the maximum cycle length is number - 1
-    biggest_cycle = 0
-    biggest_number = 0
+    greatest_seen = LengthAndNumber(0, 0)
     for i in reversed(primes):
         # Cycle is larger then remaining numbers, so their cycles must be
         # shorter
-        if biggest_cycle >= i:
+        if greatest_seen.cycle_length >= i:
             break
 
         length = cycle_length_prime(i)
-        if length > biggest_cycle:
-            biggest_cycle = length
-            biggest_number = i
+        newest_seen = LengthAndNumber(length, i)
+        greatest_seen = max(greatest_seen, newest_seen)
 
     end_time = time() - start_time
-    print(biggest_number, 'with cycle length', biggest_cycle, 'in', end_time, 'secs')
-    return biggest_number
+    print(greatest_seen.number, 'with cycle length', greatest_seen.cycle_length, 'in', end_time, 'secs')
+    return greatest_seen.number
 
 
 # Only runs if executed directly

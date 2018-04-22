@@ -33,9 +33,14 @@ Find the value of n, 1 < n < 10**7, for which phi(n) is a permutation of n and
 the ratio n/phi(n) produces a minimum.
 """
 
+from collections import namedtuple
+from time import time
+
 from euler.converter import int_to_tuple
 from euler.totient import totient_sieve
-from time import time
+
+
+RatioAndN = namedtuple("RatioAndN", ["ratio", "n"])
 
 
 def problem_070(max_num=int(10**7)):
@@ -47,20 +52,18 @@ def problem_070(max_num=int(10**7)):
     # Loop through all of them and find all pairs such that phi is a permutation
     # of the digits of n. For these, save the one with the lowest ratio
     # n / phi.
-    minimum = float("inf")
-    min_n = 0
+    minimum_seen = RatioAndN(float("inf"), 0)
     for n in range(2, len(totients)):
         phi = totients[n]
         # Check for pairs where phi is a permutation of n's digits
         if sorted(int_to_tuple(n)) == sorted(int_to_tuple(phi)):
             ratio = n / phi
-            if ratio < minimum:
-                minimum = ratio
-                min_n = n
+            newest_seen = RatioAndN(ratio, n)
+            minimum_seen = min(minimum_seen, newest_seen)
 
     end_time = time() - start_time
-    print(min_n, 'in', end_time, 'secs')
-    return min_n
+    print(minimum_seen.n, 'in', end_time, 'secs')
+    return minimum_seen.n
 
 
 # Only runs if executed directly

@@ -38,6 +38,11 @@ Which starting number, under one million, produces the longest chain?
 NOTE: Once the chain starts the terms are allowed to go above one million.
 """
 
+from collections import namedtuple
+
+
+CountAndNumber = namedtuple("CountAndNumber", ["count", "number"])
+
 
 def problem_014(max_num=1000000):
     from time import time
@@ -48,8 +53,7 @@ def problem_014(max_num=1000000):
     # Set up a dictionary mapping a number to the length of the chain for that number
     links_length = {1:1}
 
-    max_count = 0
-    max_number = None
+    greatest_seen = CountAndNumber(0, None)
     # Check every number
     for number in range(max_num, 2, -1):
         # Get chain length using the lookup table (it will exist if it has been computed before)
@@ -92,15 +96,14 @@ def problem_014(max_num=1000000):
             count = links_length[number]
 
         # If the count length is a new max, save it
-        if count > max_count:
-            max_count = count
-            max_number = number
+        newest_seen = CountAndNumber(count, number)
+        greatest_seen = max(greatest_seen, newest_seen)
 
     end_time = time() - start_time
     if max_num < 100:
         print(links_length)
-    print(max_number, "with chain length", max_count, "in", end_time, "secs")
-    return max_number
+    print(greatest_seen.number, "with chain length", greatest_seen.count, "in", end_time, "secs")
+    return greatest_seen.number
 
 
 if __name__ == '__main__':
