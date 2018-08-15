@@ -1,7 +1,8 @@
+from typing import Dict, Generator, List, Set, Union
 import collections
 import itertools
 import math
-import numpy
+import numpy as np
 try:
     import euler.countable as countable
 except ImportError:
@@ -12,7 +13,7 @@ except ImportError:
     import converter
 
 
-def prime_sieve(max_number):
+def prime_sieve(max_number: int) -> np.array:
     """Returns a (numpy) array of all prime numbers less than max_number.
 
     This function uses a sieve of Eratosthenes, and hence needs to store at
@@ -33,7 +34,7 @@ def prime_sieve(max_number):
     # cut off a number that the user cares about.
     max_number = int(math.ceil(max_number))
     # An array of bools, we use the index to store if a number is prime or not
-    is_prime = numpy.ones(max_number + 1, dtype=numpy.bool)
+    is_prime: np.array = np.ones(max_number + 1, dtype=np.bool)
     is_prime[0] = is_prime[1] = False  # 0,1 not prime
     for i in range(2, int(math.ceil(math.sqrt(max_number)))):
         if is_prime[i]:  # False if already proven to be not prime
@@ -42,16 +43,16 @@ def prime_sieve(max_number):
             # removed
             is_prime[i * i:max_number + 1:i] = False
     # Return the index values of True, that is primes
-    return numpy.array(numpy.nonzero(is_prime)[0], dtype=numpy.int64)
+    return np.array(np.nonzero(is_prime)[0], dtype=np.int64)
 
 
-def primes():
+def primes() -> Generator[int, None, None]:
     """Returns an iterator over all prime numbers.
 
     Yields:
         int: The next prime number.
     """
-    not_primes = {}
+    not_primes: Dict[int, int] = {}
     yield 2  # Only even prime, put in by hand
     for i in itertools.islice(itertools.count(0), 3, None, 2):
         # If i is already in not_primes, remove and return it, otherwise return
@@ -69,7 +70,7 @@ def primes():
             not_primes[k] = j
 
 
-def prime_factors(number):
+def prime_factors(number: int) -> List[int]:
     """Returns a list of numbers containing all the prime factors of number.
 
     Args:
@@ -92,7 +93,7 @@ def prime_factors(number):
     # until it no longer divides through evenly.
     for prime in primes():
         while new_number % prime == 0:
-            new_number = new_number / prime
+            new_number = new_number // prime
             factors.append(prime)
 
             # We have divided out all the primes
@@ -103,8 +104,10 @@ def prime_factors(number):
         if not factors and prime > math.sqrt(number):
             return [number]
 
+    return []
 
-def is_prime(number):
+
+def is_prime(number: int) -> bool:
     """Returns True if number is prime, else false.
 
     This function uses a deterministic, brute-force prime test.
@@ -135,7 +138,7 @@ def is_prime(number):
         return False
     # We now use the fact that primes are 6n+-1
     else:
-        r = math.floor(math.sqrt(number))
+        r: int = math.floor(math.sqrt(number))
         f = 5
         while f <= r:
             if not number % f:
@@ -149,9 +152,9 @@ def is_prime(number):
     return True
 
 
-def circular_primes(number, prime_list=None):
+def circular_primes(number: int, prime_list: Union[List[int], None]=None) -> Set[int]:
     """Returns a list of all the circular primes associated with number if
-    there are any, otherwise returns [].
+    there are any, otherwise returns set([]).
 
     This function uses is_prime unless prime_list is provided, in which case it
     assumes that all possible primes it might need are in that list.
@@ -193,7 +196,7 @@ def circular_primes(number, prime_list=None):
     return circular_primes
 
 
-def is_truncatable_prime(number, right_truncate=False):
+def is_truncatable_prime(number: int, right_truncate: bool=False) -> bool:
     """Returns true if number is a truncatable prime.
 
     A prime is left-truncatable if it is prime and if, when digits are removed
@@ -235,7 +238,7 @@ def is_truncatable_prime(number, right_truncate=False):
     return True
 
 
-def is_right_truncatable_prime(number):
+def is_right_truncatable_prime(number: int) -> bool:
     """Returns true if number is a right-truncatable prime.
 
     A prime is right-truncatable if it is prime and if, when digits are removed
@@ -257,7 +260,7 @@ def is_right_truncatable_prime(number):
     return is_truncatable_prime(number, right_truncate=True)
 
 
-def is_left_truncatable_prime(number):
+def is_left_truncatable_prime(number: int) -> bool:
     """Returns true if number is a left-truncatable prime.
 
     A prime is left-truncatable if it is prime and if, when digits are removed
@@ -279,7 +282,7 @@ def is_left_truncatable_prime(number):
     return is_truncatable_prime(number, right_truncate=False)
 
 
-def is_two_sided_prime(number):
+def is_two_sided_prime(number: int) -> bool:
     """Returns true if number is a two-sided prime, that is if it is both left
     and right-truncatable.
 

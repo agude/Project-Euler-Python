@@ -1,8 +1,10 @@
+from typing import Generator
 import math
 import decimal
+from typing import Dict, List
 
 
-def fibonacci(n, memoized={0: 0, 1: 1}):
+def fibonacci(n: int, memoized: Dict[int, int]={0: 0, 1: 1}) -> int:
     """Returns the nth Fibonacci number.
 
     Recursively finds the Fibonacci numbers while memoizing all of the previous
@@ -32,7 +34,7 @@ def fibonacci(n, memoized={0: 0, 1: 1}):
     return memoized[n_int]
 
 
-def fibonaccis(n):
+def fibonaccis(n: int) -> List[int]:
     """Returns a list of the Fibonacci numbers from F0 to Fn.
 
     Generates the list via calls to fibonacci, and so fills the memoization
@@ -56,7 +58,7 @@ def fibonaccis(n):
     return [fibonacci(i) for i in range(n + 1)]
 
 
-def fibonacci_generator(n=None, mod=None):
+def fibonacci_generator(n: int=None, mod: int=None) -> Generator[int, None, None]:
     """Generates a generator over all Fibonacci numbers.
 
     This makes no use of fibonacci, and so no memoization is done. This is the
@@ -93,7 +95,7 @@ def fibonacci_generator(n=None, mod=None):
         yield elements.pop(0)
 
 
-def fibonacci_binet(n, suppress_exception=False):
+def fibonacci_binet(n: int, suppress_exception: bool=False) -> int:
     """Returns the nth Fibonacci number using Binet's closed form solution.
 
     The closed form solution is of the form:

@@ -5,7 +5,7 @@ except ImportError:
     import countable
 
 
-def n_choose_k(n, k):
+def n_choose_k(n: int, k: int) -> int:
     """ Return the binomial coefficient for n choose k.
 
     The binomial coefficient is defined as:

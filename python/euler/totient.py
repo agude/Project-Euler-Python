@@ -6,7 +6,7 @@ except ImportError:
     import primes
 
 
-def eulers_totient(number):
+def eulers_totient(number: int) -> int:
     """Returns the Euler's totient (also known as the Euler's Phi) of a number.
 
     For a number n, euler's totient is the number of numbers of value < n which
@@ -32,7 +32,7 @@ def eulers_totient(number):
     return int(answer)
 
 
-def totient_sieve(max_number):
+def totient_sieve(max_number: int):
     """Returns a (numpy) array of all values of Euler's totient function,
     phi(n), for all values from 0 to the specified number.
 

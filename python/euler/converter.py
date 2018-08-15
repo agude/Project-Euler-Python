@@ -1,10 +1,11 @@
+from typing import Dict, Iterable, Tuple, Union, List
 try:
     import euler.countable as countable
 except ImportError:
     import countable
 
 
-def iterable_to_int(input_tuple):
+def iterable_to_int(input_tuple: Iterable[int]) -> int:
     """Returns an integer from an ordered iterable, with the first item in the
     iterable taking the most significant digit's place, and so on.
 
@@ -27,7 +28,7 @@ def iterable_to_int(input_tuple):
     return int(''.join(str_tuple))
 
 
-def int_to_tuple(number):
+def int_to_tuple(number: int) -> Tuple[int, ...]:
     """Takes an integer and returns a tuple of the digits in order.
 
     For example: 123 -> (1, 2, 3)
@@ -50,7 +51,7 @@ def int_to_tuple(number):
     return tuple([int(i) for i in str(number)])
 
 
-def sort_digits(number):
+def sort_digits(number: int) -> int:
     """Sort the digits of an integer and return a new integer.
 
     This is useful for seeing if two numbers are permutations of each other.
@@ -70,7 +71,7 @@ def sort_digits(number):
     return iterable_to_int(sorted_digits)
 
 
-def sum_digits(number):
+def sum_digits(number: int) -> int:
     """Sum the digits of an integer and return a new integer.
 
     Args:
@@ -86,7 +87,7 @@ def sum_digits(number):
     return sum(int_to_tuple(number))
 
 
-def truncate(number, right_truncate=False):
+def truncate(number: int, right_truncate: bool=False) -> Union[int, None]:
     """Truncate an integer and return the smaller integer.
 
     It will truncate from the left side by default, right side truncate is
@@ -132,7 +133,7 @@ def truncate(number, right_truncate=False):
     return truncated_number
 
 
-def right_truncate(number):
+def right_truncate(number: int) -> Union[int, None]:
     """Truncate an integer from the right and return the smaller integer.
 
     This is a simple wrapper around truncate. The source is simply:
@@ -152,7 +153,7 @@ def right_truncate(number):
     return truncate(number, right_truncate=True)
 
 
-def left_truncate(number):
+def left_truncate(number: int) -> Union[int, None]:
     """Truncate an integer from the left and return the smaller integer.
 
     This is a simple wrapper around truncate. The source is simply:
@@ -172,7 +173,7 @@ def left_truncate(number):
     return truncate(number, right_truncate=False)
 
 
-def reverse_int(number):
+def reverse_int(number: int) -> int:
     """ Given an integer, returns the reverse of the integer.
 
     For negative numbers, the digits are reversed but the number remains
@@ -205,7 +206,9 @@ def reverse_int(number):
     return reversed_number
 
 
-NUMBER_WORDS = {
+NumberWords = Dict[str, Dict[int, str]]
+
+NUMBER_WORDS: NumberWords = {
     "ones": {
         1: 'one',
         2: 'two',
@@ -246,7 +249,7 @@ NUMBER_WORDS = {
 
 
 class NumberWriter(object):
-    def __init__(self, number, number_words=NUMBER_WORDS):
+    def __init__(self, number: int, number_words: NumberWords=NUMBER_WORDS) -> None:
         """Takes a number and returns the number written out in words.
 
         Supports numbers up to (1,000,000,000,000,000 - 1)
@@ -271,15 +274,15 @@ class NumberWriter(object):
         Raises:
             ValueError: If number is < 0.
         """
-        self.number_words = number_words
-        self.number_tuple = int_to_tuple(number)
-        self.values = ["", "thousand", "million", "billion", "trillion",]
+        self.number_words: NumberWords = number_words
+        self.number_tuple: Tuple[int, ...] = int_to_tuple(number)
+        self.values: List[str] = ["", "thousand", "million", "billion", "trillion",]
         self.__convert_to_blocks()
 
         self.__create_string()
 
     def __create_string(self):
-        self.word = ""
+        self.word: str = ""
 
         # Zero is a special case, because otherwise a 0 in the ones
         # place has no word associated with it.
@@ -332,10 +335,10 @@ class NumberWriter(object):
         if block:
             self.blocks.append(block)
 
-    def __handle_one(self, tup):
+    def __handle_one(self, tup) -> str:
         return self.number_words["ones"][tup[0]]
 
-    def __handle_two(self, tup):
+    def __handle_two(self, tup) -> str:
         # 10 - 19, which are weird
         if tup[0] == 1:
             return self.number_words["teens"][tup[1]]
@@ -347,7 +350,7 @@ class NumberWriter(object):
                 string += "-" + ones
             return string
 
-    def __handle_three(self, tup):
+    def __handle_three(self, tup) -> str:
         # Length 3
         string = ""
         leading_value = self.number_words["ones"][tup[0]]

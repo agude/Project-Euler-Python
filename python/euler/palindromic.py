@@ -1,4 +1,4 @@
-def is_palindromic(number):
+def is_palindromic(number: int) -> bool:
     """Returns True if the number is palindromic, that is, read the same
     forward as backwards, otherwise returns False.
 
@@ -14,7 +14,7 @@ def is_palindromic(number):
     return test_number == test_number[::-1]  # [::-1] reverses a list
 
 
-def is_binary_palindromic(number):
+def is_binary_palindromic(number: int) -> bool:
     """Returns True if the number is palindromic in binary, that is, read the
     same forward as backwards, otherwise returns False.
 

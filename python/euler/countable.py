@@ -1,4 +1,7 @@
-def is_integer(number):
+from typing import SupportsFloat
+
+
+def is_integer(number: SupportsFloat) -> bool:
     """Determine if a number is an integer.
 
     Args:
@@ -13,7 +16,7 @@ def is_integer(number):
     return float(number).is_integer()
 
 
-def is_nonnegative_integer(number):
+def is_nonnegative_integer(number) -> bool:
     """Determine if a number is an integer and not negative.
 
     Args:
@@ -28,7 +31,7 @@ def is_nonnegative_integer(number):
     return (number >= 0 and is_integer(number))
 
 
-def is_positive_integer(number):
+def is_positive_integer(number) -> bool:
     """Determine if a number is an integer and greater than 0.
 
     Args:
@@ -43,7 +46,7 @@ def is_positive_integer(number):
     return (number >= 1 and is_integer(number))
 
 
-def is_nonpositive_integer(number):
+def is_nonpositive_integer(number) -> bool:
     """Determine if a number is an integer and not positive.
 
     Args:
@@ -58,7 +61,7 @@ def is_nonpositive_integer(number):
     return (number <= 0 and is_integer(number))
 
 
-def is_negative_integer(number):
+def is_negative_integer(number) -> bool:
     """Determine if a number is an integer and less than 0.
 
     Args:

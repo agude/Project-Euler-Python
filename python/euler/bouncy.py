@@ -17,7 +17,7 @@ class NumberSlope(Enum):
     both = 2
 
 
-def check_number_slope(number):
+def check_number_slope(number: int) -> NumberSlope:
     """ A general function to check if a number is a decreasing number, an
     increasing number, both, or neither (called "bouncy").
 
@@ -67,7 +67,7 @@ def check_number_slope(number):
         return NumberSlope.decreasing
 
 
-def is_decreasing(number):
+def is_decreasing(number: int) -> bool:
     """ Returns True if a number is decreasing, False otherwise.
 
     A number is decreasing if its digits, read left-to-right, are always
@@ -86,7 +86,7 @@ def is_decreasing(number):
     return result == NumberSlope.decreasing or result == NumberSlope.both
 
 
-def is_increasing(number):
+def is_increasing(number: int) -> bool:
     """ Returns True if a number is increasing, False otherwise.
 
     A number is increasing if its digits, read left-to-right, are always
@@ -105,7 +105,7 @@ def is_increasing(number):
     return result == NumberSlope.increasing or result == NumberSlope.both
 
 
-def is_bouncy(number):
+def is_bouncy(number: int) -> bool:
     """ Returns True if a number is bouncy, False otherwise.
 
     A number is bouncy if its digits, read left-to-right, are not always larger

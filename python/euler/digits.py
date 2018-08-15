@@ -4,7 +4,7 @@ except ImportError:
     import countable
 
 
-def square_and_add(number):
+def square_and_add(number: int) -> int:
     """Return the sum of the square of a number's digits.
 
     Args:
