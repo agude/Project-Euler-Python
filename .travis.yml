@@ -10,3 +10,4 @@ install: "pip install numpy pytest==3.0.* mypy"
 script:
     - cd python
     - python -m pytest -v
+    - python -m mypy Problem*.py
