@@ -28,15 +28,15 @@ Find the sum of all the even-valued terms in the sequence which do not exceed
 four million.
 """
 
-def problem_002(max_num=4000000):
+def problem_002(max_num: int = 4000000) -> int:
     from time import time
     from euler.fibonacci import fibonacci_generator
 
     # Solution
-    start_time = time()
+    start_time: float = time()
 
     # We compute all the Fibonacci numbers and check them
-    total = 0
+    total: int = 0
     for number in fibonacci_generator():
         # Break when we hit the limit
         if number > max_num:
@@ -45,7 +45,7 @@ def problem_002(max_num=4000000):
         elif not number % 2:
             total += number
 
-    end_time = time() - start_time
+    end_time: float = time() - start_time
     print(total, 'in', end_time, 'secs')
     return total
 

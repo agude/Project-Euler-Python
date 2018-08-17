@@ -26,19 +26,22 @@ get 3, 5, 6 and 9. The sum of these multiples is 23.
 Find the sum of all the multiples of 3 or 5 below 1000.
 """
 
-def problem_001(max_num=1000):
+from typing import Set
+
+
+def problem_001(max_num: int = 1000) -> int:
     from time import time
 
     # Solution
     start_time = time()
 
     # Generate the sets of numbers
-    threes = set(range(3, max_num, 3))
-    fives = set(range(5, max_num, 5))
-    all_nums = fives.union(threes)
-    total = sum(all_nums)
+    threes: Set[int] = set(range(3, max_num, 3))
+    fives: Set[int] = set(range(5, max_num, 5))
+    all_nums: Set[int] = fives.union(threes)
+    total: int = sum(all_nums)
 
-    end_time = time() - start_time
+    end_time: float = time() - start_time
     print(total, 'in', end_time, 'secs')
     return total
 
