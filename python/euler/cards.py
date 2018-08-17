@@ -129,7 +129,7 @@ class PlayingCard(object):
             return self.value < other.value
         return NotImplemented
 
-    def __eq__(self, other: "PlayingCard"):
+    def __eq__(self, other):
         if self.__class__ is other.__class__:
             return self.value == other.value
         return NotImplemented
@@ -313,7 +313,7 @@ class PokerHand(object):
     def __repr__(self):
         return self.cards.__repr__()
 
-    def __eq__(self, other: "PokerHand"):
+    def __eq__(self, other):
         if self.__class__ is other.__class__:
             if self.hand_type == other.hand_type:
                 if not self.__tie_breakers[0] == other.__tie_breakers[0]:

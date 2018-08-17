@@ -150,7 +150,7 @@ class Vertex:
             return self.number.__lt__(other.number)
         return NotImplemented
 
-    def __eq__(self, other: "Vertex"):
+    def __eq__(self, other):
         if self.__class__ is other.__class__:
             return self.number.__eq__(other.number)
         return NotImplemented
