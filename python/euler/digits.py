@@ -1,10 +1,7 @@
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
-def square_and_add(number):
+def square_and_add(number: int) -> int:
     """Return the sum of the square of a number's digits.
 
     Args:

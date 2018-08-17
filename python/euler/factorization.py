@@ -1,12 +1,10 @@
 import bisect
 import math
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+from typing import List
+import euler.countable as countable
 
 
-def proper_factors(number):
+def proper_factors(number: int) -> List[int]:
     """ Returns a list of the proper factors of a number.
 
     The proper factors of a number are all numbers that divide it evenly,
@@ -47,7 +45,7 @@ def proper_factors(number):
     return factors
 
 
-def factors(number):
+def factors(number: int) -> List[int]:
     """ Returns a list of the factors of a number.
 
     The factors of a number are all numbers that divide it evenly, including
@@ -66,7 +64,7 @@ def factors(number):
     return proper_factors(number) + [number]
 
 
-def number_of_proper_factors(number):
+def number_of_proper_factors(number: int) -> int:
     """ Returns the number of proper factors of a number.
 
     The proper factors of a number are all numbers that divide it evenly,
@@ -87,7 +85,7 @@ def number_of_proper_factors(number):
     return len(proper_factors(number))
 
 
-def number_of_factors(number):
+def number_of_factors(number: int) -> int:
     """ Returns the number of factors of a number.
 
     The factors of a number are all numbers that divide it evenly, including

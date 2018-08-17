@@ -1,10 +1,8 @@
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+from typing import Callable, Dict
+import euler.countable as countable
 
 
-def cycle_length_prime(number):
+def cycle_length_prime(number: int) -> int:
     """ Return the length of cycle of repeating digits of 1/number,
     where number is prime.
 
@@ -28,9 +26,9 @@ def cycle_length_prime(number):
     if not countable.is_positive_integer(number):
         raise ValueError("input is not a positive integer")
     # Otherwise test the number
-    d = 1
+    d:int = 1
     while True:
-        power = 10 ** d
+        power: int = 10 ** d
         if (power - 1) % number == 0:
             return d
         d += 1
@@ -46,7 +44,7 @@ class ContinuedFraction:
         [a_{0}; a_{1}, a_{2}, ...] = a_{0} + 1/(a_{1} + 1/(a_{2} + ... ))
     """
 
-    def __init__(self, a0, an):
+    def __init__(self, a0: int, an: Callable[[int], int]) -> None:
         """Set up the continued fraction.
 
         Args:
@@ -55,14 +53,14 @@ class ContinuedFraction:
                 coefficient an.
         """
         # The coefficients of the fraction
-        self.a0 = a0
-        self.an = an
+        self.a0: int = a0
+        self.an: Callable[[int], int] = an
 
         # The numerator and denominator terms
-        self.denominator_terms = {-2: 1, -1: 0}
-        self.numerator_terms   = {-2: 0, -1: 1}
+        self.denominator_terms: Dict[int, int] = {-2: 1, -1: 0}
+        self.numerator_terms: Dict[int, int] = {-2: 0, -1: 1}
 
-    def nth_convergent_numerator(self, n):
+    def nth_convergent_numerator(self, n: int) -> int:
         """Return the numerator of the nth convergent of a continued fraction.
 
         Args:
@@ -78,7 +76,7 @@ class ContinuedFraction:
         """
         return self.__nth_convergent_helper(n, self.numerator_terms)
 
-    def nth_convergent_denominator(self, n):
+    def nth_convergent_denominator(self, n: int) -> int:
         """Return the denominator of the nth convergent of a continued fraction.
 
         Args:
@@ -94,7 +92,7 @@ class ContinuedFraction:
         """
         return self.__nth_convergent_helper(n, self.denominator_terms)
 
-    def __nth_convergent_helper(self, n, terms):
+    def __nth_convergent_helper(self, n: int, terms: Dict[int, int]) -> int:
         """Helps to computer either the denominator or numerator of the nth
         convergent of a continued fraction.
 
@@ -127,10 +125,10 @@ class ContinuedFraction:
             raise ValueError("n is less than -2")
 
         if n not in terms:
-            term_1 = self.__nth_convergent_helper(n-1, terms)
-            term_2 = self.__nth_convergent_helper(n-2, terms)
+            term_1: int = self.__nth_convergent_helper(n-1, terms)
+            term_2: int = self.__nth_convergent_helper(n-2, terms)
 
-            a = self.an(n) if n else self.a0
+            a: int = self.an(n) if n else self.a0
             terms[n] = a * term_1 + term_2
 
         return terms[n]

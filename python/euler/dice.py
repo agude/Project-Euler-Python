@@ -1,15 +1,9 @@
 from math import floor
-try:
-    import euler.combinatorics as combinatorics
-except ImportError:
-    import combinatorics
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.combinatorics as combinatorics
+import euler.countable as countable
 
 
-def roll_probability(s, n, k):
+def roll_probability(s: int, n: int, k: int) -> float:
     """ Return the probability of rolling a total k using n dice of size s.
 
     Uses:
@@ -51,7 +45,7 @@ def roll_probability(s, n, k):
     return coef * sum_terms
 
 
-def roll_under_probability(s, n, k):
+def roll_under_probability(s: int, n: int, k: int) -> float:
     """ Return the probability of rolling less than k using n dice of size s.
 
     Uses:
@@ -76,7 +70,7 @@ def roll_under_probability(s, n, k):
     return combined_probability
 
 
-def roll_over_probability(s, n, k):
+def roll_over_probability(s: int, n: int, k: int) -> float:
     """ Return the probability of rolling more than k using n dice of size s.
 
     Uses:

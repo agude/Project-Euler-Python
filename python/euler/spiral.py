@@ -1,8 +1,11 @@
+from typing import List, Tuple
+
+
 class Spiral:
     """
     Class to store and manipulate a number spiral.
     """
-    def __init__(self, n):
+    def __init__(self, n: int) -> None:
         """
         Size is n x n block. n must be odd.
         """
@@ -11,10 +14,10 @@ class Spiral:
         if n % 2 == 0:
             raise ValueError("spiral can not have even size")
 
-        self.size = n
-        self.b = None
+        self.size: int = n
+        self.b: List[List[int]] = []
         self.__makeBoard()
-        self.sum = None
+        self.sum: int = 0
         self.__sumDiags()
 
     def __makeBoard(self):
@@ -30,9 +33,9 @@ class Spiral:
                 self.b[i].append(False)
 
         # Fills it
-        m = 1
-        i = n//2
-        j = n//2
+        m: int = 1
+        i: int = n//2
+        j: int = n//2
         self.b[i][j] = m
         if n < 3:
             return
@@ -58,7 +61,7 @@ class Spiral:
             else:
                 i, j = self.__fillVert(i, j, Up=True)
 
-    def __fillHori(self, i, j, Left=True, Right=False):
+    def __fillHori(self, i: int, j: int, Left: bool=True, Right: bool=False) -> Tuple[int, int]:
         """
         Fills the board to the left/(right) as long as values exist in the row
         above/(below).
@@ -92,7 +95,7 @@ class Spiral:
 
         return i, j
 
-    def __fillVert(self, i, j, Up=True, Down=False):
+    def __fillVert(self, i: int, j: int, Up: bool=True, Down: bool=False) -> Tuple[int, int]:
         """
         Fills the board to up/(down) as follows as long as values exist in the
         column to the right/(left).
@@ -136,11 +139,11 @@ class Spiral:
             if i != self.size - i - 1:  # Don't double count middle
                 self.sum += self.b[self.size - i - 1][i]
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Format for printing.
         """
-        outStr = '\n'
+        outStr: str = '\n'
         width = len(str((self.size * self.size))) + 1
         for i in range(self.size):
             for j in range(self.size):

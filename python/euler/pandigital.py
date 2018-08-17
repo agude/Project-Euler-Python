@@ -1,11 +1,9 @@
+from typing import Generator, List
 import itertools
-try:
-    import euler.converter as converter
-except ImportError:
-    import converter
+import euler.converter as converter
 
 
-def is_pandigital(number):
+def is_pandigital(number: int) -> bool:
     """Returns True if number is pandigital, False otherwise.
 
     An n-digit pandigital number contains digits 1 through n each exactly once,
@@ -20,8 +18,8 @@ def is_pandigital(number):
         bool: True if number is pandigital, False otherwise.
     """
     # Turn our number into a string and make a list of all digits to check
-    test_numbers = []
-    str_number = str(number)
+    test_numbers: List[str] = []
+    str_number: str = str(number)
     test_numbers = [str(i) for i in range(1, len(str_number) + 1)]
 
     # Check that each digit is in our number
@@ -32,7 +30,7 @@ def is_pandigital(number):
     return True
 
 
-def pandigitals(minimum_digits=1, maximum_digits=9, include_zero=False):
+def pandigitals(minimum_digits: int=1, maximum_digits: int=9, include_zero: bool=False) -> Generator[int, None, None]:
     """A generator over all pandigital numbers.
 
     An n-digit pandigital number contains digits 1 through n each exactly once,

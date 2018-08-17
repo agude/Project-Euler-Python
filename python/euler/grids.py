@@ -1,8 +1,5 @@
 from itertools import chain
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
 class Grid(object):

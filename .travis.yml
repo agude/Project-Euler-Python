@@ -1,14 +1,14 @@
 language: python
 
 python:
-  - "3.4"
-  - "3.5"
   - "3.6"
 
 # Install requirements
-install: "pip install numpy enum34 pytest==3.0.*"
+install: "pip install numpy pytest==3.0.* mypy"
 
 # Run the unit tests
 script:
     - cd python
     - python -m pytest -v
+    - python -m mypy --ignore-missing-imports Problem*.py
+    - python -m mypy --ignore-missing-imports euler/*.py

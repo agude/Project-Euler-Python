@@ -1,5 +1,6 @@
 from enum import Enum, IntEnum, unique
 from functools import total_ordering
+from typing import Dict, List, Tuple, Union
 import operator
 
 
@@ -62,7 +63,7 @@ class PlayingCard(object):
         value (CardValue): The card's value.
     """
 
-    def __init__(self, card_string):
+    def __init__(self, card_string: str) -> None:
         """ Initialize a card from a string.
 
         This class is constructed from a two character string of the form:
@@ -79,26 +80,26 @@ class PlayingCard(object):
         Raises:
             ValueError: Raised if card_string is invalid.
         """
-        self.name = card_string
+        self.name: str = card_string
         self.__set_suit()
         self.__set_number()
 
     def __set_suit(self):
-        suit_map = {
+        suit_map: Dict[str, CardSuit] = {
             "C": CardSuit.clubs,
             "D": CardSuit.diamonds,
             "H": CardSuit.hearts,
             "S": CardSuit.spades,
         }
-        suit = self.name[1]
+        suit: str = self.name[1]
 
         try:
-            self.suit = suit_map[suit]
+            self.suit: CardSuit = suit_map[suit]
         except KeyError:
             raise ValueError("Suit '" + suit + "' from '" + self.name + "' is invalid")
 
     def __set_number(self):
-        value_map = {
+        value_map: Dict[str, CardValue] = {
             "2": CardValue.two,
             "3": CardValue.three,
             "4": CardValue.four,
@@ -113,17 +114,17 @@ class PlayingCard(object):
             "K": CardValue.king,
             "A": CardValue.ace,
         }
-        value = self.name[0]
+        value: str = self.name[0]
 
         try:
-            self.value = value_map[value]
+            self.value: CardValue = value_map[value]
         except KeyError:
             raise ValueError("Value '" + value + "' from '" + self.name + "' is invalid")
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.name
 
-    def __lt__(self, other):
+    def __lt__(self, other: "PlayingCard"):
         if self.__class__ is other.__class__:
             return self.value < other.value
         return NotImplemented
@@ -155,7 +156,7 @@ class PokerHand(object):
         hand_type (PokerHandType): The type of hand (pair, flush, etc.).
     """
 
-    def __init__(self, cards):
+    def __init__(self, cards: List[PlayingCard]) -> None:
         """ Initialize a hand from a list of 5 PlayingCard objects.
 
         Args:
@@ -164,7 +165,7 @@ class PokerHand(object):
         Raises:
             ValueError: Raised if cards is invalid.
         """
-        self.cards = tuple(sorted(cards))
+        self.cards: Tuple[PlayingCard, ...] = tuple(sorted(cards))
         # Tie breakers are used to break ties when both players have
         # identically valued hands. First the 0th value is compared,
         # and if there is a still a tie the 1st value is compared. If
@@ -172,10 +173,10 @@ class PokerHand(object):
         # in order and the winner is the first hand to have a higher
         # card. If there is still a tie, the hands are actually
         # identical in value and it is a true tie.
-        self.__tie_breakers = [0, 0]
+        self.__tie_breakers: List[int] = [0, 0]
 
         # Determine how many cards of each value exist
-        self.value_count = {}
+        self.value_count: Dict[int, int] = {}
         for card in self.cards:
             value = int(card.value)
             try:
@@ -188,14 +189,14 @@ class PokerHand(object):
 
     def __set_hand_type(self):
         # Is a Flush?
-        is_flush = True
-        first_suit = self.cards[0].suit
+        is_flush: bool = True
+        first_suit: CardSuit = self.cards[0].suit
         for card in self.cards[1:]:
-                is_flush &= (card.suit == first_suit)
+            is_flush &= (card.suit == first_suit)
 
         # Is a Straight?
-        is_straight = True
-        last_value = self.cards[0].value
+        is_straight: bool = True
+        last_value: CardValue = self.cards[0].value
         for card in self.cards[1:]:
             if last_value + 1 != card.value:
                 is_straight = False
@@ -222,9 +223,9 @@ class PokerHand(object):
             return
 
         # Count the types of card matches we have
-        quads = 0
-        trips = 0
-        pairs = 0
+        quads: int = 0
+        trips: int = 0
+        pairs: int = 0
         for value in self.value_count.values():
             if value == 4:
                 quads += 1
@@ -295,7 +296,7 @@ class PokerHand(object):
                 self.__tie_breakers[0] = card_value
                 return
 
-    def __compare_cards(self, op, other):
+    def __compare_cards(self, op, other: "PokerHand"):
         # Compare card values from high to low
         for i in reversed(range(len(self.cards))):
             us = self.cards[i]
@@ -327,7 +328,7 @@ class PokerHand(object):
                 return self.hand_type == other.hand_type
         return NotImplemented
 
-    def __gt__(self, other):
+    def __gt__(self, other: "PokerHand"):
         if self.__class__ is other.__class__:
             if self.hand_type == other.hand_type:
                 if self.__tie_breakers[0] != other.__tie_breakers[0]:

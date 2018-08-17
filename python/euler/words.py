@@ -1,4 +1,7 @@
-def is_basic_word(word):
+from typing import FrozenSet
+
+
+def is_basic_word(word: str) -> bool:
     """Returns true if the word is in the basic word list.
 
     This function compares a lowercased version of the input word to the
@@ -12,12 +15,12 @@ def is_basic_word(word):
     Returns:
         bool: True if the word is in the basic word list, False otherwise.
     """
-    lower_word = str(word).lower()
+    lower_word: str = str(word).lower()
     return lower_word in BASIC_WORDS
 
 # This wordlist comes from Wikipedia:
 # http://simple.wikipedia.org/wiki/Wikipedia:Basic_English_combined_wordlist
-BASIC_WORDS = frozenset(
+BASIC_WORDS: FrozenSet[str] = frozenset(
     (
         "a",
         "able",

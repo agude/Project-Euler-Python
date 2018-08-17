@@ -1,11 +1,9 @@
+from typing import Generator, Union
 import math
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
-def polygonals(multiplier, divisor, offset, stop=None, start=1):
+def polygonals(multiplier: int, divisor: int, offset: int, stop=None, start: int=1) -> Generator[int, None, None]:
     """ A generator for generic polygonal numbers.
 
     This generator uses the following formula:
@@ -39,18 +37,18 @@ def polygonals(multiplier, divisor, offset, stop=None, start=1):
         raise ValueError("start must be a nonnegative integer")
 
     # Set up the run condition
-    run_forever = False
+    run_forever: bool = False
     if stop is None:
         run_forever = True
 
     # Loop over triangular numbers
-    n = start
+    n:int = start
     while run_forever or n <= stop:
         yield n * ((multiplier * n) + offset) // divisor
         n += 1
 
 
-def triangulars(stop=None, start=1):
+def triangulars(stop=None, start: int=1) -> Generator[int, None, None]:
     """Returns an iterator over all triangular numbers.
 
     Computes all triangular numbers from n = 1 to infinity by default, although
@@ -66,7 +64,7 @@ def triangulars(stop=None, start=1):
     return polygonals(1, 2, 1, stop, start)
 
 
-def squares(stop=None, start=1):
+def squares(stop=None, start=1) -> Generator[int, None, None]:
     """Returns an iterator over all square numbers.
 
     Computes all square numbers from n = 1 to infinity by default, although the
@@ -82,7 +80,7 @@ def squares(stop=None, start=1):
     return polygonals(1, 1, 0, stop, start)
 
 
-def pentagonals(stop=None, start=1):
+def pentagonals(stop=None, start: int=1) -> Generator[int, None, None]:
     """Returns an iterator over all pentagonal numbers.
 
     Computes all pentagonal numbers from n = 1 to infinity by default, although
@@ -98,7 +96,7 @@ def pentagonals(stop=None, start=1):
     return polygonals(3, 2, -1, stop, start)
 
 
-def hexagonals(stop=None, start=1):
+def hexagonals(stop=None, start: int=1) -> Generator[int, None, None]:
     """Returns an iterator over all hexagonal numbers.
 
     Computes all hexagonal numbers from n = 1 to infinity by default, although
@@ -114,7 +112,7 @@ def hexagonals(stop=None, start=1):
     return polygonals(2, 1, -1, stop, start)
 
 
-def heptagonals(stop=None, start=1):
+def heptagonals(stop=None, start: int=1) -> Generator[int, None, None]:
     """Returns an iterator over all heptagonal numbers.
 
     Computes all heptagonal numbers from n = 1 to infinity by default, although
@@ -130,7 +128,7 @@ def heptagonals(stop=None, start=1):
     return polygonals(5, 2, -3, stop, start)
 
 
-def octagonals(stop=None, start=1):
+def octagonals(stop=None, start: int=1) -> Generator[int, None, None]:
     """Returns an iterator over all octagonal numbers.
 
     Computes all octagonal numbers from n = 1 to infinity by default, although
@@ -146,7 +144,7 @@ def octagonals(stop=None, start=1):
     return polygonals(3, 1, -2, stop, start)
 
 
-def is_polygonal(number, multiplier, divisor):
+def is_polygonal(number: int, multiplier: int, divisor: int) -> bool:
     """Determine if a number is a specific type of polygonal number.
 
     This functions uses the formula:
@@ -177,7 +175,7 @@ def is_polygonal(number, multiplier, divisor):
     return (test_number > 0 and countable.is_integer(test_number))
 
 
-def is_triangular(number):
+def is_triangular(number: int) -> bool:
     """Determine if a number triangular.
 
     Args:
@@ -192,7 +190,7 @@ def is_triangular(number):
     return is_polygonal(number, 8, 2)
 
 
-def is_pentagonal(number):
+def is_pentagonal(number: int) -> bool:
     """Determine if a number pentagonal.
 
     Args:
@@ -207,7 +205,7 @@ def is_pentagonal(number):
     return is_polygonal(number, 24, 6)
 
 
-def is_hexagonal(number):
+def is_hexagonal(number: int) -> bool:
     """Determine if a number hexagonal.
 
     Args:
