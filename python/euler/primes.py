@@ -5,6 +5,7 @@ import math
 import numpy as np
 import euler.countable as countable
 import euler.converter as converter
+import euler.factorization as factorization
 
 
 def prime_sieve(max_number: int) -> np.ndarray:
@@ -302,3 +303,22 @@ def is_two_sided_prime(number: int) -> bool:
     """
     return (is_right_truncatable_prime(number)
             and is_left_truncatable_prime(number))
+
+
+def are_coprime(a: int, b: int) -> bool:
+    """Tests if two numbers are coprime, returns true if so, false otherwise.
+
+    Two numbers are coprime if their GCD is 1.
+
+
+    Args:
+        a (int): the first number
+        b (int): the second number
+
+    Returns:
+        bool: true if the numbers are coprime, false otherwise.
+
+    Raises:
+        TypeError: If a or b is not integral
+    """
+    return math.gcd(a, b) == 1

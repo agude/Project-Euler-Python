@@ -27,45 +27,37 @@ What is the smallest number that is evenly divisible by all of the numbers from
 1 to 20?
 """
 
-def problem_005(max_num=20):
+import numpy as np
+from typing import List
+from euler.primes import are_coprime
+
+
+def problem_005(max_num: int = 20) -> int:
     from time import time
 
     # Solution
-    start_time = time()
+    start_time: float = time()
 
-    # Find the set of coprime numbers in our set
-    divs = [True] * max_num
-    for i in range(len(divs)):
-        numi = i + 1
-        for j in range(len(divs)):
-            if divs[j] and i > j:
-                numj = j + 1
-                if not numi % numj:
-                    divs[j] = False
-
-    nums = []
-    for i in range(len(divs)):
-        if divs[i]:
-            nums.append(i + 1)
-
-    a = nums.pop()
-    b = nums.pop()
+    # We know the number has to be divisible by the two largest numbers, so we
+    # increment by the product of them.
+    final_divisors: List[int] = list(range(1, max_num+1))
+    a: int = final_divisors.pop()
+    b: int = final_divisors.pop()
+    increment: int = a * b
 
     # Find the smallest number divisible by all the coprime numbers
-    i = 0
+    test_number: int = 0
     while True:
-        # We know the number has to be divisible by a and b, so we increment by
-        # this number
-        i += a * b
-        for j in nums:
-            if i % j:
+        test_number += increment
+        for j in final_divisors:
+            if test_number % j:
                 break
         else:  # Only if above doesn't break
             break
 
-    total_time = time() - start_time
-    print(i, 'in', total_time, 'secs')
-    return i
+    total_time: float = time() - start_time
+    print(test_number, 'in', total_time, 'secs')
+    return test_number
 
 
 # Only runs if executed directly

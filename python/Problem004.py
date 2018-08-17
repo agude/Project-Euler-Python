@@ -31,14 +31,14 @@ from time import time
 from euler.palindromic import is_palindromic
 
 
-def problem_004(min_num=100, max_num=999):
+def problem_004(min_num: int = 100, max_num: int = 999) -> int:
     # Solution
-    start_time = time()
+    start_time: float = time()
 
-    largest_seen = 0
+    largest_seen: int = 0
     for a in range(max_num, min_num, -1):
         for b in range(a, min_num - 1, -1):
-            newest_number = a * b
+            newest_number: int = a * b
             if is_palindromic(newest_number):
                 break
             elif newest_number < largest_seen:
@@ -48,7 +48,7 @@ def problem_004(min_num=100, max_num=999):
                 newest_number = -1
         largest_seen = max(largest_seen, newest_number)
 
-    total_time = time() - start_time
+    total_time: float = time() - start_time
     print(largest_seen, 'in', total_time, 'secs')
     return largest_seen
 

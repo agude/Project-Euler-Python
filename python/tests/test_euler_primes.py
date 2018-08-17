@@ -145,3 +145,25 @@ def test_is_two_sided_prime(truncatable_primes):
     neither = left.symmetric_difference(right)
     for prime in neither:
         assert not eu.is_two_sided_prime(prime)
+
+
+def test_are_coprime(primes):
+    # 1 and 1 are coprime
+    assert eu.are_coprime(1, 1)
+
+    # 2 and 2 are not coprime
+    assert eu.are_coprime(2, 2) is False
+
+    # Any number and 1 are coprime
+    for i in range(100):
+        assert eu.are_coprime(1, i)
+
+    # Any odd number is coprime to 2
+    for i in range(3, 100, 2):
+        assert eu.are_coprime(2, i)
+
+    # All primes are coprime to each other
+    for i, prime_i in enumerate(primes):
+        for j in range(i+1, len(primes)):
+            prime_j = primes[j]
+            assert eu.are_coprime(prime_i, prime_j)
