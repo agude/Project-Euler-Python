@@ -7,7 +7,7 @@ import euler.countable as countable
 import euler.converter as converter
 
 
-def prime_sieve(max_number: int) -> np.array:
+def prime_sieve(max_number: int) -> np.ndarray:
     """Returns a (numpy) array of all prime numbers less than max_number.
 
     This function uses a sieve of Eratosthenes, and hence needs to store at
@@ -28,7 +28,7 @@ def prime_sieve(max_number: int) -> np.array:
     # cut off a number that the user cares about.
     max_number = int(math.ceil(max_number))
     # An array of bools, we use the index to store if a number is prime or not
-    is_prime: np.array = np.ones(max_number + 1, dtype=np.bool)
+    is_prime: np.ndarray = np.ones(max_number + 1, dtype=np.bool)
     is_prime[0] = is_prime[1] = False  # 0,1 not prime
     for i in range(2, int(math.ceil(math.sqrt(max_number)))):
         if is_prime[i]:  # False if already proven to be not prime
