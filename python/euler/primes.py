@@ -216,16 +216,19 @@ def is_truncatable_prime(number: int, right_truncate: bool=False) -> bool:
         return False
     # Truncate the number until we have removed all the digits. If it is prime
     # at all stages return True, otherwise return False.
+    test_number: Union[int, None] = number
     while True:
+        if test_number is None:
+            break
         # Truncate the primes from the left or right as desired
         if right_truncate:
-            number = converter.right_truncate(number)
+            test_number = converter.right_truncate(test_number)
         else:
-            number = converter.left_truncate(number)
+            test_number = converter.left_truncate(test_number)
         # None is returned when there are no more digits to remove
-        if number is None:
+        if test_number is None:
             break
-        if not is_prime(number):
+        if not is_prime(test_number):
             return False
 
     # Passed all of the tests
