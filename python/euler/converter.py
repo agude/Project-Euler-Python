@@ -1,8 +1,5 @@
 from typing import Dict, Iterable, Tuple, Union, List
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
 def iterable_to_int(input_tuple: Iterable[int]) -> int:

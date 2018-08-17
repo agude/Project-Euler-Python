@@ -1,12 +1,6 @@
 from math import floor
-try:
-    import euler.combinatorics as combinatorics
-except ImportError:
-    import combinatorics
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.combinatorics as combinatorics
+import euler.countable as countable
 
 
 def roll_probability(s: int, n: int, k: int) -> float:

@@ -1,9 +1,6 @@
 from typing import Generator, Union
 import math
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
 def polygonals(multiplier: int, divisor: int, offset: int, stop=None, start: int=1) -> Generator[int, None, None]:

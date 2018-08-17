@@ -1,7 +1,4 @@
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
 def square_and_add(number: int) -> int:

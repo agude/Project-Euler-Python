@@ -1,12 +1,6 @@
 from enum import Enum
-try:
-    import euler.converter as converter
-except ImportError:
-    import converter
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.converter as converter
+import euler.countable as countable
 
 
 class NumberSlope(Enum):

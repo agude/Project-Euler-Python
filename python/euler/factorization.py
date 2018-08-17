@@ -1,10 +1,7 @@
 import bisect
 import math
 from typing import List
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
 def proper_factors(number: int) -> List[int]:

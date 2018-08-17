@@ -1,9 +1,6 @@
 from typing import Generator, List
 import itertools
-try:
-    import euler.converter as converter
-except ImportError:
-    import converter
+import euler.converter as converter
 
 
 def is_pandigital(number: int) -> bool:

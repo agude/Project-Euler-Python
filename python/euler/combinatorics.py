@@ -1,8 +1,5 @@
 import math
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
 def n_choose_k(n: int, k: int) -> int:

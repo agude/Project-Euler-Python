@@ -1,9 +1,6 @@
 import fractions
 import numpy
-try:
-    import euler.primes as primes
-except ImportError:
-    import primes
+import euler.primes as primes
 
 
 def eulers_totient(number: int) -> int:

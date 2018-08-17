@@ -1,8 +1,5 @@
 from typing import Callable, Dict
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
+import euler.countable as countable
 
 
 def cycle_length_prime(number: int) -> int:

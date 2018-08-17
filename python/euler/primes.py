@@ -3,14 +3,8 @@ import collections
 import itertools
 import math
 import numpy as np
-try:
-    import euler.countable as countable
-except ImportError:
-    import countable
-try:
-    import euler.converter as converter
-except ImportError:
-    import converter
+import euler.countable as countable
+import euler.converter as converter
 
 
 def prime_sieve(max_number: int) -> np.array:
