@@ -179,7 +179,7 @@ def circular_primes(number: int, prime_list: Union[List[int], None]=None) -> Set
     # rotations (less one, since we have already checked the current number
     prime_digits = collections.deque(converter.int_to_tuple(number))
     for _ in range(len(prime_digits) - 1):
-        prime_digits.rotate()
+        prime_digits.rotate()  # type: ignore
         new_number = converter.iterable_to_int(prime_digits)
         if prime_list is None:
             if not is_prime(new_number):
