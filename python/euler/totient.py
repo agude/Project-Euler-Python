@@ -1,5 +1,6 @@
-import fractions
-import numpy
+from typing import Set
+from fractions import Fraction
+import numpy as np
 import euler.primes as primes
 
 
@@ -19,17 +20,17 @@ def eulers_totient(number: int) -> int:
         TypeError: if number doesn't support sqrt().
     """
     # We get the unique prime factors of the number
-    factors = set(primes.prime_factors(number))
+    factors: Set[int] = set(primes.prime_factors(number))
     # We use the formula: Phi(n) = n Product(1-1/p), where p are the prime
     # factors of n
-    answer = number
+    answer: Fraction = Fraction(number, 1)
     for factor in factors:
-        answer *= (1 - fractions.Fraction(1, factor))
+        answer *= (1 - Fraction(1, factor))
     # The answer must be an integer
-    return int(answer)
+    return int(answer)  # type: ignore
 
 
-def totient_sieve(max_number: int):
+def totient_sieve(max_number: int) -> np.ndarray:
     """Returns a (numpy) array of all values of Euler's totient function,
     phi(n), for all values from 0 to the specified number.
 
@@ -52,12 +53,12 @@ def totient_sieve(max_number: int):
     """
     # We set the type of ints stored in the array based on the size of the
     # input to try to save some space
-    numpy_type = numpy.uint32
+    numpy_type: type = np.uint32
     if max_number <= 65535:  # 2**16 - 1
-        numpy_type = numpy.uint16
+        numpy_type = np.uint16
 
     # An array of the totients, with totient_array[n] = phi(n).
-    totient_array = numpy.ones(max_number + 1, dtype=numpy_type)
+    totient_array: np.ndarray = np.ones(max_number + 1, dtype=numpy_type)
     totient_array[0] = 0
 
     # Now sieve numbers
@@ -66,16 +67,16 @@ def totient_sieve(max_number: int):
         # product of previous primes are prime themselves, and so primes are
         # the only number that will have a value of 1 when we reach them.
         if totient_array[number] == 1:
-            prime = number
+            prime: int = number
             for number_to_update in range(prime, max_number + 1, prime):
                 # All numbers that contain the prime at least once get
                 # multiplied by (prime - 1)
                 totient_array[number_to_update] *= prime - 1
                 # Numbers that contain additional powers of the prime are
                 # multiplied by the prime for each additional power.
-                quotient = number_to_update / prime
+                quotient: int = number_to_update // prime
                 while not quotient % prime:
                     totient_array[number_to_update] *= prime
-                    quotient /= prime
+                    quotient //= prime
 
     return totient_array

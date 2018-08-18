@@ -10,7 +10,7 @@ def is_palindromic(number: int) -> bool:
     Returns:
         bool: True if number is palindromic, False otherwise.
     """
-    test_number = str(abs(number))
+    test_number: str = str(abs(number))
     return test_number == test_number[::-1]  # [::-1] reverses a list
 
 
@@ -27,5 +27,5 @@ def is_binary_palindromic(number: int) -> bool:
         bool: True if number's binary representation is palindromic, False
             otherwise.
     """
-    binary_string = bin(abs(number))[2:]  # We strip the "0b" prefix
+    binary_string: str = bin(abs(number))[2:]  # We strip the "0b" prefix
     return binary_string == binary_string[::-1]  # [::-1] reverses a list

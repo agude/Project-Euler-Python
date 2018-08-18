@@ -26,7 +26,7 @@ def cycle_length_prime(number: int) -> int:
     if not countable.is_positive_integer(number):
         raise ValueError("input is not a positive integer")
     # Otherwise test the number
-    d:int = 1
+    d: int = 1
     while True:
         power: int = 10 ** d
         if (power - 1) % number == 0:

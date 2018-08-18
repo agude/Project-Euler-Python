@@ -235,11 +235,11 @@ class Graph:
         return self.vertices.__len__()
 
     def __str__(self) -> str:
-        out_str = ""
-        keys = sorted(self.vertices.keys())
+        out_str: str = ""
+        keys: List[int] = sorted(self.vertices.keys())
         for key in keys:
             out_str += "Vertex " + str(key) + '\n'
-            edge_strs = []
+            edge_strs: List[str] = []
             for edge in self[key]:
                 edge_strs.append(str(edge))
             edge_strs.sort()

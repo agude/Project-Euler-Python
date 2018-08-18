@@ -39,8 +39,8 @@ def check_number_slope(number: int) -> NumberSlope:
 
     # Check through the number from left-to-right and keep track if it can be a
     # decreasing or increasing number.
-    decreasing = True
-    increasing = True
+    decreasing: bool = True
+    increasing: bool = True
     for i in range(len(number_tuple) - 1):
         # Check if increasing
         if increasing and not number_tuple[i] <= number_tuple[i+1]:
@@ -76,7 +76,7 @@ def is_decreasing(number: int) -> bool:
     Raises:
         ValueError: If number is < 0, or not an integer.
     """
-    result = check_number_slope(number)
+    result: NumberSlope = check_number_slope(number)
     return result == NumberSlope.decreasing or result == NumberSlope.both
 
 
@@ -95,7 +95,7 @@ def is_increasing(number: int) -> bool:
     Raises:
         ValueError: If number is < 0, or not an integer.
     """
-    result = check_number_slope(number)
+    result: NumberSlope = check_number_slope(number)
     return result == NumberSlope.increasing or result == NumberSlope.both
 
 

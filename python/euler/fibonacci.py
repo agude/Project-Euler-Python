@@ -4,7 +4,7 @@ import decimal
 from typing import Dict, List
 
 
-def fibonacci(n: int, memoized: Dict[int, int]={0: 0, 1: 1}) -> int:
+def fibonacci(n: int, memoized: Dict[int, int] = {0: 0, 1: 1}) -> int:
     """Returns the nth Fibonacci number.
 
     Recursively finds the Fibonacci numbers while memoizing all of the previous
@@ -81,21 +81,21 @@ def fibonacci_generator(n: int=None, mod: int=None) -> Generator[int, None, None
     if mod is not None and mod < 1:
         raise ValueError("mod is less than 1")
 
-    elements = [0, 1]
+    elements: List[int] = [0, 1]
     # If n is none, the loop will never terminate (as we intend); otherwise it
     # will stop when count is n. We start count at -1 so that we return up to
     # F(n), not F(n-1)
-    count = -1
+    count: int = -1
     while n is None or count < n:
         count += 1
-        new_number = elements[0] + elements[1]
+        new_number: int = elements[0] + elements[1]
         if mod is not None:
             new_number %= mod
         elements.append(new_number)
         yield elements.pop(0)
 
 
-def fibonacci_binet(n: int, suppress_exception: bool=False) -> int:
+def fibonacci_binet(n: int, suppress_exception: bool = False) -> int:
     """Returns the nth Fibonacci number using Binet's closed form solution.
 
     The closed form solution is of the form:
@@ -132,7 +132,7 @@ def fibonacci_binet(n: int, suppress_exception: bool=False) -> int:
     if not suppress_exception and n > 70:
         raise ArithmeticError("results are inaccurate for n greater than 70")
 
-    s5 = decimal.Decimal(math.sqrt(5))
-    phi = decimal.Decimal((1 + s5) / 2)
-    ans = (phi ** n) / s5
+    sqrt5: decimal.Decimal = decimal.Decimal(math.sqrt(5))
+    phi: decimal.Decimal = decimal.Decimal((1 + sqrt5) / 2)
+    ans: decimal.Decimal = (phi ** n) / sqrt5
     return int(round(ans))

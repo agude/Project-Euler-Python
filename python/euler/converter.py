@@ -21,7 +21,7 @@ def iterable_to_int(input_tuple: Iterable[int]) -> int:
         TypeError: If input_tuple does not support reversed().
     """
     # Using a string is faster than looping over the tuple and adding numbers
-    str_tuple = (str(i) for i in input_tuple)
+    str_tuple: Iterable[str] = (str(i) for i in input_tuple)
     return int(''.join(str_tuple))
 
 
@@ -63,7 +63,7 @@ def sort_digits(number: int) -> int:
         ValueError: If number is < 0.
 
     """
-    sorted_digits = sorted(int_to_tuple(number), reverse=True)
+    sorted_digits: List[int] = sorted(int_to_tuple(number), reverse=True)
 
     return iterable_to_int(sorted_digits)
 
@@ -110,11 +110,12 @@ def truncate(number: int, right_truncate: bool=False) -> Union[int, None]:
         raise ValueError("Input is non-integral")
     # For negative numbers, we remember that they are negative and strip the
     # sign
-    is_negative = number < 0
+    is_negative: bool = number < 0
     number = abs(number)
 
     # Convert to a string and strip the correct element
-    str_number = str(number)
+    str_number: str = str(number)
+    truncated_str: str = ""
     if right_truncate:
         truncated_str = str_number[:-1]
     else:
@@ -123,7 +124,7 @@ def truncate(number: int, right_truncate: bool=False) -> Union[int, None]:
     if not truncated_str:
         return None
     # Convert to int, restore the sign if needed, and return
-    truncated_number = int(truncated_str)
+    truncated_number: int = int(truncated_str)
     if is_negative:
         truncated_number *= -1
 
@@ -191,12 +192,12 @@ def reverse_int(number: int) -> int:
         raise ValueError("Input is non-integral")
     # For negative numbers, we remember that they are negative and strip the
     # sign
-    is_negative = number < 0
+    is_negative: bool = number < 0
     number = abs(number)
 
     # Convert to string to reverse
-    str_number = str(number)
-    reversed_number = int(str_number[::-1])  # [::-1] reversed a string
+    str_number: str = str(number)
+    reversed_number: int = int(str_number[::-1])  # [::-1] reversed a string
     if is_negative:
         reversed_number *= -1
 
@@ -289,8 +290,9 @@ class NumberWriter(object):
 
         # Otherwise recursively build the solution
         for i, block in enumerate(reversed(self.blocks)):
-            current_value = self.values[i]
-            digit_count = len(block)
+            current_value: str = self.values[i]
+            digit_count: int = len(block)
+            current_string: str = ""
             if digit_count == 1:
                 current_string = self.__handle_one(block)
             if digit_count == 2:
@@ -310,15 +312,15 @@ class NumberWriter(object):
         number = list(self.number_tuple[:])
 
         # The leading digits are not always a group of 3, so get them first
-        first_offset = len(number) % 3
-        block = []
+        first_offset: int = len(number) % 3
+        block: List[int] = []
         for _ in range(first_offset):
             block.append(number.pop(0))
         if block:
             self.blocks.append(block)
 
         # Now get all the rest, which are all three digits long
-        block = []
+        block: List[int] = []
         for i, digit in enumerate(number):
             # Starting a new block
             if not i % 3:
@@ -340,20 +342,20 @@ class NumberWriter(object):
         if tup[0] == 1:
             return self.number_words["teens"][tup[1]]
         else:
-            string = ""
+            string: str = ""
             string += self.number_words["tens"][tup[0]]
-            ones = self.__handle_one(tup[1:])
+            ones: str = self.__handle_one(tup[1:])
             if ones:
                 string += "-" + ones
             return string
 
     def __handle_three(self, tup) -> str:
         # Length 3
-        string = ""
-        leading_value = self.number_words["ones"][tup[0]]
+        string: str = ""
+        leading_value: str = self.number_words["ones"][tup[0]]
         if leading_value:
             string += leading_value + " hundred"
-        tens = self.__handle_two(tup[1:])
+        tens: str = self.__handle_two(tup[1:])
         if tens:
             string += " and " + tens
         return string

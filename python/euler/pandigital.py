@@ -18,9 +18,8 @@ def is_pandigital(number: int) -> bool:
         bool: True if number is pandigital, False otherwise.
     """
     # Turn our number into a string and make a list of all digits to check
-    test_numbers: List[str] = []
     str_number: str = str(number)
-    test_numbers = [str(i) for i in range(1, len(str_number) + 1)]
+    test_numbers: List[str] = [str(i) for i in range(1, len(str_number) + 1)]
 
     # Check that each digit is in our number
     for digit in test_numbers:
@@ -30,7 +29,7 @@ def is_pandigital(number: int) -> bool:
     return True
 
 
-def pandigitals(minimum_digits: int=1, maximum_digits: int=9, include_zero: bool=False) -> Generator[int, None, None]:
+def pandigitals(minimum_digits: int = 1, maximum_digits: int = 9, include_zero: bool = False) -> Generator[int, None, None]:
     """A generator over all pandigital numbers.
 
     An n-digit pandigital number contains digits 1 through n each exactly once,
@@ -75,6 +74,7 @@ def pandigitals(minimum_digits: int=1, maximum_digits: int=9, include_zero: bool
             greater than 10.
     """
     # Check for non-sense input values and raise and error
+    err: str = ""
     if minimum_digits < 1:
         err = "can not generate numbers with fewer than 1 digit"
         raise ValueError(err)
@@ -88,8 +88,8 @@ def pandigitals(minimum_digits: int=1, maximum_digits: int=9, include_zero: bool
     # Loop over the allowed number of digits
     for max_number in range(minimum_digits, maximum_digits + 1):
         # We only ever generate digits 1-9, even if max_number is 10
-        max_digit_range = min(10, max_number + 1)
-        digits = [i for i in range(1, max_digit_range)]
+        max_digit_range: int = min(10, max_number + 1)
+        digits: List[int] = [i for i in range(1, max_digit_range)]
 
         # Sometimes we want to include 0
         if include_zero:

@@ -18,9 +18,9 @@ def square_and_add(number: int) -> int:
         raise ValueError("Input must be integral and non-negative")
 
     # Use mod 10 and integer division to pull off digits
-    result = 0
+    result: int = 0
     while number:
-        digit = number % 10
+        digit: int = number % 10
         number //= 10
         result += digit * digit
 

@@ -42,7 +42,7 @@ def polygonals(multiplier: int, divisor: int, offset: int, stop=None, start: int
         run_forever = True
 
     # Loop over triangular numbers
-    n:int = start
+    n: int = start
     while run_forever or n <= stop:
         yield n * ((multiplier * n) + offset) // divisor
         n += 1
@@ -171,7 +171,7 @@ def is_polygonal(number: int, multiplier: int, divisor: int) -> bool:
         TypeError: If number and multiplier do not support +, *, or sqrt(), or
         if divisor does not support / .
     """
-    test_number = (math.sqrt(multiplier * number + 1) + 1) / divisor
+    test_number: float = (math.sqrt(multiplier * number + 1) + 1) / divisor
     return (test_number > 0 and countable.is_integer(test_number))
 
 

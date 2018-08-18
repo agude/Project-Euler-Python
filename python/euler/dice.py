@@ -30,13 +30,13 @@ def roll_probability(s: int, n: int, k: int) -> float:
         raise ValueError("k is a not a non-negative integer")
 
     # Coefficient
-    coef = 1. / s**n
+    coef: float = 1. / s**n
 
     # Sum
-    sum_terms = 0
-    ending_term = int(floor((k - n) / s))
+    sum_terms: int = 0
+    ending_term: int = int(floor((k - n) / s))
     for i in range(0, ending_term + 1):
-        term = 1
+        term: int = 1
         term *= ((-1)**i) * combinatorics.n_choose_k(n, i)
         term *= combinatorics.n_choose_k(k - (s * i) - 1, n - 1)
         sum_terms += term
@@ -63,7 +63,7 @@ def roll_under_probability(s: int, n: int, k: int) -> float:
     Raises:
         ValueError: if s, n, or k are not non-negative integers.
     """
-    combined_probability = 0.0
+    combined_probability: float = 0.0
     for i in range(n, min(k, s * n + 1)):
         combined_probability += roll_probability(s, n, i)
 
@@ -88,7 +88,7 @@ def roll_over_probability(s: int, n: int, k: int) -> float:
     Raises:
         ValueError: if s, n, or k are not non-negative integers.
     """
-    combined_probability = 0.0
+    combined_probability: float = 0.0
     for i in range(max(k + 1, n), s * n + 1):
         combined_probability += roll_probability(s, n, i)
 
