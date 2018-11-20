@@ -82,25 +82,3 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
-
-##Github C++ ignore
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.gch
-
-# Dependency Files
-*.d
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-
-# Don't ignore the library
-!alexlib.*
