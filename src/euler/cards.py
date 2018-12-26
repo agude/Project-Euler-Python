@@ -15,8 +15,8 @@ class CardSuit(Enum):
 
 @unique
 class CardValue(IntEnum):
-    """ Playing card values. They are order able as excepted:
-    2 < 3 < ...< king < ace.
+    """ Playing card values. They are orderable as excepted:
+    2 < 3 < ... < king < ace.
     """
     two = 2
     three = 3
@@ -50,7 +50,7 @@ class PokerHandType(IntEnum):
 
 @total_ordering
 class PlayingCard(object):
-    """Represent a standard American playing card.
+    """Represent a standard French playing card.
 
     Cards are comparable by value using the standard operators (<, >, <=, >=),
     which considers only the value not the suit. To compare suits, use
