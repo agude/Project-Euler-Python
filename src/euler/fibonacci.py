@@ -135,4 +135,6 @@ def fibonacci_binet(n: int, suppress_exception: bool = False) -> int:
     sqrt5: decimal.Decimal = decimal.Decimal(math.sqrt(5))
     phi: decimal.Decimal = decimal.Decimal((1 + sqrt5) / 2)
     ans: decimal.Decimal = (phi ** n) / sqrt5
-    return int(round(ans))
+    # TODO agude/Project-Euler-Python/issues/1:
+    # Remove ignore when mypy fixes its bug: python/mypy/issues/6211
+    return int(round(ans))  # type: ignore
