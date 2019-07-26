@@ -4,7 +4,7 @@ import euler.countable as countable
 
 
 def roll_probability(s: int, n: int, k: int) -> float:
-    """ Return the probability of rolling a total k using n dice of size s.
+    r""" Return the probability of rolling a total k using n dice of size s.
 
     Uses:
         F_{s,n}(x) = \frac{1}{s^n}\sum_{i=0}^{\left \lfloor \frac{k-n}{s}
@@ -46,7 +46,7 @@ def roll_probability(s: int, n: int, k: int) -> float:
 
 
 def roll_under_probability(s: int, n: int, k: int) -> float:
-    """ Return the probability of rolling less than k using n dice of size s.
+    r""" Return the probability of rolling less than k using n dice of size s.
 
     Uses:
         F_{s,n}(x) = \frac{1}{s^n}\sum_{i=0}^{\left \lfloor \frac{k-n}{s}
@@ -71,7 +71,7 @@ def roll_under_probability(s: int, n: int, k: int) -> float:
 
 
 def roll_over_probability(s: int, n: int, k: int) -> float:
-    """ Return the probability of rolling more than k using n dice of size s.
+    r""" Return the probability of rolling more than k using n dice of size s.
 
     Uses:
         F_{s,n}(x) = \frac{1}{s^n}\sum_{i=0}^{\left \lfloor \frac{k-n}{s}
