@@ -58,7 +58,7 @@ def problem_301(max_num=2**30):
 
     # There is nothing elegant here, we simply brute force
     total = 0
-    for a in range(max_num):
+    for a in range(1, max_num + 1):
         if not (a ^ (a * 2) ^ (a * 3)):
             total += 1
 
