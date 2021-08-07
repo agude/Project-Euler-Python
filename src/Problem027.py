@@ -50,7 +50,7 @@ from time import time
 from euler.primes import is_prime, prime_sieve
 
 
-EulerPrimeNumbers = namedtuple("EulerPrimeNumber", ["length", "a", "b"])
+EulerPrimeNumbers = namedtuple("EulerPrimeNumbers", ["length", "a", "b"])
 
 
 def problem_027(a_max=1000, b_max=1000):
