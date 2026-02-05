@@ -25,6 +25,8 @@ def cycle_length_prime(number: int) -> int:
     # Test that number is valid
     if not countable.is_positive_integer(number):
         raise ValueError("input is not a positive integer")
+    # Convert to Python int to avoid overflow with numpy integers
+    number = int(number)
     # Otherwise test the number
     d: int = 1
     while True:
