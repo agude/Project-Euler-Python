@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+echo "Running tests..."
+uv run pytest -q
+
+echo "Running mypy..."
+uv run mypy $(git ls-files 'src/Problem*.py' 'src/euler/*.py')
+
+echo "All checks passed!"
