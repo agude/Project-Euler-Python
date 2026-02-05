@@ -1,0 +1,21 @@
+[project]
+name = "project-euler"
+version = "0.1.0"
+description = "Python solutions to Project Euler problems"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "mypy",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["src/tests"]
+pythonpath = ["src"]
+
+[tool.mypy]
+ignore_missing_imports = true
